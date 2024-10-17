@@ -1,8 +1,10 @@
 import requests
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
 def getSuggestions():
     # Replace with your own API key from Spoonacular
-    API_KEY = "47d8f549f16143e39ae9fc5106692b69"
+    API_KEY = os.getenv('spoonacularAPI_KEY')
 
     # API Endpoint for meal planning suggestions
     url = f"https://api.spoonacular.com/recipes/complexSearch"
