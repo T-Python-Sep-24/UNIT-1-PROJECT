@@ -1,23 +1,59 @@
 from colorama import Fore, Style
 
 from workouts import Workout
-
-
-def main_menu():
+from nutrition import Meal
+# Nutritions Menu
+def nutritionsTrackingMenu():
     print(Fore.CYAN + "=" * 40)
-    print("    CLI Health and Fitness Tracker")
+    print("    (Workouts) Tracker")
     print("=" * 40 + Style.RESET_ALL)
     print("Please choose an option from the menu below:")
-    print(Fore.YELLOW + "1. Track Workouts")
-    print("2. Meal and Calorie Tracking")
-    print("3. View Daily/Weekly Health Stats")
-    print("4. Goal Setting")
-    print("5. Track Weight and Body Measurements")
-    print("6. Set Reminders")
-    print("7. Generate Reports")
-    print("8. Exit" + Style.RESET_ALL)
+    print(Fore.GREEN + "1. Add Meal")
+    print("2. Update Meal information")
+    print("3. Display all Meals")
+    print("4. Suggest meals")
+    print("5. Return to Main Menu" + Style.RESET_ALL)
     print("=" * 40)
 
+def nutritionTracking():
+
+    nutrition_instance = Meal()
+
+    while True:
+
+        nutritionsTrackingMenu()
+        choice = input("Enter Your choice: ")
+
+        if choice == '1':
+            # add meal function
+            meal_name = input("Enter the meal name: ")
+            meal_calories = input("Enter the calories of the meal: ")  # API is recommended
+            meal_macronutrients = input("Enter meal macronutrients: ")  # API is recommended
+            water_intake = input("Enter your water intake in liters: ")
+            meal_date = input("Enter the date of the meal or skip for today's date: ")
+            nutrition_instance.add_meal(meal_name, meal_calories, meal_macronutrients, water_intake, meal_date)
+
+        elif choice == '2':
+
+            nutrition_instance.get_meals()
+            m_num = input("Enter the meal number to update: ")
+            m_attribute = input("Enter the meal attribute that you want to update [name, calories, macronutrients, water, date]: ")
+            m_new_value = input("Enter the new attribute's value to update: ")
+            nutrition_instance.update_meal(m_num, m_attribute, m_new_value)
+
+        elif choice == '3':
+            # print all meals function
+            nutrition_instance.get_meals()
+
+        elif choice == '4':
+            nutrition_instance.suggest_meals()
+        elif choice.lower() == 'q':
+            print("Returning to the main menu <<<")
+            break
+        else:
+            print("Invalid choice! Please enter a number between 1 and 8.")
+
+# workout Menu
 def workoutTrackingMenu():
 
     print(Fore.CYAN + "=" * 40)
@@ -28,7 +64,7 @@ def workoutTrackingMenu():
     print("2. Update Workout information")
     print("3. Display all Your Workouts / Goals")
     print("4. Goal Setting")
-    print("5. Return to Main Menu" + Style.RESET_ALL)
+    print(Fore.RED + "[q/Q] Return to Main Menu" + Style.RESET_ALL)
     print("=" * 40)
 
 def workoutTracking():
@@ -71,9 +107,27 @@ def workoutTracking():
             calories_burned_goal = input("Enter the calories to burn goal: ")
             workout_instance.set_goals(w_num, [duration_goal, calories_burned_goal])
 
-        elif choice == '5':
+        elif choice.lower() == 'q':
+            print("Returning to the main menu >>>")
             break
+        else:
+            print("Invalid choice! Please enter a number between 1 and 8.")
 
+# Main menu
+def main_menu():
+    print(Fore.CYAN + "=" * 40)
+    print("    CLI Health and Fitness Tracker")
+    print("=" * 40 + Style.RESET_ALL)
+    print("Please choose an option from the menu below:")
+    print(Fore.YELLOW + "1. Track Workouts")
+    print("2. Meal and Calorie Tracking")
+    print("3. View Daily/Weekly Health Stats")
+    print("4. Goal Setting")
+    print("5. Track Weight and Body Measurements")
+    print("6. Set Reminders")
+    print("7. Generate Reports")
+    print(Fore.RED + "[q/Q]. Exit" + Style.RESET_ALL)
+    print("=" * 40)
 
 def main():
 
@@ -86,24 +140,25 @@ def main():
             input(" >>> Press any Key to continue <<< ")
 
         elif choice == '2':
-            # Call the meal logging function
-            pass
+            # todo Call the meal logging function
+            nutritionTracking()
+            input(" >>> Press any Key to continue <<< ")
         elif choice == '3':
-            # Call the health stats viewing function
+            #Todo Call the health stats viewing function
             pass
         elif choice == '4':
-            # Call the goal setting function
+            #Todo Call the goal setting function
             pass
         elif choice == '5':
-            # Call the weight and measurements tracking function
+            #Todo Call the weight and measurements tracking function
             pass
         elif choice == '6':
-            # Call the reminders management function
+            #Todo Call the reminders management function
             pass
         elif choice == '7':
-            # Call the report generation function
+            #Todo Call the report generation function
             pass
-        elif choice == '8':
+        elif choice.lower() == 'q':
             print("Exiting the Health and Fitness Tracker. Goodbye!")
             break
         else:
