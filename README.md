@@ -72,7 +72,7 @@ This project can be extended by integrating external APIs such as:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/username/cli-health-fitness-tracker.git
+   https://github.com/HmzhDubh/UNIT-1-PROJECT.git
 
 2. Install the dependencies:
    ```bash
@@ -122,3 +122,25 @@ cli_health_fitness_tracker/
 │   └── List of dependencies (e.g., matplotlib)
 │
 └── README.md
+
+---
+
+### Explanation of the Structure:
+
+- **`workouts.py`**: This module manages exercise logs, workout tracking, and goals. It includes the `Workout` class along with functions for logging, updating, and retrieving workouts.
+
+- **`nutrition.py`**: This module handles meal logging and calorie/macronutrient tracking. It contains the `Meal` class and related functions.
+
+- **`health_stats.py`**: Responsible for tracking user data such as weight, BMI, and body measurements. It features the `HealthStats` class with relevant functions.
+
+- **`reminders.py`**: Manages fitness reminders for workouts, meals, and more. This module includes the `Reminder` class.
+
+- **`reports.py`**: Generates daily, weekly, and monthly fitness reports and trends. This includes the `ReportGenerator` class.
+
+- **`main.py`**: The entry point of the application that handles user interaction.
+
+- **`requirements.txt`**: Lists the dependencies required for the project, such as `matplotlib`.
+
+- **`README.md`**: This file, providing an overview and documentation for the project.
+
+---
