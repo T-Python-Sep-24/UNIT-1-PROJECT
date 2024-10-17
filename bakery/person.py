@@ -4,11 +4,11 @@ import pickle, json
 
 class Person:
 
-    def __init__(self, name: str, age: int, gender: str, id: str) -> None:
+    def __init__(self, name: str, age: int, gender: str, phone: str) -> None:
         self.__name = name
         self.__age = age 
         self.__gender = gender
-        self.__id = id
+        self.__phone = phone
 
     def setName(self, name: str):
         '''
@@ -28,6 +28,12 @@ class Person:
         '''
         self.__gender = gender
 
+    def setPhone(self, phone: str):
+        '''
+        Setter for gender attribute
+        '''    
+        self.__phone = phone
+
     def getName(self) -> str:
         '''
         Getter for name attribute
@@ -46,17 +52,17 @@ class Person:
         '''
         return self.__gender
     
-    def getID(self) -> str:
+    def getPhone(self) -> str:
         '''
-        Getter for ID attribute
+        Getter for phone attribute
         '''
-        return self.__id
+        return self.__phone
     
     
 class Customer(Person):
 
-    def __init__(self, name: str, age: int, gender: str, id: str):
-        super().__init__(name, age, gender, id)
+    def __init__(self, name: str, age: int, gender: str, phone: str):
+        super().__init__(name, age, gender, phone)
         self.__orderHistory: list[OrderedProduct] = []
 
     def setOrderHistory(self, orderHistory: list[OrderedProduct]):
@@ -82,74 +88,50 @@ class Customer(Person):
 
 class Employee(Person):
 
-    def __init__(self, name: str, age: int, gender: str, id: str):
-        super().__init__(name, age, gender, id)
-        self.__id = 'e' + id
-
-    def getID(self) -> str:
-        '''
-        Override method from parent class and add 'e' before the employee id to distinguish them
-        '''
-        return self.__id
+    def __init__(self, name: str, age: int, gender: str, phone: str):
+        super().__init__(name, age, gender, phone)
 
     def addProduct(self, prodName: str, qty: int, price: float):
         '''
-        This method adds a product to a pickle file containing all products
+        This method adds a product to a json file containing all products
         '''
-        #Make sure the file exists to avoid errors
-        try:
-            with open("../bakeryData/menu.json", "r", encoding="utf-8") as file:
-                #Get the information from the json file by using .load() function
-                menu = json.load(file)
-        except FileNotFoundError:
-            return "The menu is empty."
-        except Exception as e:
-            return f"An error occured, {e.__class__}"
-        finally:
-            menu[prodName]= {
-                'qty': qty,
-                'price': price
-            }
-            with open("../bakeryData/menu.json", "w", encoding="utf-8") as file:
-                #Stores the modified menu in a json file 
-                json.dump(menu, file, indent = 4)
+        #Use the method below to get the menu from the json file
+        menu: dict = self.loadFromJSON()
+
+        menu[prodName]= {
+            'qty': qty,
+            'price': price
+        }
+        with open("../bakeryData/menu.json", "w", encoding="utf-8") as file:
+            #Store the modified menu in a json file 
+            json.dump(menu, file, indent = 4)
     
     def removeProduct(self, prodName: str) -> str:
         '''
-        This method removes a product from the menu then updates the json file that contains all products
+        This method removes a product from the menu then saves the modified menu to the json file
         '''
-        try:
-            with open("../bakeryData/menu.json", "r", encoding="utf-8") as file:
-                #Get the information from the json file by using .load() function
-                menu = json.load(file)
-        except FileNotFoundError:
-            return "The menu is empty."
-        except Exception as e:
-            return f"An error occured, {e.__class__}"
-        else:
+        menu: dict = self.loadFromJSON()
+        
+        if menu:
             #Check if the product is on the menu
             if prodName in menu:
                 del menu[prodName]
                 with open("../bakeryData/menu.json", "w", encoding="utf-8") as file:
-                    #Stores the modified menu back to the json file 
+                    #Store the modified menu back to the json file 
                     json.dump(menu, file, indent = 4)
                 return f"Product '{prodName}' was deleted successfully."
             else: 
                 return f"Product '{prodName}' isn't on the menu."
+        else: 
+            return "Your menu is empty."
 
     def updateProductQty(self, prodName: str, qty: int):
         '''
         This method updates a product's quantity then saves the modified menu to the json file
         '''
-        try:
-            with open("../bakeryData/menu.json", "r", encoding="utf-8") as file:
-                #Get the information from the json file by using .load() function
-                menu = json.load(file)
-        except FileNotFoundError:
-            return "The menu is empty."
-        except Exception as e:
-            return f"An error occured, {e.__class__}"
-        else:
+        menu: dict = self.loadFromJSON()
+        
+        if menu:
             #Check that the product is on the menu
             if prodName in menu:
                 #Modify the quantity of the product
@@ -160,20 +142,16 @@ class Employee(Person):
                 return f"Quantity of '{prodName}' was updated successfully."
             else:
                 return f"Product '{prodName}' isn't on the menu."
+        else: 
+            return "Your menu is empty."
         
     def updateProductPrice(self, prodName: str, price: float):
         '''
         This method updates a product's price then saves the modified menu to the json file
         '''
-        try:
-            with open("../bakeryData/menu.json", "r", encoding="utf-8") as file:
-                #Get the information from the json file by using .load() function
-                menu = json.load(file)
-        except FileNotFoundError:
-            return "The menu is empty."
-        except Exception as e:
-            return f"An error occured, {e.__class__}"
-        else:
+        menu: dict = self.loadFromJSON()
+        
+        if menu:
             #Check that the product is on the menu
             if prodName in menu:
                 #Update the price of the product
@@ -184,22 +162,37 @@ class Employee(Person):
                 return f"Price of '{prodName}' was updated successfully."
             else:
                 return f"Product '{prodName}' isn't on the menu."
+        else: 
+            return "Your menu is empty."
 
     def listAllProducts(self):
         '''
         This method retrieves the list of all products from json file and returns a formatted string containing the menu
         '''
         menuFormatted: str = ""
+        menu: dict = self.loadFromJSON()
+
+        if menu:
+            #Format and store the menu 
+            for prod in menu:
+                menuFormatted += f"⟡ {prod} Quantity: {menu[prod]['qty']} Price per piece: {menu[prod]['qty']}SR.\n"
+            return menuFormatted
+        else: 
+            return "Your menu is empty."
+        
+    def loadFromJSON(self) -> dict: 
+        '''
+        Call this method whenever you want to load from a json file and make neccessary checks
+        '''
+        menu: dict = {}
         try:
             with open("../bakeryData/menu.json", "r", encoding="utf-8") as file:
                 #Get the information from the json file by using .load() function
                 menu = json.load(file)
         except FileNotFoundError:
-            return "The menu is empty."
+            print("File doesn't Exist.")
         except Exception as e:
-            return f"An error occured, {e.__class__}"
-        else:
-            #Format and store the menu 
-            for prod in menu:
-                menuFormatted += f"⟡ {prod} Quantity: {menu[prod]['qty']} Price per piece: {menu[prod]['qty']}SR.\n"
-            return menuFormatted
+            print(f"An error occured, {e.__class__}")
+        finally:
+            return menu
+        
