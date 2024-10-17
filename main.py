@@ -46,7 +46,13 @@ def nutritionTracking():
             nutrition_instance.get_meals()
 
         elif choice == '4':
-            nutrition_instance.suggest_meals()
+            isCutomized = input("Do you want a customized Suggestion [y/n] otherwise Random? ")
+            if isCutomized.lower() == "y":
+                diet = input("Enter diet type [vegetarian, vegan, keto, paleo] or enter None: ")
+                maxCalories = int(input("Enter maximum calories wanted in the meal: "))
+                numOfSuggestions = int(input("Enter the Number of suggested meals you want: "))
+                type = input("Enter the meal type [main course, side dish, salad, snack, soup, appetizer, dessert, drink, beverage]: ")
+                nutrition_instance.suggest_meals(diet, maxCalories, numOfSuggestions, type)
         elif choice.lower() == 'q':
             print("Returning to the main menu <<<")
             break

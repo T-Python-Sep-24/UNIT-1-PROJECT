@@ -49,10 +49,10 @@ class Meal():
 
         self.formatOutput()
 
-    def suggest_meals(self):
+    def suggest_meals(self,diet = None, maxCalories = 500, numOfSuggestions = 5, type = 'main course'):
         # APIs are recommended
-        suggestmeals.getSuggestions()
-        print("Coming Soon (; ")
+        suggestmeals.getSuggestions(diet, maxCalories, numOfSuggestions, type)
+        # print("Coming Soon (; ")
 
     def formatOutput(self):
         """
