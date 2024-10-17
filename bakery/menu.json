@@ -1,0 +1,27 @@
+{
+    "Chocolate Chip Cookies": 
+    {
+        "qty": 50 ,
+        "price": 10.0
+    },
+    "Double Chocolate Cookies": 
+    {
+        "qty": 50 ,
+        "price": 11.50
+    },
+    "Brownies": 
+    {
+        "qty": 40 ,
+        "price": 15.0
+    }, 
+    "Carrot Cake": 
+    {
+        "qty": 25 ,
+        "price": 15.0
+    }, 
+    "Croissant": 
+    {
+        "qty": 30 ,
+        "price": 20.0
+    }
+}
