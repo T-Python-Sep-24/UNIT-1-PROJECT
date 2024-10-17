@@ -1,4 +1,6 @@
 from bakery.order import OrderedProduct
+import pickle, json
+
 
 class Person:
 
@@ -53,7 +55,7 @@ class Person:
     
 class Customer(Person):
 
-    def __init__(self, name: str, age: int, gender: str, id: str) -> None:
+    def __init__(self, name: str, age: int, gender: str, id: str):
         super().__init__(name, age, gender, id)
         self.__orderHistory: list[OrderedProduct] = []
 
@@ -69,10 +71,18 @@ class Customer(Person):
         '''
         return self.__orderHistory
     
+    def saveToFile(self):
+        '''
+        Call this when you want to store your customer data in a pickle file
+        '''
+        with open("bakeryData/customerDetails.pkl", "wb") as file:
+            #Store the customer in a pickle file
+            pickle.dump(self, file)
+    
 
 class Employee(Person):
 
-    def __init__(self, name: str, age: int, gender: str, id: str) -> None:
+    def __init__(self, name: str, age: int, gender: str, id: str):
         super().__init__(name, age, gender, id)
         self.__id = 'e' + id
 
