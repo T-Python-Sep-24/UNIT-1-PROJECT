@@ -93,3 +93,32 @@ This project can be extended by integrating external APIs such as:
 
 This `README.md` structure follows a standard format and ensures that anyone viewing the project on GitHub or another platform will understand its purpose and how to use it.
 
+cli_health_fitness_tracker/
+│
+├── workouts.py
+│   ├── class Workout
+│   └── functions for logging, updating, and retrieving workouts
+│
+├── nutrition.py
+│   ├── class Meal
+│   └── functions for logging, updating, and retrieving meals
+│
+├── health_stats.py
+│   ├── class HealthStats
+│   └── functions for tracking weight, BMI, and measurements
+│
+├── reminders.py
+│   ├── class Reminder
+│   └── functions for managing reminders
+│
+├── reports.py
+│   ├── class ReportGenerator
+│   └── functions for generating and displaying reports
+│
+├── main.py
+│   └── Main program to handle user interaction
+│
+├── requirements.txt
+│   └── List of dependencies (e.g., matplotlib)
+│
+└── README.md
