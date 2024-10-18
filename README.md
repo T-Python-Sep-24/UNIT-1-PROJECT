@@ -1,18 +1,32 @@
 # UNIT-1-PROJECT
 
 
-
-## Based on what you’ve learned until now , create a project of your choosing (impress us with your imagination) . This project must at least satisfy the following minimum requirements :
+### Requirements:
+## Based on what you’ve learned until now , create a project of your choosing (impress us with your imagination) . This project must at least satisfy the following minimum requirements:
 
 - Must be interactive on CLI.
 - Use your coding skills in Python accurately.
 - Organize Your Code into modules & (or packages)
 - Use Best practices.
 
-## Example Project :  An online Grocery Store :
+### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
 
-#### Overview : An online store that sells fruits to customers. This online store has 2 main users. The customer and the manager of the store . Each one of them should be able to do the following tasks for the store to function properly . 
+### ------------------------------------------------------------------------------------------------------------------------------------
 
+
+## Project Name:
+### An online Grocery Store
+
+
+
+
+#### Overview:
+### An online store that sells fruits to customers. This online store has 2 main users. The customer and the manager of the store . Each one of them should be able to do the following tasks for the store to function properly. 
+
+
+
+
+#### User Story:
 #### As a customer I should be able to do the following :
 - Browse  Products . 
 - View the product info (summary, specs, price, quantity , etc.)
@@ -28,6 +42,7 @@
 
 
 
+
 #### Usage :
  Explain to the user how to use your project . 
  for example:
@@ -37,5 +52,3 @@
  - type in buy product_name to buy the product . 
  - and so on...
 
-
-### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
