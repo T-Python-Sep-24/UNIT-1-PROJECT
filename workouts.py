@@ -60,6 +60,7 @@ class Workout():
         self.workouts[int(workout_number) - 1]['goals'] = goals
         base.save_to_file(self.fileName, self.workouts)
         self.workout_goals = goals
+        print("Goals Updated Successfully ✅ ")
 
     def formatOutput(self):
         """

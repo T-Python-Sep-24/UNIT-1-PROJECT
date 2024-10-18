@@ -3,3 +3,4 @@
 # http, apis
 pip install colorama
 pip install art
+pip install dotenv
