@@ -1,36 +1,12 @@
 
 
 class Guest:
-    def __init__(self, name:str, phone:int, email:str, rsvp_status:str ):
-        self.name = name
-        self.phone = phone
-        self.email = email
-        self.rsvp = rsvp_status
+    def __init__(self, guest_name:str, guest_phone:int, guest_email:str, rsvp_status:str = "Pending"):
+        self.guest_name = guest_name
+        self.guest_phone = guest_phone
+        self.guest_email = guest_email
+        self.rsvp = rsvp_status #will include "Attending", "Not Attending", "Pending"
 
 
-    def add_guest():
-        pass
-
-
-    def search_guest(self, name):
-        pass
-
-
-    def view_guests():
-        pass
-
-
-    def update_rsvp():
-        pass 
-
-
-    def filter_by_rsvp():
-        pass
-
-
-    def send_reminder():
-        pass
-
-
-    def attendance_count():
-        pass  
+    def __str__(self):
+        return f"Guest Name: {self.guest_name}, Phone: {self.guest_phone}, Email: {self.guest_email}, RSVP: {self.rsvp}"    
