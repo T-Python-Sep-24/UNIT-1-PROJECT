@@ -3,9 +3,18 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 
+import dotenv
+
+dotenv.load_dotenv()
+# Email credentials
+
 def send_emails(user_email):
 
-    # Email credentials
+    """
+    method to send reminders and reports received from various classes to users
+    :param user_email:
+    :return:
+    """
     sender_email = os.getenv('SENDER_EMAIL')  # Your Gmail address
     app_password = os.getenv('EMAIL_APP_PASSWORD')    # Your Gmail password or app-specific password
 
@@ -17,11 +26,22 @@ def send_emails(user_email):
     message = MIMEMultipart()
     message['From'] = sender_email
     message['To'] = receiver_email
-    message['Subject'] = 'Test Email from Python with App Password'
+    message['Subject'] = 'Test Email from Python'
 
     # Email body
-    body = 'Hello, this is a test email sent from Python with App Password!'
-    message.attach(MIMEText(body, 'plain'))
+    # body = 'Hello, this is a test email sent from Python with App Password!'
+
+    html_content = """\
+    <html>
+      <body>
+        <h1>Hello!</h1>
+        <p>This is an HTML email sent from Python.</p>
+        <p><strong>Enjoy coding!</strong></p>
+        <a href="https://www.example.com">Click here to visit our website</a>
+      </body>
+    </html>
+    """
+    message.attach(MIMEText(html_content, 'html'))
 
     # Connect to Gmail's SMTP server and send the email
     try:
@@ -40,3 +60,5 @@ def send_emails(user_email):
     finally:
         # Close the server connection
         smtp_server.quit()
+
+send_emails("hamza.helal.d@gmail.com")
