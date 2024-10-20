@@ -1,41 +1,42 @@
 # UNIT-1-PROJECT
 
+## Project :  violations Management System 
 
+#### Overview: An online system that allows users to manage their violations on a single platform. The system supports two types of users: Residents and Management Authorities, each with specific tasks and functionalities.
 
-## Based on what you’ve learned until now , create a project of your choosing (impress us with your imagination) . This project must at least satisfy the following minimum requirements :
-
-- Must be interactive on CLI.
-- Use your coding skills in Python accurately.
-- Organize Your Code into modules & (or packages)
-- Use Best practices.
-
-## Example Project :  An online Grocery Store :
-
-#### Overview : An online store that sells fruits to customers. This online store has 2 main users. The customer and the manager of the store . Each one of them should be able to do the following tasks for the store to function properly . 
-
-#### As a customer I should be able to do the following :
-- Browse  Products . 
-- View the product info (summary, specs, price, quantity , etc.)
-- Search for Products.
-- Get recommendations for my next purchase based on my purchase history.
-- Add Products to the shopping cart .
-- Remove a product from the shopping cart.
-- List the products in my shopping cart. 
-- Continue to checkout . 
-- Fill in my address for delivery.
-- Get receipt of my purchases.
-- Check delivery status . 
-
-
+#### As a Resident I should be able to do the following :
+-Login/Register for Residents 
+-List the violations that i have (fine number,type of fine ,date,price,issued by which ministry)
+-search for a specfic violations 
+-Pay all violations(installment option if the violations is more than 3000 sar)
+-pay for a specfic violations(installment option if the violations is more than 3000 sar)
+-send messages to management to object a violations
+-see response
+-Exit
+### As an Authortie in a specfic ministry I shoild be able to do the following:
+-Login/Register for manamge
+-Fine a violation for the customers
+-check the violations for a customer
+-Objections review from customers and response
+-make a discount to all customer
+-make a discount for one of the customer
+-Manager log
+## For Management Users They only can do the tasks to their ministry only and they can not interfer with other ministries
 
 #### Usage :
- Explain to the user how to use your project . 
- for example:
- - type in search product_name to search for a product.
- - type in list_products to show all the products in the grocery.
- - type in show product_name to get information about this product.
- - type in buy product_name to buy the product . 
- - and so on...
+## As for the resident :
+.After logging in as a resident, you can:
+.List your violations.
+.Search for a specific violation by its number.
+.Pay all violations or choose to pay in installments if eligible.
+.Send messages to management to object a violation.
+.View responses to your objections.
+Follow the on-screen instructions to complete each action.
+## As for the Management :
+.After logging in as a management user, you can:
+.Fine violations for customers under your ministry.
+.Review and respond to customer objections.
+.Apply discounts to all or specific customers.
+.Check logs of issued fines and actions you've taken.
+You will only be able to interact with violations that assigned to your ministry
 
-
-### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
