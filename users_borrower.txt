@@ -1,0 +1,4 @@
+Name of borrower : shouq | The date : 2024-10-19 | The value : 200 SAR| Stauts : Not pay
+Name of borrower : shouq | The date : 2024-10-19 | The value : 200 SAR| Stauts : pay
+Name of borrower : shouq | The date : 2024-10-20 | The value : 200 SAR| Stauts : 2024-10-19
+Name of borrower : shouq | The date : 2024-10-20 | The value : 200 SAR| Stauts : 2024-10-20
