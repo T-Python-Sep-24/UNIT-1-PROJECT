@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "title": "Stars",
+        "artist": "Ahmed",
+        "year": 2000,
+        "description": "description",
+        "likes": 5,
+        "comments": [
+            "dd",
+            "gggggg"
+        ]
+    },
+    {
+        "id": 2,
+        "title": "Moon",
+        "artist": "Mohammed",
+        "year": 1999,
+        "description": "description",
+        "likes": 1,
+        "comments": [
+            "great"
+        ]
+    }
+]
