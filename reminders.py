@@ -5,8 +5,23 @@ import os
 
 import dotenv
 
+import base
+
 dotenv.load_dotenv()
 # Email credentials
+class Reminders():
+
+    def __init__(self):
+        self.fileName = 'reminders.json'
+
+    def setReminder(self, instance):
+        base.save_to_file(self.fileName, data=instance)
+
+    def getReminders(self):
+        reminders = base.load_from_file(self.fileName)
+
+        for i, reminder in enumerate(reminders, 1):
+            print(i + reminder)
 
 def send_emails(user_email):
 
@@ -61,4 +76,4 @@ def send_emails(user_email):
         # Close the server connection
         smtp_server.quit()
 
-send_emails("hamza.helal.d@gmail.com")
+# send_emails("hamza.helal.d@gmail.com")
