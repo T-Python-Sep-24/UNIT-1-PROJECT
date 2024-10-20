@@ -7,6 +7,10 @@ class Workout():
     fileName='workouts.json'
 
     def __init__(self):
+        """
+        initializer / constructor
+        """
+
 
         self.workouts = []
         self.fileName = 'workouts.json'
@@ -18,7 +22,15 @@ class Workout():
         self.workout_goals = ""
 
     def add_workout(self, workout_type, duration, intensity, calories_burned, workout_date):
-
+        """
+        this method if to add new workout data
+        :param workout_type:
+        :param duration:
+        :param intensity:
+        :param calories_burned:
+        :param workout_date:
+        :return:
+        """
         self.workout_type = workout_type
         self.workout_duration = duration
         self.workout_intensity = intensity
@@ -40,22 +52,41 @@ class Workout():
         print(" >> Workout added successfully ✅ ")
 
     def update_workout(self, workout_number, workout_attr, new_value):
+        """
+        this method is to update the exiting workouts data
+        :param workout_number:
+        :param workout_attr:
+        :param new_value:
+        :return:
+        """
         self.workouts = base.load_from_file(self.fileName)
         self.workouts[int(workout_number) - 1][workout_attr] = new_value
         base.save_to_file(self.fileName, self.workouts)
         print("Workout information updated successfully ✅ ")
 
     def get_workouts(self):
+        """
+        this method displays all existing workouts
+        :return:
+        """
         self.workouts = base.load_from_file(self.fileName)
         self.formatOutput()
 
 
-    def get_goals(self):
-
-        return self.workout_goals
+    # def get_goals(self):
+    #     '''
+    #     method to get the goals specified / added by the used
+    #     :return:
+    #     '''
+    #     return self.workout_goals
 
     def set_goals(self, workout_number:int, goals: list):
-
+        """
+        method to set goals of the workouts and add updated workouts data to file
+        :param workout_number:
+        :param goals:
+        :return:
+        """
         self.workouts = base.load_from_file(self.fileName)
         self.workouts[int(workout_number) - 1]['goals'] = goals
         base.save_to_file(self.fileName, self.workouts)

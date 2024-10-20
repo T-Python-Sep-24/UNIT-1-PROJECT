@@ -7,6 +7,9 @@ class Meal():
     fileName='meals.json'
 
     def __init__(self):
+        """
+        init / constructor
+        """
         self.meals = []
         self.fileName = 'meals.json'
         self.meal_name = ""
@@ -16,7 +19,15 @@ class Meal():
         self.meal_date = ""
 
     def add_meal(self, meal_name, meal_calories, meal_macronutrients, water_intake, meal_date):
-
+        """
+        method to add meals data to files
+        :param meal_name:
+        :param meal_calories:
+        :param meal_macronutrients:
+        :param water_intake:
+        :param meal_date:
+        :return:
+        """
         self.meal_name = meal_name
         self.meal_calories = meal_calories
         self.meal_macronutrients = meal_macronutrients
@@ -39,17 +50,36 @@ class Meal():
         print(" >> Meal added successfully ✅ ")
 
     def update_meal(self, meal_number, meal_attr, new_value):
+        """
+        this method update existing meals data and save to files
+        :param meal_number:
+        :param meal_attr:
+        :param new_value:
+        :return:
+        """
         self.meals = base.load_from_file(self.fileName)
         self.meals[int(meal_number) - 1][meal_attr] = new_value
         base.save_to_file(self.fileName, self.meals)
         print("Workout information updated successfully ✅ ")
 
     def get_meals(self):
+        """
+        this method displays all meals in file
+        :return:
+        """
         self.meals = base.load_from_file(self.fileName)
 
         self.formatOutput()
 
     def suggest_meals(self,diet = None, maxCalories = 500, numOfSuggestions = 5, type = 'main course'):
+        """
+        this method uses the spoonacular api to suggest meals using default or customized inputs from the user
+        :param diet:
+        :param maxCalories:
+        :param numOfSuggestions:
+        :param type:
+        :return:
+        """
         # APIs are recommended
         suggestmeals.getSuggestions(diet, maxCalories, numOfSuggestions, type)
         # print("Coming Soon (; ")

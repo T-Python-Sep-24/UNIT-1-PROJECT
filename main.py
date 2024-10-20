@@ -4,7 +4,6 @@ from workouts import Workout
 from nutrition import Meal
 from health_states import Health_states
 
-
 # health states menu
 def healthStatesMenu():
 
@@ -16,9 +15,8 @@ def healthStatesMenu():
     print("2. Get Curring BMI") # done
     print("3. Display all Health States") # done
     # print("4. Track your Progress") # todo
-    print("[Q/q]. Return to Main Menu" + Style.RESET_ALL)
+    print(Fore.RED + "[Q/q]. Return to Main Menu" + Style.RESET_ALL)
     print("=" * 40)
-
 
 def healthStatesTracking():
 
@@ -76,7 +74,6 @@ def healthStatesTracking():
         else:
             print("Invalid choice! Please enter a number between 1 and 4 or q to return to main menu.")
 
-
 # Nutrition's Menu
 def nutritionsTrackingMenu():
     print(Fore.CYAN + "=" * 40)
@@ -84,10 +81,10 @@ def nutritionsTrackingMenu():
     print("=" * 40 + Style.RESET_ALL)
     print("Please choose an option from the menu below:")
     print(Fore.GREEN + "1. Add Meal")
-    print("2. Update Meal information")
-    print("3. Display all Meals")
+    print("2. Update Meal data")
+    print("3. Display Meals")
     print("4. Suggest meals")
-    print("5. Return to Main Menu" + Style.RESET_ALL)
+    print(Fore.RED + "[Q/q] Return to Main Menu" + Style.RESET_ALL)
     print("=" * 40)
 
 def nutritionTracking():
@@ -134,7 +131,7 @@ def nutritionTracking():
                 type = input("Enter the meal type [main course, side dish, salad, snack, soup, appetizer, dessert, drink, beverage]: ")
                 nutrition_instance.suggest_meals(diet, maxCalories, numOfSuggestions, type)
 
-            else:
+            elif isCutomized.lower() == 'n':
                 nutrition_instance.suggest_meals()
             input(" >>> Press any Key to continue <<< ")
 
@@ -152,9 +149,9 @@ def workoutTrackingMenu():
     print("    (Workouts) Tracker")
     print("=" * 40 + Style.RESET_ALL)
     print("Please choose an option from the menu below:")
-    print(Fore.GREEN + "1. Add Workouts")
-    print("2. Update Workout information")
-    print("3. Display all Your Workouts / Goals")
+    print(Fore.GREEN + "1. Add Workout")
+    print("2. Update Workout data")
+    print("3. Display Workouts / Goals")
     print("4. Goal Setting")
     print(Fore.RED + "[q/Q] Return to Main Menu" + Style.RESET_ALL)
     print("=" * 40)
@@ -216,8 +213,9 @@ def main_menu():
     print(Fore.YELLOW + "1. Track Workouts")  # done
     print("2. Meal and Calorie Tracking")  # done
     print("3. Track health states and body mass index")  # done
-    print("5. Set Reminders")
-    print("6. Generate Reports")
+    print("4. Set Reminders")
+    print("5. Generate Reports")
+    print("6. Clear Data")  # todo resit program data
     print(Fore.RED + "[q/Q]. Exit" + Style.RESET_ALL)
     print("=" * 40)
 
