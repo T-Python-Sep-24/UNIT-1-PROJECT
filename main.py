@@ -1,6 +1,7 @@
 import pickle
 from bakery.person import *
 from bakery.order import *
+import re
 
 users: list[Person] = []
 
@@ -29,6 +30,23 @@ def saveUsers(user: Person):
             #Store list of bank accounts in a pickle file
             pickle.dump(users, file)
 
+def phoneValid(phone: str) -> bool:
+    '''
+    This method validates a phone number and return true if it's valid
+    '''
+    numberPattern = "^05[0-9]{8}$"
+    return re.match(numberPattern, phone)
+
+def passwordValid(password: str) -> bool:
+    '''
+    This function validates a password and returns true if it's valid
+    '''
+    passwordPattern = r'[A-Za-z0-9@#_+$&-]{8,}'
+    if re.fullmatch(passwordPattern, password):
+        return True
+    else:
+        return False
+
 def checkUserLogin(phone: str, password: str) -> Person:
     '''
     This function searches for a user with a phone number and password, if they exists it returns the user
@@ -38,7 +56,9 @@ def checkUserLogin(phone: str, password: str) -> Person:
         if user.getPhone() == phone and user.getPassword() == password:
             print(f"Welcome back {user.getName()}")
             return user
-        
+        elif user.getPhone() == phone and user.getPassword() != password: 
+            print(f"Incorrect password for phone number {phone}")
+          
 def checkUserRegister(phone: str, password: str) -> bool:
     '''
     This function checks if a user with the passed phone number exists. It returns True if they do and False if not
@@ -134,7 +154,7 @@ def customerMenu(customer: Customer):
             input("")
             
         elif choice == '3':
-            
+             
             input("")
 
         elif choice == '4':
@@ -163,6 +183,10 @@ def main():
             phone: str = input("Enter your phone number: ")
             password: str = input("Enter your password: ")
 
+            #Check if phone number is valid
+            if not phoneValid(phone):
+                print("Phone number should be 10 digits starting with (05). Try again..")
+                continue
             #Check if the user exists in the system, returns None if the user don't
             user: Person = checkUserLogin(phone, password)
 
@@ -173,23 +197,38 @@ def main():
                 elif user.getRole() == "customer":
                     customerMenu(user)
                     break
-            else:
-                print("There is no account with that phone number.")
 
         elif choice == '2':
-            print("--------------Register--------------")
-            name: str = input("Enter your name: ")
-            age: int = int(input("Enter your age: "))
-            gender: str = input("Enter your gender: ")
-            phone: str = input("Enter your phone number: ")
-            password: str = input("Enter your password: ")
+            while True:
+                print("--------------Register--------------")
+                name: str = input("Enter your name: ")
+                try:
+                    age: int = int(input("Enter your age: "))
+                except ValueError:
+                    print("Please enter age in numbers only")
+                    continue
+                gender: str = input("Enter your gender: ")
+                phone: str = input("Enter your phone number: ")
+                password: str = input("Enter your password: ")
 
-            #Check if the user exists in the system, returns False if they don't
-            exist: bool = checkUserRegister(phone, password)
-            if not exist:
-                customer: Customer = Customer(name, age, gender, phone, password)
-                saveUsers(customer)
-                print("You have successfully registered.")
+                if not phoneValid(phone):
+                    print("Phone number should be 10 digits starting with (05). Try again..")
+                    input("")
+                    continue
+                if not passwordValid(password):
+                    print("Password too weak, your password satisfy the following:")
+                    print("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)\nTry again..")
+                    input("")
+                    continue
+                
+                #Check if the user exists in the system, returns False if they don't
+                exist: bool = checkUserRegister(phone, password)
+                if not exist:
+                    customer: Customer = Customer(name, age, gender, phone, password)
+                    saveUsers(customer)
+                    print("You have successfully registered, continue to login.")
+                input("")
+                break
 
         else:
             print("Invalid choice, try again..", end=" ")

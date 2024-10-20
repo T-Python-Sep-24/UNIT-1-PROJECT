@@ -99,14 +99,14 @@ class Cart:
             with open("bakeryData/customerDetails.pkl", "rb") as file:
                 #Get the information from the json file by using .load() function
                 self.__orderedProducts = pickle.load(file)
-            if self.__orderedProducts == []:
-                return "Your cart is empty"
-            else:
-                for prod in self.__orderedProducts:
-                    products += f"• {prod.getName()}. Quantity: {prod.getQty()} pieces. Price: {prod.getPrice()} SR.\n"
-                return f"{products}Total price: {self.calculateTotal()} SR."
+            for prod in self.__orderedProducts:
+                products += f"• {prod.getName()}. Quantity: {prod.getQty()} pieces. Price: {prod.getPrice()} SR.\n"
+            return f"{products}Total price: {self.calculateTotal()} SR."
+        
         except FileNotFoundError:
             return "File doesn't Exist."
+        except EOFError:
+            return "Your cart is empty"
         except Exception as e:
             return f"An error occured, {e.__class__}"
 
