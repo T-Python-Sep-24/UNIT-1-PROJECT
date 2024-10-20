@@ -30,6 +30,26 @@ class OrderedProduct:
         '''
         return self.__price
 
+from datetime import datetime
+
+class Order:
+
+    def __init__(self, orderedProducts: list[OrderedProduct]):
+        self.__date = datetime.today()
+        self.__orderedProducts = orderedProducts
+
+    def orderInfo(self) -> str:
+        '''
+        This method returns the details of the order
+        '''
+        products: str = ""
+        for prod in self.__orderedProducts:
+            total: float = prod.getQty() * prod.getPrice()
+            products += f"Product name: {prod.getName()}. Quantity: {prod.getQty()}. Price: {total}\n"
+        return f"{products} Ordered on: {self.__date}"
+        
+
+
 import pickle
 
 class Cart:
@@ -57,25 +77,43 @@ class Cart:
         '''
         Calculate and return the total price of the products in the cart
         '''
-        total = 0.0
+        total: float = 0.0
         for prod in self.__orderedProducts:
             total += prod.getPrice()
         
         return total
     
-    def storeCartData(self):
+    def saveCartData(self):
         '''
         This method stores cart data in a pickle file to retrieve when needed
         '''
         with open("bakeryData/cartDetails.pkl", "wb") as file:
             #Store the customer in a pickle file
-            pickle.dump(self, file)
-        
+            pickle.dump(self.__orderedProducts, file)
+    
+    def viewCart(self):
+        '''
+        This method displays cart contents when called
+        '''    
+        try:
+            with open("bakeryData/customerDetails.pkl", "rb") as file:
+                #Get the information from the json file by using .load() function
+                self.__orderedProducts = pickle.load(file)
+            if self.__orderedProducts == []:
+                return "Your cart is empty"
+            else:
+                for prod in self.__orderedProducts:
+                    products += f"• {prod.getName()}. Quantity: {prod.getQty()} pieces. Price: {prod.getPrice()} SR.\n"
+                return f"{products}Total price: {self.calculateTotal()} SR."
+        except FileNotFoundError:
+            return "File doesn't Exist."
+        except Exception as e:
+            return f"An error occured, {e.__class__}"
 
     def clearCart(self):
         '''
         This method clears all products from the cart
         '''
         #Open the cart in write mode to clear its contents
-        open("bakeryData/cartDetails.pkl", "w").close()
+        open("bakeryData/cartDetails.pkl", "wb").close()
             

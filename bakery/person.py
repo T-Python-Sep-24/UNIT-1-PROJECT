@@ -1,4 +1,4 @@
-from bakery.order import OrderedProduct
+from bakery.order import OrderedProduct, Order
 import pickle, json
 
 
@@ -78,24 +78,56 @@ class Person:
         '''
         return self.__role
     
+    def listAllProducts(self):
+        '''
+        This method retrieves the list of all products from json file and returns a formatted string containing the menu
+        '''
+        menuFormatted: str = ""
+        menu: dict = self.__loadFromJSON()
+
+        if menu:
+            #Format and store the menu 
+            for prod in menu:
+                menuFormatted += f"⟡ {prod}.\tQuantity: {menu[prod]['qty']}\tPrice per piece: {menu[prod]['qty']}SR.\n"
+            return menuFormatted
+        else: 
+            return "Your menu is empty."
+        
+    def __loadFromJSON(self) -> dict: 
+        '''
+        Call this method whenever you want to load from a json file and make neccessary checks
+        '''
+        menu: dict = {}
+        try:
+            with open("bakeryData/menu.json", "r", encoding="utf-8") as file:
+                #Get the information from the json file by using .load() function
+                menu = json.load(file)
+        except FileNotFoundError:
+            print("File doesn't Exist.")
+        except Exception as e:
+            print(f"An error occured, {e.__class__}")
+        finally:
+            return menu
+        
     
 class Customer(Person):
 
     def __init__(self, name: str, age: int, gender: str, phone: str, password: str):
         super().__init__(name, age, gender, phone, password)
-        self.__orderHistory: list[OrderedProduct] = []
+        self.__orderHistory: list[Order] = []
         self.__role = "customer"
 
-    def setOrderHistory(self, orderHistory: list[OrderedProduct]):
+    def setOrderHistory(self, orderHistory: list[Order]):
         '''
         setter for orderHistory attribute
         '''
         self.__orderHistory = orderHistory
 
-    def getOrderHistory(self,) -> list[OrderedProduct]:
+    def getOrderHistory(self,) -> list[Order]:
         '''
         Getter for orderHistory attribute
         '''
+        self.__loadFromFile()
         return self.__orderHistory
     
     def getRole(self):
@@ -108,9 +140,22 @@ class Customer(Person):
         '''
         Call this when you want to store your customer data in a pickle file
         '''
-        with open("../bakeryData/customerDetails.pkl", "wb") as file:
+        with open("bakeryData/customerDetails.pkl", "wb") as file:
             #Store the customer in a pickle file
             pickle.dump(self, file)
+
+    def __loadFromFile(self) -> list[Order]: 
+        '''
+        Call this method whenever you want to load from a pickle file and make neccessary checks
+        '''
+        try:
+            with open("bakeryData/customerDetails.pkl", "rb") as file:
+                #Get the information from the json file by using .load() function
+                self.__orderHistory = pickle.load(file)
+        except FileNotFoundError:
+            print("File doesn't Exist.")
+        except Exception as e:
+            print(f"An error occured, {e.__class__}")
     
 
 class Employee(Person):
@@ -235,46 +280,14 @@ class Employee(Person):
                 elif choice == '2':
                     newQty: int = int(input("Enter the new quantity: "))
                     if not isinstance(newQty, int):
-                        raise ValueError("Please enter qunatity in numbers only.")
+                        raise ValueError
                     return self.updateProductQty(prodName, newQty)
                 elif choice == '3':
                     newPrice: float = float(input("Enter the new price: "))
                     if not isinstance(newPrice, float):
-                        raise ValueError("Please enter price in numbers only.")
+                        raise ValueError
                     return self.updateProductPrice(prodName, newPrice)
                 else:
                     print("Invalid choice, try again..")
-            except ValueError as e:
-                print(e)
-
-    def listAllProducts(self):
-        '''
-        This method retrieves the list of all products from json file and returns a formatted string containing the menu
-        '''
-        menuFormatted: str = ""
-        menu: dict = self.__loadFromJSON()
-
-        if menu:
-            #Format and store the menu 
-            for prod in menu:
-                menuFormatted += f"⟡ {prod}.\tQuantity: {menu[prod]['qty']}\tPrice per piece: {menu[prod]['qty']}SR.\n"
-            return menuFormatted
-        else: 
-            return "Your menu is empty."
-        
-    def __loadFromJSON(self) -> dict: 
-        '''
-        Call this method whenever you want to load from a json file and make neccessary checks
-        '''
-        menu: dict = {}
-        try:
-            with open("bakeryData/menu.json", "r", encoding="utf-8") as file:
-                #Get the information from the json file by using .load() function
-                menu = json.load(file)
-        except FileNotFoundError:
-            print("File doesn't Exist.")
-        except Exception as e:
-            print(f"An error occured, {e.__class__}")
-        finally:
-            return menu
-        
+            except ValueError:
+                print("Please enter numbers only.")
