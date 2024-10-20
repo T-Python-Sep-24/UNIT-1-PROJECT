@@ -1,10 +1,12 @@
-import json
-import os
+# import libraries 
+import json  # to save and load donor information.
+import os    # checking if a file exists
 
-class BloodBank:
-    def __init__(self):
+
+class BloodBank:          # Defines a new class
+    def __init__(self):   # Defines the constructor method
         self.donors = {}  # Dictionary to store donor information
-        self.load_data()
+        self.load_data()  # load existing donor data from a JSON file
 
     def add_donor(self, name, blood_type, quantity):
         donor_id = len(self.donors) + 1
@@ -35,53 +37,10 @@ class BloodBank:
         return total
 
     def save_data(self):
-        with open('donors.json', 'w') as file:
+        with open('donors.json', 'w') as file:     #saves the current donor information to a JSON file
             json.dump(self.donors, file)
 
     def load_data(self):
         if os.path.exists('donors.json'):
             with open('donors.json', 'r') as file:
                 self.donors = json.load(file)
-
-def display_menu():
-    print("\n--- Blood Bank Management System ---")
-    print("1. Add Donor")
-    print("2. View Donors")
-    print("3. Search Donor")
-    print("4. Total Blood Quantity")
-    print("5. Exit")
-
-def main():
-    blood_bank = BloodBank()
-    while True:
-        display_menu()
-        choice = input("Choose an option (1-5): ")
-
-        try:
-            if choice == '1':
-                name = input("Enter donor name: ")
-                blood_type = input("Enter blood type (A, B, AB, O): ")
-                quantity = float(input("Enter quantity of blood (in liters): "))
-                if quantity < 0:
-                    raise ValueError("Quantity cannot be negative.")
-                blood_bank.add_donor(name, blood_type, quantity)
-            elif choice == '2':
-                blood_bank.view_donors()
-            elif choice == '3':
-                donor_id = int(input("Enter donor ID to search: "))
-                blood_bank.search_donor(donor_id)
-            elif choice == '4':
-                total_quantity = blood_bank.total_blood_quantity()
-                print(f"Total blood quantity in the bank: {total_quantity} liters")
-            elif choice == '5':
-                print("Exiting the system.")
-                break
-            else:
-                print("Invalid choice. Please try again.")
-        except ValueError as ve:
-            print(f"Input error: {ve}")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-
-if __name__ == "__main__":
-    main()
