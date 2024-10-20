@@ -10,6 +10,12 @@ class Employee:
             print("The username length must be more than 2 characters, please provide a valid username.")
             return  # Exit the function if validation fails
         
+        # Get roll input and validate
+        roll = input("Enter your roll:")
+        if len(roll)<=2:
+            print("The roll length must be more than 2 characters, please provide a valid roll")
+            return # Exit the function if validation fails
+        
         # Get email input and validate
         email = input("Enter your email address: ")
         if email.count('@') != 1:

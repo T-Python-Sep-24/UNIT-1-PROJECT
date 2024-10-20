@@ -4,12 +4,13 @@ Overview: Trio Tool is a project management tool designed for software developme
 
 As a manager I should be able to do the following :
 
-. Browse Employee Tasks 
-. View the employee info (username, email,)
-. Search for employee tasks
+- Browse Employee Tasks 
+- View the employee info (username, email,)
+- Search for employee tasks
 
 
 As a employee I should be able to do the following :
 
-. Get feedback for my manager in  next task based on my task history.
+
+- Get feedback for my manager in  next task based on my task history.
 
