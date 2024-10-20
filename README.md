@@ -42,10 +42,10 @@
 myIdeas:
 
 1-Games platform:
-Player->,Score-.رقم واسم تسجسل جديد او دخول
-player public user
-player registed
-Player(Home)
+Player->.رقم واسم تسجسل جديد او دخول✅
+player public user✅
+player registed✅
+Player(Home)✅
 Get recommendations for best 3 games "trending" section.
 Search for scores in games(achievements and badges).display money you have.
 Enter to communityChat->write his comment

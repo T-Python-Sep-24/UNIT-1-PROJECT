@@ -1,7 +1,8 @@
 
 import sys
 import time
-
+import os
+from Game import Game
 class Player:
     def __init__(self,style:str) -> None:
         self.__style=self.set_player_style(style)
@@ -19,12 +20,11 @@ class Player:
             #trendig games
             print("1- Games")
             print("2- Community")
-            print("0- Exit")
+            print("0- Exit")#Done
             player_choice2=input("Your Choice: ")
             print()
             if player_choice2=="1":
                 #show games list
-                self.loading_animation()
                 self.games_list()
                 #games list function
             elif player_choice2=="2":
@@ -35,7 +35,7 @@ class Player:
             else:
                 print("Invalid choice. Please try again.")
 
-    def games_list(self):##as parameter should have object (member)
+    def games_list(self):
         while True:
                 print("Games list")
                 #trendig games
@@ -47,7 +47,6 @@ class Player:
                 print("6- X-O game")
                 print("7- Timer Challenge")
                 print("8- Memory challenge")
-                print("#- Return to home page")
                 print("0- Exit")
                 
                 player_choice2=input("Your Choice: ")
@@ -65,8 +64,29 @@ class Player:
                     #function to start a game
                     pass
                 elif player_choice2=="5":
+                    self.loading_animation()
+                    os.system('cls')
                     #function to start a game
-                    pass
+                    game_disc='''Rock-Paper-Scissors is played between two players. 
+Each player simultaneously choose one of three shapes.
+Objective: The objective of the game is to choose a shape that defeats \nthe opponent's shape based on the following rules:
+1. Rock crushes Scissors (Rock wins)✊✂️
+2. Scissors cuts Paper (Scissors wins)✂️📄
+3. Paper covers Rock (Paper wins)📄✊'''
+                    rock_paper_scissors_game=Game('Rock-Paper-Scissors',game_disc)
+                    rock_paper_scissors_game.intro_game()
+                    print("Choose the game mode:")
+                    print("1- Computer Mode")
+                    print("2- Multi-Players Mode")
+                    game_mode=input("Your Choice: ")
+                    if game_mode=="1":
+                        rock_paper_scissors_game.rock_paper_scissors()
+                    elif game_mode=="2":
+                        rock_paper_scissors_game.set_game_style('multi')
+                        rock_paper_scissors_game.rock_paper_scissors()
+                        pass
+                    else:
+                        print("Invalid choice. Please try again.")    
                 elif player_choice2=="6":
                     #function to start a game
                     pass
@@ -75,9 +95,7 @@ class Player:
                     pass
                 elif player_choice2=="8":
                     #function to start a game
-                    pass 
-                elif player_choice2=="#":
-                    self.home_page_public()    
+                    pass    
                 elif player_choice2=="0":
                     break        
                 else:

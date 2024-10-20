@@ -1,16 +1,19 @@
 from Player import Player
 from Member import Member
+import os
 while True:
-    print("\nWelcome to Game Land")
+    os.system('cls')
+    print("\n🎮🌟 Welcome to Games Galaxy! 🌟🎮")
     print('''Are you new player?
 1- YES
 2- NO
 0- Exit ''')
     player_state=input("Your Choice: ")
     print("--------------------")
+    os.system('cls')
 
     if player_state == "1":
-        print("Join our community and enjoy more features!")
+        print("Join our community and enjoy more features! ✨")
         print('''
 1- Sign up now 
 2- Go directly to the games''')
@@ -20,15 +23,22 @@ while True:
         if player_choice=="1":
             print("Fill the form please.")
             player_name=input("Please enter your name:")
-            player_id=input("Enter your ID (6 digits):")
-            #check id
+            player_name=player_name.lower()
+            player_password=input("Enter your password (6 digits):")
             
-            #create new member player
-            new_member=Member("member",player_name,player_id)
-            input('Press Enter to continue >>>')
-            #show list of his home page (member)
-
-            #Home page function
+            #check password number
+            if  player_password.isdigit() and len(player_password)==6:
+                
+                #create new member instance
+                new_member=Member("member",player_name,player_password)
+                is_valid_name=new_member.record_new_member(new_member.get_member_name())
+                if is_valid_name:
+                    #show list of his home page (member)
+                    print(f"\nWe’re excited to have you join us, {new_member.get_member_name().capitalize()}! Let’s get started!\n")
+                    new_member.home_page_member()    
+            else:
+                print("Invalid password format.\nPlease enter password as 6 digits\n--------------------") 
+                input('Press Enter to continue >>>\n')  
                  
         elif player_choice=="2":
             visitor=Player("visitor")
@@ -42,8 +52,22 @@ while True:
     elif player_state == "2":
         print("We are happy to see you again ;)")
         player_name=input("Please enter your name:")
-        player_id=input("Enter your ID (6 digits):")
-        #check his data and load it -else- 
+        player_name=player_name.lower()
+        player_password=input("Enter your password (6 digits):")
+        #check password number
+        if  player_password.isdigit() and len(player_password)==6:
+                #create new member instance
+                old_member=Member("member",player_name,player_password)
+                #check his data and load it -else-
+                is_valid_member=old_member.sign_in_member(old_member.get_member_name())
+                if is_valid_member:
+                    #show list of his home page (member)
+                    print(f"\nWe’re excited to have you join us, {old_member.get_member_name().capitalize()}! Let’s get started!\n")
+                    old_member.home_page_member() 
+        else:
+            print("Invalid ID format.\nPlease enter password as 6 digits\n--------------------") 
+            input('Press Enter to continue >>>\n')  
+         
 
     elif player_state=="0":
             print("Thank you")
@@ -51,43 +75,4 @@ while True:
             break
     else:
             print("Invalid choice. Please try again.")
-
-
-
-#Home page member function
-def home_page_member():#as parameter should have object (member)
-     # welcoming the user by its name
-     while True:
-          print("Home page (member)")
-          #trendig games
-          print("1- Games")
-          print("2- Community")
-          print("3- Achievements and badges (money)")
-          print("4- My purchases")
-          print("5- Change my name or ID")
-          print("0- Exit")
-          
-          player_choice2=input("Your Choice: ")
-          print()
-          if player_choice2=="1":
-               #show games list
-               #games list function
-               pass
-          elif player_choice2=="2":
-               #display the community (can't write)
-               pass
-          elif player_choice2=="3":
-               #display Achievements and badges (money)
-               pass 
-          elif player_choice2=="4":
-               #display the purchases (hints&adds)
-               pass
-          elif player_choice2=="5":
-               #update info
-               pass     
-          elif player_choice2=="0":
-               break
-               pass        
-          else:
-               print("Invalid choice. Please try again.")
 
