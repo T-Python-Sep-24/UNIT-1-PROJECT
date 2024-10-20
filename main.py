@@ -11,3 +11,8 @@ while True:
     pick: int = input("Enter: ")
     print()
 
+    if pick == "1":
+        controller.display_orginal()
+    elif pick == "2":
+        controller.display_result()
+
