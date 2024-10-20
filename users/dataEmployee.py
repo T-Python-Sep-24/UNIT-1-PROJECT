@@ -2,8 +2,6 @@ from datetime import datetime
 from identfyPerson  import Person
 import json 
 
-
-
 class Employee(Person):
     def __init__(self, name, id, email, phonenum ,position ) -> None:
         super().__init__(name, id, email, phonenum)
