@@ -1,15 +1,14 @@
 
-import base
 from dotenv import load_dotenv
+import base
 import os
-
 import requests
 import json
-
+# Load secrets from dotenv
 load_dotenv()
 
 
-class Workout():
+class Workout:
 
     fileName = 'workouts.json'
 
@@ -68,6 +67,7 @@ class Workout():
             print("Workout information updated successfully ✅ ")
         else:
             print("you have no workouts yet")
+
     def get_workouts(self):
         """
         this method displays all existing workouts
@@ -78,13 +78,6 @@ class Workout():
             self.formatOutput()
         else:
             print("You don't have any workouts available yet")
-
-    # def get_goals(self):
-    #     '''
-    #     method to get the goals specified / added by the used
-    #     :return:
-    #     '''
-    #     return self.workout_goals
 
     def set_goals(self, workout_number: int, goals: list):
         """
@@ -117,39 +110,35 @@ class Workout():
         else:
             print("you have no workouts yet")
 
-
     def calcCalories(self, query, weight, height, gender, age):
 
+        # Nutritionix API credentials from .env file
 
-        # Your Nutritionix API credentials
         API_ID = os.getenv('Calories_API_ID')
         API_KEY = os.getenv('Calories_API_KEY')
 
         # The URL for the exercise endpoint
         url = "https://trackapi.nutritionix.com/v2/natural/exercise"
 
-        # Set the headers with your API credentials
+        # Headers with your API credentials
         headers = {
             'x-app-id': API_ID,
             'x-app-key': API_KEY,
             'Content-Type': 'application/json'
         }
 
-        # Example data: natural language input for exercise
         data = {
             "query": query,
             "gender": gender,
-            "weight_kg": weight,  # user's weight in kilograms
-            "height_cm": height,  # user's height in centimeters
+            "weight_kg": weight,  # weight in kilograms
+            "height_cm": height,  # height in centimeters
             "age": age
         }
 
-        # Make a POST request to the API
         response = requests.post(url, headers=headers, json=data)
 
-        # Check if the request was successful
         if response.status_code == 200:
-            # Parse the response JSON and print it out
+
             exercise_data = response.json()
             if 'exercises' in exercise_data:
                 nf_calories = exercise_data['exercises'][0]['nf_calories']

@@ -117,11 +117,12 @@ def healthStatesTracking():
 
 # Nutrition's Menu
 def nutritionsTrackingMenu():
+
     print(Fore.CYAN + "=" * 40)
     print("    (Nutrition) Tracker")
     print("=" * 40 + Style.RESET_ALL)
     print("Please choose an option from the menu below:")
-    print(Fore.GREEN + "1. Add Meal")
+    print(Fore.GREEN + "1. Query Meals")
     print("2. Update Meal data")
     print("3. Display Meals")
     print("4. Suggest meals")
@@ -140,11 +141,28 @@ def nutritionTracking():
         if choice == '1':
             # add meal function
             meal_name = input("Enter the meal name: ")
-            meal_calories = input("Enter the calories of the meal: ")  # API is recommended
-            meal_macronutrients = input("Enter meal macronutrients: ")  # API is recommended
-            water_intake = input("Enter your water intake in liters: ")
-            meal_date = input("Enter the date of the meal or skip for today's date: ")
-            nutrition_instance.add_meal(meal_name, meal_calories, meal_macronutrients, water_intake, meal_date)
+            quantity = input("Enter meal quantity in grams: ")
+            query = quantity + " grams of " + meal_name
+            meal_calories, meal_macronutrients = nutrition_instance.calcFoodNutrients(query)
+
+            print("-"*35)
+            print(f"{meal_name} calories and nutrients: ")
+            print("-"*35)
+            print(f"1. {meal_calories} Calories Per {quantity} Grams")
+
+            for i, (key, value) in enumerate(meal_macronutrients.items(), start=2):
+
+                print(f"{i}. {key.title()}: {value}")
+
+            print("-"*35)
+            c = input("Do you want to add this meal to your file [y/n] ? ")
+            if c.lower() == 'y':
+
+                water_intake = input("Enter your water intake in liters: ")
+                meal_date = datetime.date.today()
+
+                nutrition_instance.add_meal(meal_name, meal_calories, meal_macronutrients, water_intake, str(meal_date))
+
             input(" >>> Press any Key to continue <<< ")
 
         elif choice == '2':

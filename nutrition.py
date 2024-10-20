@@ -1,10 +1,17 @@
+import os
+
+import dotenv
+import requests
+
 import base
 import suggestmeals
+from dotenv import load_dotenv
+load_dotenv()
 
 
-class Meal():
+class Meal:
 
-    fileName='meals.json'
+    fileName= 'meals.json'
 
     def __init__(self):
         """
@@ -14,7 +21,7 @@ class Meal():
         self.fileName = 'meals.json'
         self.meal_name = ""
         self.meal_calories = ""  # API is recommended
-        self.meal_macronutrients = ""  # API is recommended
+        self.meal_macronutrients = {}  # API is recommended
         self.water_intake = 0  # litre
         self.meal_date = ""
 
@@ -71,6 +78,51 @@ class Meal():
 
         self.formatOutput()
 
+    def calcFoodNutrients(self, query):
+
+        # Nutritionix API credentials from .env file
+
+        API_ID = os.getenv('Calories_API_ID')
+        API_KEY = os.getenv('Calories_API_KEY')
+
+        # The URL for the exercise endpoint
+        url = "https://trackapi.nutritionix.com/v2/natural/nutrients"
+
+        # Headers with your API credentials
+        headers = {
+            'x-app-id': '010f4a73',
+            'x-app-key': '14fefbc8b1316e8e742142a40ab58f74',
+            'Content-Type': 'application/json'
+        }
+        data = {
+            "query": query,
+        }
+        response = requests.post(url, headers=headers, json=data)
+
+        if response.status_code == 200:
+
+            foodsData = response.json()
+            # print(json.dumps(foodsData, indent=4))
+            calories = foodsData['foods'][0]['nf_calories']
+            micronutrients = {
+                'total_fats': foodsData['foods'][0]['nf_total_fat'],
+                'saturated_fat': foodsData['foods'][0]['nf_saturated_fat'],
+                'cholesterol': foodsData['foods'][0]['nf_cholesterol'],
+                'sodium': foodsData['foods'][0]['nf_sodium'],
+                'carbohydrate': foodsData['foods'][0]['nf_total_carbohydrate'],
+                'dietary_fiber': foodsData['foods'][0]['nf_dietary_fiber'],
+                'sugars': foodsData['foods'][0]['nf_sugars'],
+                'protein': foodsData['foods'][0]['nf_protein'],
+                'potassium': foodsData['foods'][0]['nf_potassium'],
+            }
+            return calories, micronutrients
+
+        else:
+            return f"Error: {response.status_code}, {response.text}"
+
+
+
+
     def suggest_meals(self,diet = None, maxCalories = 500, numOfSuggestions = 5, type = 'main course'):
         """
         this method uses the spoonacular api to suggest meals using default or customized inputs from the user
@@ -88,8 +140,14 @@ class Meal():
         """
         Formats and prints a task from the to-do list.
         """
-        print("-"*30)
+        print("-"*10 + " Meals Data " + "-"*10)
         for i, meal in enumerate(self.meals, start=1):
-            print(f"{i}. {meal['name']} has ({meal['calories']}) And {meal['macronutrients']} macronutrients, "
-                  f"Your Water Intakes is {meal['water']} Liters, Date:{meal['date']}")
-        print("-"*30)
+            print(f"{i}. {meal['name']} Contains {meal['calories']} Calories")
+            print("Macronutrients: ")
+            for j, (key, value) in enumerate(meal['macronutrients'].items(), 1):
+                print(f"  {j}. {key.title()}: {value}")
+            print(f"- Water Intake: {meal['water']} Liters")
+            print(f"- Date: {meal['date']}")
+            # print(f"{i}. {meal['name']} has ({meal['calories']}) And {meal['macronutrients']} macronutrients, "
+            #       f"Your Water Intakes is {meal['water']} Liters, Date:{meal['date']}")
+        print("-"*32)
