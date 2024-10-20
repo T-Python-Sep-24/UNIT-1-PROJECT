@@ -1,41 +1,35 @@
 # UNIT-1-PROJECT
 
 
+## Project Name :  Blood Bank Management System
 
-## Based on what you’ve learned until now , create a project of your choosing (impress us with your imagination) . This project must at least satisfy the following minimum requirements :
-
-- Must be interactive on CLI.
-- Use your coding skills in Python accurately.
-- Organize Your Code into modules & (or packages)
-- Use Best practices.
-
-## Example Project :  An online Grocery Store :
-
-#### Overview : An online store that sells fruits to customers. This online store has 2 main users. The customer and the manager of the store . Each one of them should be able to do the following tasks for the store to function properly . 
+#### Overview : The Blood Bank Management System is an application designed to manage donor information and track blood donations. This system aims to streamline the process of recording and retrieving donor details, ensuring that blood banks can efficiently manage their resources. 
 
 #### As a customer I should be able to do the following :
-- Browse  Products . 
-- View the product info (summary, specs, price, quantity , etc.)
-- Search for Products.
-- Get recommendations for my next purchase based on my purchase history.
-- Add Products to the shopping cart .
-- Remove a product from the shopping cart.
-- List the products in my shopping cart. 
-- Continue to checkout . 
-- Fill in my address for delivery.
-- Get receipt of my purchases.
-- Check delivery status . 
-
+- Add Donor 
+- View Donors
+- Search Donor
+- Total Blood Quantity
 
 
 #### Usage :
  Explain to the user how to use your project . 
  for example:
- - type in search product_name to search for a product.
- - type in list_products to show all the products in the grocery.
- - type in show product_name to get information about this product.
- - type in buy product_name to buy the product . 
- - and so on...
+ - Upon starting the application, the user will see the menu displaying several options
 
+ - The user will be prompted to choose an option by entering a number (1-5).
 
-### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
+ * Adding a Donor (Option 1)
+   The user will be prompted to enter:
+   Donor Name: Type the name of the donor.
+   Blood Type: Enter the blood type (A, B, AB, or O).
+   Quantity: Input the quantity of blood donated (in liters).
+
+ * Viewing Donors (Option 2)
+
+ * Searching for a Donor (Option 3)
+
+ * Total Blood Quantity (Option 4)
+
+ * Exiting the System (Option 5)
+
