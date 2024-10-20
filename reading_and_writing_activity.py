@@ -1,4 +1,6 @@
 import time
+from art import *  
+from colorama import *
 class Story:
     def __init__(self):
         self.stories = {
@@ -48,20 +50,21 @@ Meanwhile, the captured bird was discovered by an explorer. He spoke rudely to t
             file.write(content)
 
     def display_menu(self):
-        print('''
+        print(text2art("Welcome to the Reading and Writing Challenge! \n ",font = 'straight'))
+        print(text2art('''
            1. The Hare and the Tortoise
            2. The Elephant and the Ants
            3. The Talking Birds
            4. Write your own story 
            5. Display all kids stories
            6. Exit 
-        ''')
+        ''', font ='straight'))
 
     def read_story(self, title, content):
-        print(content)
-        print("Press 'Enter' when you finish reading...")
         start_time = time.time()
-        input()  
+
+        print(content)
+        input("Press 'Enter' when you finish reading...")  
         
         end_time = time.time()
         time_taken = (end_time - start_time) / 60
@@ -81,7 +84,7 @@ Meanwhile, the captured bird was discovered by an explorer. He spoke rudely to t
         time_taken = (end_time - start_time) / 60  
         print(f"You took {time_taken:.2f} minutes to answer the questions.")
 
-    def run(self):
+    def read_write(self):
         self.display_menu()
         choose = input("Choose number 1 - 6: ")
 
@@ -89,6 +92,7 @@ Meanwhile, the captured bird was discovered by an explorer. He spoke rudely to t
             if choose in self.stories:
                 title, story_content = self.stories[choose]
                 self.read_story(title, story_content)
+                input ("Press 'Enter' to answer the questions ")
                 self.ask_questions(choose)
 
             elif choose == '4':
@@ -111,5 +115,4 @@ Meanwhile, the captured bird was discovered by an explorer. He spoke rudely to t
             self.display_menu()
             choose = input("Choose number 1 - 6: ")
 
-story_app = Story()
-story_app.run()
+
