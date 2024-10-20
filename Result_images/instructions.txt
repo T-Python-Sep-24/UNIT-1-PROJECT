@@ -1,0 +1,3 @@
+Inside this Result_images:
+- You will have the result of executing the program inside the Result_images folder.
+- Your original images that you want to work on it should be putted inside the Original_images folder.
