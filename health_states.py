@@ -7,7 +7,7 @@ class Health_states():
         initializer / constructor
         """
         self.health_states = []
-        self.fileName = 'health_states.json'
+        self.fileName = 'user_dataa_files/health_states.json'
         self.weight = 0
         self.height = 0
         self.measure_date = ""

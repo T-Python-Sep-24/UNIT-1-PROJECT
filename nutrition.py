@@ -11,14 +11,14 @@ load_dotenv()
 
 class Meal:
 
-    fileName= 'meals.json'
+    fileName = 'user_dataa_files/meals.json'
 
     def __init__(self):
         """
         init / constructor
         """
         self.meals = []
-        self.fileName = 'meals.json'
+        self.fileName = 'user_dataa_files/meals.json'
         self.meal_name = ""
         self.meal_calories = ""  # API is recommended
         self.meal_macronutrients = {}  # API is recommended

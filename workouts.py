@@ -10,7 +10,7 @@ load_dotenv()
 
 class Workout:
 
-    fileName = 'workouts.json'
+    fileName = 'user_dataa_files/workouts.json'
 
     def __init__(self):
         """
@@ -18,7 +18,7 @@ class Workout:
         """
 
         self.workouts = []
-        self.fileName = 'workouts.json'
+        self.fileName = 'user_dataa_files/workouts.json'
         self.workout_type = ""
         self.workout_duration = ""
         self.calories_burned = 0
