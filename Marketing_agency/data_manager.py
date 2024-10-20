@@ -1,43 +1,73 @@
 import datetime
+
+
 class DataManager:
+    """
+    The DataManager class is responsible for managing and processing the data
+    """
+
     def __init__(self):
-        # Lists to hold our data
-        self.employees = []
-        self.clients = []
-        self.products = []
-        self.sales = []
+        """
+        Initializes the DataManager with empty lists for employees, clients,
+        products, and sales
+        """
+        self.employees = []  # List to hold employee information
+        self.clients = []  # List to hold client information
+        self.products = []  # List to hold product information
+        self.sales = []  # List to hold sales records
 
     def process_sale(self, employee_id, client_id):
-        # Creating a sale record
+        """
+        Creates a new sale record.
+
+        Parameters:
+        - employee_id: The ID of the employee making the sale.
+        - client_id: The ID of the client making the purchase.
+
+        A sale record is created and added to the sales list, along with
+        a timestamp.
+        """
+        # Create a sale dictionary to hold sale details
         sale = {
-            "sale_id": len(self.sales) + 1,
-            "employee_id": employee_id,
-            "client_id": client_id,
-            "timestamp": datetime.datetime.now().isoformat(),
+            "sale_id": len(self.sales) + 1,  # Unique ID for the sale
+            "employee_id": employee_id,  # ID of the employee making the sale
+            "client_id": client_id,  # ID of the client buying the product
+            "timestamp": datetime.datetime.now().isoformat(),  # Current date and time of the sale
         }
-        self.sales.append(sale)  # Adding sale to the list
-        print(f"Processed sale: {sale}")
+
+        self.sales.append(sale)  # Add the new sale to the list of sales
+        print(f"Processed sale: {sale}")  # Print confirmation of the sale
 
     def view_employees(self):
-        # Check if there are any employees to show
-        if not self.employees:
-            print("No employees to display.")
+        """
+        Displays all employees.
+
+        If there are no employees, it prints a message indicating that.
+        """
+        if not self.employees:  # Check if the employee list is empty
+            print("No employees to display.")  # Message if no employees are found
             return
-        for employee in self.employees:
+
+        for employee in self.employees:  # Loop through each employee and print their info
             print(employee)
 
     def view_clients(self):
-        # Print each client
-        for client in self.clients:
+        """
+        Displays all clients.
+        """
+        for client in self.clients:  # Loop through each client and print their info
             print(client)
 
     def view_products(self):
-        # Print each product
-        for product in self.products:
+        """
+        Displays all products.
+        """
+        for product in self.products:  # each product and print its info
             print(product)
 
     def view_sales(self):
-        # Print each sale
-        for sale in self.sales:
+        """
+        Displays all sales .
+        """
+        for sale in self.sales:  # each sale and print its info
             print(sale)
-

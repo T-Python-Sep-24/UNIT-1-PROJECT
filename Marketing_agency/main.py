@@ -3,6 +3,7 @@ from data_exporter import DataExporter
 from data_manager import DataManager
 
 def main():
+    """in this class we take inputs from the user and call the methods to do what he want """
     print("Welcome to the Sales and Marketing Management System!")
     data_generator = DataGenerators()
     data_manager = DataManager()

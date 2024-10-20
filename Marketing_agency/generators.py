@@ -76,7 +76,6 @@ class DataGenerators:
                 "date": self.fake_data.date_between(start_date='-1y', end_date='today'),
                 "employee": random.choice([emp['name'] for emp in data_manager.employees]),
                 "client": random.choice([client['name'] for client in data_manager.clients]),
-                "amount": round(random.uniform(100, 10000), 2)
             }
             data_manager.sales.append(transaction)
         print(f"Generated {number} transaction records.")
