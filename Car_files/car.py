@@ -1,3 +1,6 @@
+import json
+import os
+
 class Car:
     def __init__(self, cname, year, price, available = True):
         self.cname = cname
@@ -9,6 +12,19 @@ class Car:
     def __str__(self):
         availability = "Available" if self.available else "Not Available"
         return f"{self.cname} ({self.year}) - ${self.price}/day ({availability})"
+    
+
+    def to_dict(self):
+        return {
+            "cname": self.cname,
+            "year": self.year,
+            "price": self.price,
+            "available": self.available
+        }
+
+    @classmethod
+    def from_dict(self, data):
+        return self(data['cname'], data['year'], data['price'], data['available'])
 
 class CarStorage():
     def __init__(self):
@@ -43,4 +59,18 @@ class CarStorage():
         else:
             for car in self.cars:
                 print(car)
-car_storage = CarStorage()
+
+
+    def save_file(self):
+        file_path = os.path.join(os.path.dirname(__file__), '..', 'data_file', 'cars.json')
+        with open(file_path, 'w') as f:
+            cars_data = [{'cname': car.cname, 'year': car.year, 'price': car.price, 'available': car.available} for car in self.cars]
+            json.dump(cars_data, f)
+
+
+    def load_file(self):
+        file_path = os.path.join(os.path.dirname(__file__), '..', 'data_file', 'cars.json')
+        with open(file_path, 'r') as f:
+            cars_data = json.load(f)
+            self.cars = [Car(car['cname'], car['year'], car['price'], car['available']) for car in cars_data]
+            
