@@ -1,32 +1,47 @@
 
-#I will create a class called Event that will include name, date, discreption,location, and geust
+## Created a class called Event that will include name, event date, description, location, and a list of guests
 
 from datetime import datetime
-import re
 from guest import Guest
 import pickle
+import csv
 
 events_dict = {}
 
 class Event:
-    def __init__(self, name:str, event_date, description:str, location:str):
+    def __init__(self, name:str, event_date:str, description:str, location:str):
+
         self.name = name
-        self.event_date = event_date
         self.description = description
         self.location = location
         self.guests = {} # Empty dictionary to store guests for this specific event, with email as key
 
+        # Convert event_date to a datetime object
+        try:
+            self.event_date = datetime.strptime(event_date, "%Y-%m-%d")
+            
+        except ValueError:
+            print(f"Invalid Date Format For '{event_date}'. Use 'YYYY-MM-DD'.")
+            return  # Exit initialization if the date is invalid
+    
+
 
     def __str__(self):
-        return f"Event Name: {self.name}, Date: {self.event_date}, Location: {self.location}, Description: {self.description}"
-    #If event is an instance of Event its will print(event). This method controls how the event is displayed when it is printed or converted to a string.           
+        return(
+            f"Event Name: {self.name}\n"
+            f"Date: {self.event_date}\n"
+            f"Location: {self.location}\n"
+            f"Description: {self.description}\n"
+            + "=" * 30 #Check
+               
+        ) #If event is an instance of Event its will print(event). This method controls how the event is displayed when it is printed or converted to a string.           
 
 
 #Methods
 
-#1. Functions For Evants
+#1. Functions For Events
 
-#Create event
+#Create Event
     def create_event(self):
         try:
             # Check if the event already exists by name
@@ -35,11 +50,12 @@ class Event:
                 return   
                 
             events_dict[self.name] = self
-            print(f"Event '{self.name}' created successfully")
+            print(f"Event '{self.name}' Created Successfully")
 
 
         except Exception as e:
-            print(f"The Event Could not be created. Error: {e}")                    
+            print(f"The Event Could Not be Created. Error: {e}")                    
+
 
 
 #Display all events
@@ -48,9 +64,10 @@ class Event:
             print("No Events Found")
             return
         
-        for event_name, event in events_dict.items():
-            print(event)
+        for index, (event_name, event) in enumerate (events_dict.items(), start = 1):
+            print(f"{index}. {event_name} - {event}")
             
+
 
 #Search for event
     def search_event(self, name):
@@ -64,6 +81,7 @@ class Event:
             return None    
 
 
+
 #Delete an event
     def delete_event(self, name):
         if name in events_dict:
@@ -71,7 +89,8 @@ class Event:
             print("Event Deleted Successfully")
 
         else:
-            print("The Event Could not be Deleted")
+            print("The Event Could Not be Deleted")
+
 
 
 
@@ -81,33 +100,36 @@ class Event:
 #Add guest to event
     def add_guest(self, guest_name:str, guest_phone:int, guest_email:str, rsvp_status:str = "Pending"):
 
-        guest_phone = str(guest_phone)
-
-        # Phone number validation: Must be digits only and 10 characters long
-        if not re.fullmatch(r"\d{10}", guest_phone):
-            print(f"Invalid phone number '{guest_phone}'. It should contain exactly 10 digits.")
-            return
-
         if guest_email in self.guests:
             print(f"The Guest with Email '{guest_email}' Already Exists in The Event")
             return
         
-        else:
-            new_guest = Guest(guest_name = guest_name, guest_phone = int(guest_phone), guest_email = guest_email, rsvp_status = rsvp_status)
+        try:
+            new_guest = Guest(
+                guest_name = guest_name,
+                guest_phone = guest_phone,
+                guest_email = guest_email,
+                rsvp_status = rsvp_status
+                )
+            
             self.guests[guest_email] = new_guest
             print(f"The Guest '{guest_name}' Added to Event '{self.name}'")
+            
+
+        except Exception as e:
+            print(f"Error Adding Guest: {e}")    
 
 
 
 #Display all the guests in event
     def display_guests(self):
         if not self.guests:
-            print("No Guests Added to This Event")
+            print("No Guests Added Yet to This Event")
             return
         
-        print(f"Guest List for The Event '{self.name}': ")
-        for guest_email, guest in self.guests.items():
-            print(guest)
+        print(f"Guest List for The Event '{self.name}': \n" + "-" * 30) #Check
+        for index, (guest_email, guest) in enumerate (self.guests.items(), start = 1):
+            print(f"{index}. {guest_email} - {guest}")
 
 
 
@@ -139,37 +161,37 @@ class Event:
         if guest_email in self.guests:
             guest = self.guests[guest_email]
             guest.rsvp_status = rsvp_status   
-            print(f"RSVP status for '{guest.guest_name}' updated to '{rsvp_status}'") 
+            print(f"RSVP Status for '{guest.guest_name}' Updated to '{rsvp_status}'") 
 
         else:
-            print(f"No Guest found with '{guest_email}' in this event")
+            print(f"No Guest Found With '{guest_email}' in This Event")
 
 
 
 #Filter Guests by RSVP Status
-    def filter_by_rsvp(self, revp_status:str):
-        filtered_guests = [guest for guest in self.guests.values() if guest.rsvp_status == revp_status]
+    def filter_by_rsvp(self, rsvp_status:str):
+        filtered_guests = [guest for guest in self.guests.values() if guest.rsvp_status == rsvp_status]
 
         if not filtered_guests:
-            print(f"No Guests Found With RSVP Status '{revp_status}'")
+            print(f"No Guests Found With RSVP Status '{rsvp_status}'")
             return
 
-        print(f"Guests With RSVP Status '{revp_status}':")
-        for guest in filtered_guests:
-            print(guest)
+        print(f"Guests With RSVP Status '{rsvp_status}': \n" + "-" * 30) #Check
+        for index, (guest) in enumerate (filtered_guests, start = 1):
+            print(f"{index}. {guest}") 
 
 
 
-#Send Reminders to Guests by RSVP Status to whomes are Pending
+#Send Reminders Based on RSVP Status to The Guests who are Pending
     def send_reminder(self):
         pending_guests = [guest for guest in self.guests.values() if guest.rsvp_status == "Pending"]
 
         if not pending_guests:
             print("No Pending Guests to Send Reminders to")
 
-        print("Sending Reminders to The Following Guests:")
-        for guest in pending_guests:
-            print(f"Reminder Sent to: {guest.guest_name} ({guest.guest_email})")
+        print("Sending Reminders to The Following Guests: \n" + "-" * 30) #Check
+        for index, (guest) in enumerate (pending_guests, start = 1): 
+            print(f"{index}. Reminder Sent to: {guest.guest_name} - ({guest.guest_email})") 
 
 
 
@@ -182,5 +204,70 @@ class Event:
         print(f"Attendance Count for Event '{self.name}': ")
         print(f"Attending: {attending}")
         print(f"Not Attending: {not_attending}")
-        print(f"Pending: {pending}")                                                    
+        print(f"Pending: {pending}")
+
+
+
+#Save Event with Pickle
+    def save_event(self, filename:str = "events_data.pkl"):
+        try:
+            with open(filename, 'wb') as file:
+                pickle.dump(events_dict, file)
+                print(f"Events successfully saved to '{filename}'")
+        
+        except Exception as e:
+            print(f"Error Saving File: {e}")
+
+
+
+#Load Events with Pickle
+    def load_event(self, filename: str = "events_data.pkl"):
+        try:
+            with open(filename, 'rb') as file:
+                events_dict = pickle.load(file)
+                print(f"Events successfully loaded from '{filename}'")
+                
+        except FileNotFoundError:
+            print(f"File '{filename}' not found. No data loaded.")
+            
+        except Exception as e:
+            print(f"Error Loading File: {e}")
+
+
+
+#Exporting Guest List as CSV File, so User Can Share or Print it
+    def export_guest_to_csv(self, filename = "Guest_List.csv"):
+        if not self.guests:
+            print("No Guests to Export")
+            return
+
+        try:
+            with open(filename, mode = 'w', newline='', encoding = 'utf-8') as file:
+                writer = csv.writer(file)
+
+                #Write The Header Row
+                writer.writerow([
+                    "Guests Name",
+                    "Phone Number",
+                    "Email",
+                    "RSVP Status"
+                ])
+
+                #Write Each Guest's Details
+                for guest in self.guests.values():
+                    writer.writerow([
+                        guest.guest_name,
+                        guest.guest_phone,
+                        guest.guest_email,
+                        guest.rsvp_status,
+                    ])
+
+                print(f"Guest List Successfully Exported to '{filename}'") 
+
+        except Exception as e:
+            print(f"Error Exporting Guest to CSV: {e}")                                       
+
+
+
+
                            

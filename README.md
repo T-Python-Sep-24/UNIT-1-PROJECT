@@ -15,40 +15,47 @@
 
 
 ## Project Name:
-### An online Grocery Store
+### Event and Guest Planner 
 
 
 
 
 #### Overview:
-### An online store that sells fruits to customers. This online store has 2 main users. The customer and the manager of the store . Each one of them should be able to do the following tasks for the store to function properly. 
+### The Event and Guest Planner is a tool designed to help users create, manage, and organize events effectively. It allows users to add, update, and delete events, as well as manage guest lists for each event. The system provides a range of features, including tracking RSVP statuses, sending reminders to guests, and exporting guest lists to CSV files for easy sharing or printing. It is ideal for event managers who need to manage event details and attendees seamlessly. 
 
 
 
 
 #### User Story:
-#### As a customer I should be able to do the following :
-- Browse  Products . 
-- View the product info (summary, specs, price, quantity , etc.)
-- Search for Products.
-- Get recommendations for my next purchase based on my purchase history.
-- Add Products to the shopping cart .
-- Remove a product from the shopping cart.
-- List the products in my shopping cart. 
-- Continue to checkout . 
-- Fill in my address for delivery.
-- Get receipt of my purchases.
-- Check delivery status . 
+#### As an Event Manager, I Should Be Able To:
+ - Create new events with details like name, date, description, and location.
+ - View a list of all created events.
+ - Search for specific events by name.
+ - Delete events that are no longer needed.
+ - Add guests to a specific event with their name, phone number, email, and initial RSVP status.
+ - View a list of all guests for a particular event.
+ - Search for a guest by email within an event.
+ - Update a guest’s RSVP status to "Attending," "Not Attending," or "Pending."
+ - Remove guests from an event if needed.
+ - Filter guests by their RSVP status.
+ - Send reminders to guests with a "Pending" RSVP status.
+ - Export the guest list to a CSV file for sharing or printing purposes.
 
 
 
 
 #### Usage :
- Explain to the user how to use your project . 
- for example:
- - type in search product_name to search for a product.
- - type in list_products to show all the products in the grocery.
- - type in show product_name to get information about this product.
- - type in buy product_name to buy the product . 
- - and so on...
+ Explain to the user how to use your project. 
+ - Type create_event to create a new event with specified details.
+ - Type display_events to show all events.
+ - Type search_event event_name to search for a specific event.
+ - Type delete_event event_name to remove an event.
+ - Type add_guest to add a guest to a specific event.
+ - Type display_guests to list all guests for a particular event.
+ - Type search_guest guest_email to search for a guest by email.
+ - Type update_rsvp guest_email new_status to update a guest’s RSVP status.
+ - Type remove_guest guest_email to remove a guest from an event.
+ - Type filter_by_rsvp rsvp_status to filter guests by RSVP status.
+ - Type send_reminder to send reminders to guests with pending RSVPs.
+ - Type export_guests_to_csv to export the guest list to a CSV file.
 
