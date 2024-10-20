@@ -1,39 +1,42 @@
-import datetime
 
 import base
+from dotenv import load_dotenv
+import os
+
+import requests
+import json
+
+load_dotenv()
+
 
 class Workout():
 
-    fileName='workouts.json'
+    fileName = 'workouts.json'
 
     def __init__(self):
         """
         initializer / constructor
         """
 
-
         self.workouts = []
         self.fileName = 'workouts.json'
         self.workout_type = ""
         self.workout_duration = ""
-        self.workout_intensity = ""
         self.calories_burned = 0
         self.workout_date = ""
         self.workout_goals = ""
 
-    def add_workout(self, workout_type, duration, intensity, calories_burned, workout_date):
+    def add_workout(self, workout_type, duration, calories_burned, workout_date):
         """
         this method if to add new workout data
         :param workout_type:
         :param duration:
-        :param intensity:
         :param calories_burned:
         :param workout_date:
         :return:
         """
         self.workout_type = workout_type
         self.workout_duration = duration
-        self.workout_intensity = intensity
         self.calories_burned = calories_burned
         self.workout_date = workout_date
         self.workout_goals = []
@@ -41,7 +44,6 @@ class Workout():
         workout = {
             "type": self.workout_type,
             "duration": self.workout_duration,
-            "intensity": self.workout_intensity,
             "calories_burned": self.calories_burned,
             "date": self.workout_date,
             "goals": []
@@ -59,19 +61,23 @@ class Workout():
         :param new_value:
         :return:
         """
-        self.workouts = base.load_from_file(self.fileName)
-        self.workouts[int(workout_number) - 1][workout_attr] = new_value
-        base.save_to_file(self.fileName, self.workouts)
-        print("Workout information updated successfully ✅ ")
-
+        if self.isWorkoutsAvailable():
+            self.workouts = base.load_from_file(self.fileName)
+            self.workouts[int(workout_number) - 1][workout_attr] = new_value
+            base.save_to_file(self.fileName, self.workouts)
+            print("Workout information updated successfully ✅ ")
+        else:
+            print("you have no workouts yet")
     def get_workouts(self):
         """
         this method displays all existing workouts
         :return:
         """
         self.workouts = base.load_from_file(self.fileName)
-        self.formatOutput()
-
+        if self.isWorkoutsAvailable:
+            self.formatOutput()
+        else:
+            print("You don't have any workouts available yet")
 
     # def get_goals(self):
     #     '''
@@ -80,53 +86,86 @@ class Workout():
     #     '''
     #     return self.workout_goals
 
-    def set_goals(self, workout_number:int, goals: list):
+    def set_goals(self, workout_number: int, goals: list):
         """
         method to set goals of the workouts and add updated workouts data to file
         :param workout_number:
         :param goals:
         :return:
         """
+
         self.workouts = base.load_from_file(self.fileName)
-        self.workouts[int(workout_number) - 1]['goals'] = goals
-        base.save_to_file(self.fileName, self.workouts)
-        self.workout_goals = goals
-        print("Goals Updated Successfully ✅ ")
+        if self.isWorkoutsAvailable():
+            self.workouts[int(workout_number) - 1]['goals'] = goals
+            base.save_to_file(self.fileName, self.workouts)
+            self.workout_goals = goals
+            print("Goals Updated Successfully ✅ ")
+        else:
+            print("You can't set goals until you have a workout available")
 
     def formatOutput(self):
         """
         Formats and prints a task from the to-do list.
         """
         print("-"*30)
-        for i, workout in enumerate(self.workouts, start=1):
-            print(f"{i}. {workout['type']} For ({workout['duration']}) With {workout['intensity']} Intensity, "
-                  f"Burning {workout['calories_burned']} Calories, Date:{workout['date']} "
-                  f"{"Your Goals:", workout['goals'] if len(workout['goals']) > 0 else "None"}")
-        print("-"*30)
+        if self.isWorkoutsAvailable():
+            for i, workout in enumerate(self.workouts, start=1):
+                print(f"{i}. {workout['type']} For ({workout['duration']}), "
+                      f"Burning {workout['calories_burned']} Calories, Date:{workout['date']} "
+                      f"{"Your Goals:", workout['goals'] if len(workout['goals']) > 0 else "None"}")
+            print("-"*30)
+        else:
+            print("you have no workouts yet")
 
-    # def __save_to_file(self, fileName):
-    #     """
-    #     This method save the accounts data to the pickle file after it has been serialized
-    #     :param fileName:
-    #     :return:
-    #     """
-    #     try:
-    #         with open(fileName, 'w') as f:
-    #             json.dump(self.workouts, f, indent=4)
-    #     except Exception as e:
-    #         print(e)
-    #
-    # def __load_from_file(self, fileName):
-    #     """
-    #     This method loads all the accounts data from the pickle file and deserialize it
-    #     :param fileName:
-    #     :return: accounts
-    #     """
-    #
-    #     try:
-    #         with open(fileName, 'r') as file:
-    #             self.workouts = json.load(file)
-    #             print(f"Loading Data ... ⏳")
-    #             return self.workouts
-    #     except Exception as e:
-    #         print(f"Error loading from file The File might be Empty or {e} ⚠ ")
+
+    def calcCalories(self, query, weight, height, gender, age):
+
+
+        # Your Nutritionix API credentials
+        API_ID = os.getenv('Calories_API_ID')
+        API_KEY = os.getenv('Calories_API_KEY')
+
+        # The URL for the exercise endpoint
+        url = "https://trackapi.nutritionix.com/v2/natural/exercise"
+
+        # Set the headers with your API credentials
+        headers = {
+            'x-app-id': API_ID,
+            'x-app-key': API_KEY,
+            'Content-Type': 'application/json'
+        }
+
+        # Example data: natural language input for exercise
+        data = {
+            "query": query,
+            "gender": gender,
+            "weight_kg": weight,  # user's weight in kilograms
+            "height_cm": height,  # user's height in centimeters
+            "age": age
+        }
+
+        # Make a POST request to the API
+        response = requests.post(url, headers=headers, json=data)
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Parse the response JSON and print it out
+            exercise_data = response.json()
+            if 'exercises' in exercise_data:
+                nf_calories = exercise_data['exercises'][0]['nf_calories']
+                self.calories_burned = nf_calories
+                # print(f"Calories burned: {nf_calories}")
+                return  nf_calories
+            else:
+                print("No exercises found in the response.")
+
+            # print(json.dumps(exercise_data, indent=4))
+        else:
+            return f"Error: {response.status_code}, {response.text}"
+
+
+    def isWorkoutsAvailable(self):
+        if self.workouts is None:
+            return False
+        else:
+            return True
