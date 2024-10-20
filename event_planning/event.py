@@ -2,7 +2,7 @@
 ## Created a class called Event that will include name, event date, description, location, and a list of guests
 
 from datetime import datetime
-from guest import Guest
+from .guest import Guest
 import pickle
 import csv
 
@@ -59,7 +59,8 @@ class Event:
 
 
 #Display all events
-    def display_events(self):
+    @classmethod
+    def display_events(cls):
         if not events_dict:
             print("No Events Found")
             return
@@ -70,7 +71,8 @@ class Event:
 
 
 #Search for event
-    def search_event(self, name):
+    @classmethod
+    def search_event(cls, name):
         if name in events_dict:
             event = events_dict[name]
             print(event) #Uses the __str__ method of the Event class to print the event details
@@ -83,7 +85,8 @@ class Event:
 
 
 #Delete an event
-    def delete_event(self, name):
+    @classmethod
+    def delete_event(cls, name):
         if name in events_dict:
             del events_dict[name]
             print("Event Deleted Successfully")
@@ -210,6 +213,7 @@ class Event:
 
 #Save Event with Pickle
     def save_event(self, filename:str = "events_data.pkl"):
+        global events_dict
         try:
             with open(filename, 'wb') as file:
                 pickle.dump(events_dict, file)
@@ -222,6 +226,7 @@ class Event:
 
 #Load Events with Pickle
     def load_event(self, filename: str = "events_data.pkl"):
+        global events_dict
         try:
             with open(filename, 'rb') as file:
                 events_dict = pickle.load(file)
