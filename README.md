@@ -11,16 +11,16 @@
 
 ## Project :   
 
-#### Overview : A website created to assist children with learning disabilities in improving their skills.
+#### Overview : A program created to assist children with learning disabilities in improving their skills.
 
 #### As a user I should be able to do the following :
-- Select the desired activity (spelling, reading, writing).
+- Select the desired activity (spelling, reading, writing, Matching,).
 - Engage in spelling exercises featuring selected words.
-- Read text passages and answer comprehension questions.
-- Respond to provided writing prompts.
-- 
-- 
-- 
+- View a list of available stories with titles 
+- Select a story to read in a clear and engaging format.
+- Answer questions about the story.
+- Create and save personal stories.
+- matching....
 
 
 ### Skill Improvement: Support users in developing reading, writing, and spelling skills interactively.
