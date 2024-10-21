@@ -39,4 +39,19 @@
 
 
 ### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
- 
+#### Project name : (Salf)
+#### Overview : 
+
+
+#### As a lender I should be able to do the following :
+Lender user can choose from the list ,
+- number 1 to add user to borrower 
+- number 2 to display borrower users
+- number 3 to change the status
+
+
+#### Usage:
+Lender user can choose from the list ,
+- number 1 to add user to borrower 
+- number 2 to display borrower users
+- number 3 to change the status
