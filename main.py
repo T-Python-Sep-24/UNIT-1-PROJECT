@@ -2,16 +2,55 @@ import datetime
 
 from colorama import Fore, Style
 
+import health_states
 from reminders import Reminders
 from workouts import Workout
 from nutrition import Meal
 from health_states import Health_states
+from reports import Reports
+
+# generate reports
+def reportsMenu():
+
+    print(Fore.CYAN + "=" * 40)
+    print("    (Reports) Tracker")
+    print("=" * 40 + Style.RESET_ALL)
+    print("Please choose an option from the menu below:")
+    print(Fore.GREEN + "1. Generate daily meals reports")
+    print("2. Generate Weekly Workout reports")
+    print("3. Generate Monthly progress reports")
+    print(Fore.RED + "[Q/q]. Return to Main Menu" + Style.RESET_ALL)
+    print("=" * 40)
+
+def reportsTracking():
+
+    reports_instance = Reports()
+
+    while True:
+
+        reportsMenu()
+        choice = input("Enter Your Choice: ")
+
+        if choice == "1":
+            reports_instance.generate_daily_meals_report()
+            input(" >>> Press any Key to continue <<< ")
+        elif choice == "2":
+            reports_instance.generate_weekly_report()
+            input(" >>> Press any Key to continue <<< ")
+        elif choice == "3":
+            reports_instance.generate_monthly_report()
+            input(" >>> Press any Key to continue <<< ")
+        elif choice.lower() == "q":
+            print("returning to main menu <<<")
+            break
+        else:
+            print("Invalid choice! Please enter a number between 1 and 4 or q to return to main menu.")
 
 # reminders menu
 
 def remindersMenu():
     print(Fore.CYAN + "=" * 40)
-    print("    (Workouts) Tracker")
+    print("    (Reminders) Tracker")
     print("=" * 40 + Style.RESET_ALL)
     print("Please choose an option from the menu below:")
     print(Fore.GREEN + "1. Set Workout Reminder")  # done
@@ -69,39 +108,31 @@ def healthStatesTracking():
         choice = input("Enter Your Choice: ")
 
         if choice == "1":
+
             weight = float(input("Enter Your Weight: "))
             height = float(input("Enter Your Height: "))
-            date = input("Enter measurement date: ")
+            date = datetime.date.today()
 
-            health_states_instance.add_health_states(weight, height, date)
+            health_states_instance.add_health_states(weight, height, str(date))
             input(" >>> Press any Key to continue <<< ")
 
         elif choice == "2":
-            if health_states_instance.get_bmi() == 0:
 
-                # enter data
-                weight = float(input("Enter your weight in (kg ie. 65): "))
-                height = float(input("Enter your Height in (meters ie. 1.66): "))
+            # enter data
+            weight = float(input("Enter your weight in (kg ie. 65): "))
+            height = float(input("Enter your Height in (meters ie. 166): "))
 
-                #calc bmi
-                bmi = health_states_instance.calc_bmi(weight, height)
-                cat = health_states_instance.bmi_categorization(bmi)
-                print(f"Your BMI is {bmi} which is categorized as {cat}")
+            # calc bmi
+            bmi = health_states_instance.calc_bmi(weight, height)
+            cat = health_states_instance.bmi_categorization(bmi)
 
-                # ask the user to save it or not
-                saveOrnot = input("Do you want to add this data to your file [y/n] ? ")
-                if saveOrnot.lower() == 'y':
-                    date = input("please Enter date: ")
-                    health_states_instance.add_health_states(weight, height, date)
+            print(f"Your BMI is {bmi} which is categorized as {cat}")
 
-                # get bmi
-                # bmi = health_states_instance.calc_bmi()
-                # cat = health_states_instance.bmi_categorization(bmi)
-                # print(f"Your BMI is {bmi} which is categorized as {cat}")
-            else:
-                bmi = health_states_instance.get_bmi()
-                cat = health_states_instance.bmi_categorization(bmi)
-                print(f"Your BMI is {bmi} which is categorized as {cat}")
+            # ask the user to save it or not
+            saveOrnot = input("Do you want to add this data to your file [y/n] ? ")
+            if saveOrnot.lower() == 'y':
+                date = datetime.date.today()
+                health_states_instance.add_health_states(weight, height, str(date))
 
             input(" >>> Press any Key to continue <<< ")
 
@@ -113,7 +144,7 @@ def healthStatesTracking():
             print("returning to main menu <<<")
             break
         else:
-            print("Invalid choice! Please enter a number between 1 and 4 or q to return to main menu.")
+            print("Invalid choice! Please enter a number between 1 and 3 or q to return to main menu.")
 
 # Nutrition's Menu
 def nutritionsTrackingMenu():
@@ -219,6 +250,7 @@ def workoutTrackingMenu():
 def workoutTracking():
 
     workout_instance = Workout()
+    health_states_instance = Health_states()
     while True:
 
         workoutTrackingMenu()
@@ -234,14 +266,14 @@ def workoutTracking():
             gender = input("Enter your gender: ")
 
             nf_calories = workout_instance.calcCalories(query, weight, height, gender, age)
-
             w_date = datetime.date.today()
 
             print(f"You Burned {nf_calories} Calories ")
-            c = input("Do you want to add workout to file [y/n] ? ")
+            c = input("Do you want to add workout and health states to file [y/n] ? ")
             if c.lower() == 'y':
 
                 workout_instance.add_workout(activity, duration, nf_calories, str(w_date))
+                health_states_instance.add_health_states(weight, height, str(w_date))
 
             input(" >>> Press any Key to continue <<< ")
         elif choice == '2':
@@ -319,20 +351,19 @@ def main():
         if choice == '1':
             workoutTracking()
             input(" >>> Press any Key to continue <<< ")
-
         elif choice == '2':
             nutritionTracking()
             input(" >>> Press any Key to continue <<< ")
         elif choice == '3':
             healthStatesTracking()
-
+            input(" >>> Press any Key to continue <<< ")
         elif choice == '4':
             #Todo Call the reminders management function
             remindersTracking()
-
+            input(" >>> Press any Key to continue <<< ")
         elif choice == '5':
-            #Todo Call the report generation function
-            pass
+            reportsTracking()
+            input(" >>> Press any Key to continue <<< ")
         elif choice == '6':
             #Todo Clear all files function
             pass
