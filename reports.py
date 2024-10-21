@@ -87,9 +87,6 @@ class Reports:
         # Display the table
             print(tabulate(measurement_details, tablefmt="heavy_grid"))
 
-    def display_report(self):
-        pass
-
     def send_report_via_email(self, user_email):
         """
         method to send reminders and reports received from various classes to users
@@ -102,7 +99,6 @@ class Reports:
         # Recipient email
         receiver_email = user_email  # Recipient's email address example@gmail.com
 
-
         # Create the email message
         message = MIMEMultipart()
         message['From'] = sender_email
@@ -112,9 +108,9 @@ class Reports:
         # Email body
         # body = 'Hello, this is a test email sent from Python with App Password!'
 
-        mealsFile = nutrition.Meal().fileName
-        meals_data = base.load_from_file(mealsFile)
-        mealsTable = []
+        meals_file = nutrition.Meal().fileName
+        meals_data = base.load_from_file(meals_file)
+        meals_table = []
         macronutrientsTable = []
 
         workoutsFile = workouts.Workout().fileName
@@ -135,7 +131,7 @@ class Reports:
                 ["Calories", f"{meal['calories']} kcal"],
                 ["Water", f"{meal['water']} glasses"]
             ]
-            mealsTable = tabulate(meal_details, tablefmt="html")
+            meals_table = tabulate(meal_details, tablefmt="html")
 
             macronutrients = [
                 ["Total fats", meal['macronutrients']['total_fats']],
@@ -236,7 +232,7 @@ class Reports:
             <p><strong>Enjoy coding!</strong></p>
                 <div>
                     <h2> Meals </h2>
-                    {mealsTable}
+                    {meals_table}
                     <h2> Macronutrients </h2>
                     {macronutrientsTable}
                     <h2> Workouts </h2>
@@ -271,4 +267,4 @@ class Reports:
             # Close the server connection
             smtp_server.quit()
 
-    # send_emails("hamza.helal.d@gmail.com")
+    # send_report_via_email("hamza.helal.d@gmail.com")
