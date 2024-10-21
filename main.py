@@ -3,12 +3,15 @@ import datetime
 from colorama import Fore, Style
 
 import health_states
+from user_data import User
 from reminders import Reminders
 from workouts import Workout
 from nutrition import Meal
 from health_states import Health_states
 from reports import Reports
 
+
+user = User()
 # generate reports
 def reportsMenu():
 
@@ -19,6 +22,7 @@ def reportsMenu():
     print(Fore.GREEN + "1. Generate daily meals reports")
     print("2. Generate Weekly Workout reports")
     print("3. Generate Monthly progress reports")
+    print("4. Send Complete Reports Via Email")
     print(Fore.RED + "[Q/q]. Return to Main Menu" + Style.RESET_ALL)
     print("=" * 40)
 
@@ -40,6 +44,16 @@ def reportsTracking():
         elif choice == "3":
             reports_instance.generate_monthly_report()
             input(" >>> Press any Key to continue <<< ")
+        elif choice == "4":
+            # email = user.get_email()
+            email = input("Enter Your Email: ")
+            if user.validate_email(email):
+                reports_instance.send_report_via_email(email)
+                print(f"Reports is sent to {email}")
+            else:
+                print("Please enter a valid email address")
+            input(" >>> Press any Key to continue <<< ")
+
         elif choice.lower() == "q":
             print("returning to main menu <<<")
             break

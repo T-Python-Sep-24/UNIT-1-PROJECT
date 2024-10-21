@@ -3,6 +3,12 @@ import health_states
 import nutrition
 import workouts
 from tabulate import tabulate
+import dotenv
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import os
+dotenv.load_dotenv()
 
 
 class Reports:
@@ -64,6 +70,7 @@ class Reports:
                 print(tabulate([[goal] for goal in workout['goals']], headers=["Goal"], tablefmt="heavy_grid"))
             else:
                 print("\nNo goals for this workout.")
+
     def generate_monthly_report(self):
         health_states_data = base.load_from_file(health_states.Health_states().fileName)
         print("\nBody Measurements")
@@ -80,55 +87,188 @@ class Reports:
         # Display the table
             print(tabulate(measurement_details, tablefmt="heavy_grid"))
 
-
-    # def format_report(self, data):
-    #     if 'macronutrients' in data:
-    #     # Nutrition data
-    #         print("\nNutrition Information")
-    #         print("=============================")
-    #         nutrition_table = [
-    #             ["Food", data['name']],
-    #             ["Calories", data['calories']],
-    #             ["Total Fats", f"{data['macronutrients']['total_fats']} g"],
-    #             ["Saturated Fat", f"{data['macronutrients']['saturated_fat']} g"],
-    #             ["Cholesterol", f"{data['macronutrients']['cholesterol']} mg"],
-    #             ["Sodium", f"{data['macronutrients']['sodium']} mg"],
-    #             ["Carbohydrate", f"{data['macronutrients']['carbohydrate']} g"],
-    #             ["Dietary Fiber", f"{data['macronutrients']['dietary_fiber']} g"],
-    #             ["Sugars", data['macronutrients']['sugars']],
-    #             ["Protein", f"{data['macronutrients']['protein']} g"],
-    #             ["Potassium", f"{data['macronutrients']['potassium']} mg"],
-    #             ["Water", f"{data['water']} L"],
-    #             ["Date", data['date']]
-    #         ]
-    #         print(tabulate(nutrition_table, tablefmt="heavy_grid"))
-    #
-    #     elif 'calories_burned' in data:
-    #         # Workout data
-    #         print("\nWorkout Details")
-    #         print("=============================")
-    #         workout_table = [
-    #             ["Type", data['type']],
-    #             ["Duration", data['duration']],
-    #             ["Calories Burned", f"{data['calories_burned']} kcal"],
-    #             ["Date", data['date']],
-    #             ["Goals", ", ".join(data['goals']) if data['goals'] else "No goals set"]
-    #         ]
-    #         print(tabulate(workout_table, tablefmt="heavy_grid"))
-    #
-    #     elif 'bmi' in data:
-    #         # Body measurements data
-    #         print("\nBody Measurements")
-    #         print("=============================")
-    #         measurements_table = [
-    #             ["Height", f"{data['height']} cm"],
-    #             ["Weight", f"{data['weight']} kg"],
-    #             ["BMI", f"{data['bmi']:.4f}"],
-    #             ["Date", data['date']]
-    #         ]
-    #         print(tabulate(measurements_table, tablefmt="heavy_grid"))
-
     def display_report(self):
         pass
+
     def send_report_via_email(self, user_email):
-        pass
+        """
+        method to send reminders and reports received from various classes to users
+        :param user_email:
+        :return:
+        """
+        sender_email = os.getenv('SENDER_EMAIL')  # Your Gmail address
+        app_password = os.getenv('EMAIL_APP_PASSWORD')    # Your Gmail password or app-specific password
+
+        # Recipient email
+        receiver_email = user_email  # Recipient's email address example@gmail.com
+
+
+        # Create the email message
+        message = MIMEMultipart()
+        message['From'] = sender_email
+        message['To'] = receiver_email
+        message['Subject'] = 'Health And Fitness Reports From Python Fitness Tracker'
+
+        # Email body
+        # body = 'Hello, this is a test email sent from Python with App Password!'
+
+        mealsFile = nutrition.Meal().fileName
+        meals_data = base.load_from_file(mealsFile)
+        mealsTable = []
+        macronutrientsTable = []
+
+        workoutsFile = workouts.Workout().fileName
+        workout_data = base.load_from_file(workoutsFile)
+        workoutsTable = []
+        goals = []
+
+        health_states_file = health_states.Health_states().fileName
+        health_states_data = base.load_from_file(health_states_file)
+        health_states_table = []
+
+        for meal in meals_data:
+
+            meal_details = [
+                ["Meal Details"],
+                ["Name", meal['name']],
+                ["Date", meal['date']],
+                ["Calories", f"{meal['calories']} kcal"],
+                ["Water", f"{meal['water']} glasses"]
+            ]
+            mealsTable = tabulate(meal_details, tablefmt="html")
+
+            macronutrients = [
+                ["Total fats", meal['macronutrients']['total_fats']],
+                ["Saturated fat", meal['macronutrients']['saturated_fat']],
+                ["Cholesterol", meal['macronutrients']['cholesterol']],
+                ["Sodium", meal['macronutrients']['sodium']],
+                ["Carbohydrate", meal['macronutrients']['carbohydrate']],
+                ["Dietary fiber", meal['macronutrients']['dietary_fiber']],
+                ["Sugars", meal['macronutrients']['sugars']],
+                ["Protein", meal['macronutrients']['protein']],
+                ["Potassium", meal['macronutrients']['potassium']]
+            ]
+            macronutrientsTable = tabulate(macronutrients, headers=["Nutrient", "Value"], tablefmt="html")
+
+        for workout in workout_data:
+
+            workout_details = [
+                ["Workout Details"],
+                ["Type", workout['type']],
+                ["Duration", workout['duration']],
+                ["Calories Burned", f"{workout['calories_burned']} kcal"],
+                ["Date", workout['date']]
+            ]
+            workoutsTable = tabulate(workout_details, tablefmt="html")
+
+            # If there are goals, display them as well
+            if workout['goals']:
+
+                goals = tabulate([[goal] for goal in workout['goals']], headers=["Goal"], tablefmt="html")
+            else:
+                goals = ["\nNo goals for this workout."]
+
+        for state in health_states_data:
+            # Format data into table rows
+            measurement_details = [
+                ["Height", f"{state['height']} cm"],
+                ["Weight", f"{state['weight']} kg"],
+                ["BMI", f"{state['bmi']:.4f}"],
+                ["Date", state['date']]
+            ]
+
+            # Display the table
+            health_states_table = (tabulate(measurement_details, tablefmt="html"))
+
+        html_content = f"""\
+        <html>
+          <head>
+            <style>
+                table {{
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                    font-family: Arial, sans-serif;
+                    font-size: 14px;
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                }}
+                th, td {{
+                    padding: 10px;
+                  text-align: left;
+                  border: 1px solid #ddd;
+                }}
+                table, th, td {{
+                    border: 1px solid #dddddd;
+                }}
+            
+                th, td {{
+                    padding: 10px;
+                    text-align: left;
+                }}
+            
+                th {{
+                    background-color: #f4f4f4;
+                    font-weight: bold;
+                }}
+            
+                tr:nth-child(even) {{
+                    background-color: #f9f9f9;
+                }}
+            
+                tr:hover {{
+                    background-color: #f1f1f1;
+                }}
+            
+                caption {{
+                    font-size: 18px;
+                    margin-bottom: 10px;
+                    font-weight: bold;
+                    text-align: left;
+                }}
+          </style>
+
+          </head>
+          <body>
+            <h1>Hello!</h1>
+            <p>Hello, this is a Your Meals daily Report sent from Python.</p>
+            <p><strong>Enjoy coding!</strong></p>
+                <div>
+                    <h2> Meals </h2>
+                    {mealsTable}
+                    <h2> Macronutrients </h2>
+                    {macronutrientsTable}
+                    <h2> Workouts </h2>
+                    {workoutsTable}
+                    <h2> Goals </h2>
+                    {goals}
+                    <h2> Health States </h2>
+                    {health_states_table}
+                </div>
+            <a href="https://www.example.com">Click here to visit our website</a>
+            <h3> THANK YOU ! </h3>
+          </body>
+        </html>
+        """
+        message.attach(MIMEText(html_content, 'html'))
+
+        # Connect to Gmail's SMTP server and send the email
+        try:
+            # Set up the SMTP server
+            smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
+            smtp_server.starttls()  # Upgrade the connection to a secure encrypted SSL/TLS connection
+            smtp_server.login(sender_email, app_password)  # Login with App Password
+
+            # Send the email
+            smtp_server.sendmail(sender_email, receiver_email, message.as_string())
+            print('Email sent successfully!')
+
+        except Exception as e:
+            print(f"Error occurred: {e}")
+
+        finally:
+            # Close the server connection
+            smtp_server.quit()
+
+    # send_emails("hamza.helal.d@gmail.com")
