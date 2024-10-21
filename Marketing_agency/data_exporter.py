@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 
+
 class DataExporter:
     """
     The DataExporter class handles exporting data to CSV files.

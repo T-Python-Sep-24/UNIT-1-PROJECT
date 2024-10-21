@@ -1,8 +1,12 @@
 from generators import DataGenerators
 from data_exporter import DataExporter
 from data_manager import DataManager
-from colorama import Fore , Style
+from forcasting import run_sales_prediction
+import pandas as pd
+from colorama import Fore, Style
 import os
+from user_auth import User
+
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -13,11 +17,21 @@ def main():
     data_manager = DataManager()
     data_exporter = DataExporter()
 
+    clear_console()
+    print(Fore.CYAN + "=" * 40)
+    print(Fore.YELLOW + Style.BRIGHT + "  Data Management System  ".center(40))
+    print(Fore.CYAN + "=" * 40 + "\n")
+
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+
+    if not User.authenticate(username, password):
+        print("Invalid credentials. Exiting.")
+        return
     while True:
-        clear_console()
-        print(Fore.CYAN + "=" * 40)
-        print(Fore.YELLOW + Style.BRIGHT + "  Sales and Marketing Management System  ".center(40))
-        print(Fore.CYAN + "=" * 40 + "\n")
+
+
+
 
         print(Fore.GREEN + "Please choose an action:".center(40))
         print(Fore.MAGENTA + "1. " + Fore.WHITE + "Generate Employees".center(40))
@@ -29,7 +43,7 @@ def main():
         print(Fore.MAGENTA + "7. " + Fore.WHITE + "View Products".center(40))
         print(Fore.MAGENTA + "8. " + Fore.WHITE + "View Transactions".center(40))
         print(Fore.MAGENTA + "9. " + Fore.WHITE + "Export Data".center(40))
-        print(Fore.MAGENTA + "10. " + Fore.WHITE + "Delete Data".center(40))
+        print(Fore.MAGENTA + "10. " + Fore.WHITE + "Run Sales Forecasting".center(40))
         print(Fore.MAGENTA + "11. " + Fore.WHITE + "Exit".center(40))
         print(Fore.CYAN + "=" * 40)
 
@@ -97,8 +111,11 @@ def main():
 
             print("Data exported successfully.")
 
+        elif choice == 10:  # New Sales Forecasting Option
+            df = pd.read_csv("Stores.csv")
+            run_sales_prediction(df)
 
-        elif choice == 10:
+        elif choice == 11:
 
             print("Exiting the sales management system. Goodbye!")
 
