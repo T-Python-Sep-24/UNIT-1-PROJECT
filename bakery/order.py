@@ -46,7 +46,7 @@ class Order:
         for prod in self.__orderedProducts:
             total: float = prod.getQty() * prod.getPrice()
             products += f"Product name: {prod.getName()}. Quantity: {prod.getQty()}. Price: {total}\n"
-        return f"{products} Ordered on: {self.__date}"
+        return f"{products} Ordered on: {self.__date}\n"
         
 
 

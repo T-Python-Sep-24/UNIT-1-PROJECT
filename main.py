@@ -24,11 +24,98 @@ def saveUsers(user: Person):
     This function saves users to a pickle file
     '''
     loadUsers()
-
     users.append(user)
     with open("bakeryData/users.pkl", "wb") as file:
             #Store list of bank accounts in a pickle file
             pickle.dump(users, file)
+
+def updateCustomer(customer: Customer):
+    '''
+    This function updates a customer's details then saves the updated info to the list of users in a pickle file
+    '''
+    loadUsers()
+    for user in users:
+        if user.getPhone() == customer.getPhone():
+            while True:
+                print("Choose what to update:\n1. Name.\n2. Age\n3. Gender.\n4. Phone number.\n5. Password.\n6. Back to main menu.")
+                choice: str = input("Your choice: ")
+                if choice == '1':
+                    newName: str = input("New name: ")
+                    user.setName(newName)
+                    print("Name was updated successfully.")
+                    break
+                elif choice == '2':
+                    while True:
+                        try:
+                            newAge: int = int(input("New age: "))
+                        except ValueError:
+                            print("Enter age in numbers only")
+                            continue
+                        else:
+                            user.setAge(newAge)
+                            print("Age was updated successfully.")
+                            break
+                elif choice == '3':
+                    newGender: str = input("New gender: ")
+                    user.setGender(newGender)
+                    break
+                elif choice == '4':
+                    while True:
+                        newPhone: str = input("New phone number: ")
+                        if not phoneValid(newPhone):
+                            print("Phone number should be 10 digits starting with (05). Try again..")
+                            input("")
+                            continue
+                        else:
+                            user.setPhone(newPhone)
+                            print("Phone was updated successfully.")
+                            break
+                    break
+                elif choice == '5':
+                    while True:
+                        newPassword: str = input("New password: ")
+                        if not passwordValid(newPassword):
+                            print("Password too weak, your password satisfy the following:")
+                            print("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)\nTry again..")
+                            input("")
+                            continue
+                        else:
+                            user.setPassword(newPassword)
+                            print("Password was updated successfully.")
+                            break
+                elif choice == '6':
+                    break
+            customer = user
+
+    with open("bakeryData/users.pkl", "wb") as file:
+            #Store list of bank accounts in a pickle file
+            pickle.dump(users, file)
+
+    return customer
+
+def loadCustomerDetails():
+
+    global customers
+    try:
+        with open("bakeryData/customerDetails.pkl", "rb") as file:
+            #Read the list of bank accounts from a pickle file and store it in bankAccounts list
+            customers = list(pickle.load(file))
+    except FileNotFoundError:
+        print("File doesn't exist.")
+    except EOFError as e:
+        print(e)
+    except Exception as e:
+        print(e)
+
+def saveCustomerDetails(customer: Customer):
+    '''
+    Call this when you want to store your customer data in a pickle file
+    '''
+    loadCustomerDetails()
+    customers.append(customer)
+    with open("bakeryData/customerDetails.pkl", "wb") as file:
+        #Store the customer in a pickle file
+        pickle.dump(customers, file)
 
 def phoneValid(phone: str) -> bool:
     '''
@@ -154,11 +241,23 @@ def customerMenu(customer: Customer):
             input("")
             
         elif choice == '3':
-             
+            ("------------------New Order------------------")
+
             input("")
 
         elif choice == '4':
-            
+            ("------------------My Profile------------------")
+            print(customer.getInfo())
+            while True:
+                profileChoice: str = input("Would you like to update your profile? yes/no: ")
+                if profileChoice.lower() == 'yes':
+                    ("------------------Update Profile------------------")
+                    customer = updateCustomer(customer)
+                    break
+                elif profileChoice.lower() == 'no':
+                    break
+                else:
+                    print("Invalid choice, try again..")
             input("")
 
         elif choice == '5':
@@ -189,8 +288,8 @@ def main():
                 continue
             #Check if the user exists in the system, returns None if the user don't
             user: Person = checkUserLogin(phone, password)
-
             if user != None:
+                #Display the appropriate main menu for each of the employee and the customer
                 if user.getRole() == "employee":
                     employeeMenu(user)
                     break
@@ -204,6 +303,7 @@ def main():
                 name: str = input("Enter your name: ")
                 try:
                     age: int = int(input("Enter your age: "))
+                #Handle the exception that occurs when the user enters a non-digit value
                 except ValueError:
                     print("Please enter age in numbers only")
                     continue
@@ -211,6 +311,7 @@ def main():
                 phone: str = input("Enter your phone number: ")
                 password: str = input("Enter your password: ")
 
+                #Validate phone and password formats
                 if not phoneValid(phone):
                     print("Phone number should be 10 digits starting with (05). Try again..")
                     input("")
@@ -225,6 +326,7 @@ def main():
                 exist: bool = checkUserRegister(phone, password)
                 if not exist:
                     customer: Customer = Customer(name, age, gender, phone, password)
+                    #Store the created customer account in a pickle file
                     saveUsers(customer)
                     print("You have successfully registered, continue to login.")
                 input("")
@@ -234,5 +336,5 @@ def main():
             print("Invalid choice, try again..", end=" ")
             input("")
 
-#Executing main
+#Executing main program
 main()

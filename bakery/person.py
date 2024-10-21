@@ -127,7 +127,6 @@ class Customer(Person):
         '''
         Getter for orderHistory attribute
         '''
-        self.__loadFromFile()
         return self.__orderHistory
     
     def getRole(self):
@@ -135,23 +134,30 @@ class Customer(Person):
         Getter for role attribute
         '''
         return self.__role
-    
-    def saveToFile(self):
-        '''
-        Call this when you want to store your customer data in a pickle file
-        '''
-        with open("bakeryData/customerDetails.pkl", "wb") as file:
-            #Store the customer in a pickle file
-            pickle.dump(self, file)
 
-    def __loadFromFile(self) -> list[Order]: 
+    def getInfo(self) -> str:
+        '''
+        This method returns a formatted string containing customer info
+        '''
+        info: str = f"Name: {self.getName()}.\nAge: {self.getAge()}.\nGender: {self.getGender()}.\nPhone number: {self.getPhone()}.\nOrder history:\n"
+
+        for order in self.getOrderHistory():
+            info += {order.orderInfo()}
+        
+        return info
+
+    def loadFromFile(self) -> list[Order]: 
         '''
         Call this method whenever you want to load from a pickle file and make neccessary checks
         '''
+        customers: list[Customer] = []
         try:
             with open("bakeryData/customerDetails.pkl", "rb") as file:
                 #Get the information from the json file by using .load() function
-                self.__orderHistory = pickle.load(file)
+                customers = pickle.load(file)
+            for customer in customers:
+                if customer.getName() == self.getName():
+                    return customer.getOrderHistory()
         except FileNotFoundError:
             print("File doesn't Exist.")
         except Exception as e:
