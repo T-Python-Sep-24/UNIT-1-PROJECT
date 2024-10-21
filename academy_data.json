@@ -1,5 +1,21 @@
 {
-    "teachers": [],
-    "students": [],
-    "courses": []
+    "teachers": [
+        {
+            "teacher_id": 2516,
+            "name": "abdullah",
+            "specialization": "python"
+        }
+    ],
+    "students": [
+        {
+            "student_id": 7856,
+            "name": "kald"
+        }
+    ],
+    "courses": [
+        {
+            "course_id": 5089,
+            "name": "python"
+        }
+    ]
 }
