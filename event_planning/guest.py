@@ -1,3 +1,4 @@
+## Created a class called Guest that will include guest name, guest phone, guest email, and guest RSVP
 
 import re
 
@@ -14,7 +15,7 @@ class Guest:
             
         
         #Email Validation: Must End With "gmail", "hotmail" or "Outlook"
-        if re.fullmatch(r".+@(gmail|hotmail| outlook)\\.com$", guest_email):
+        if re.fullmatch(r".+@(gmail|hotmail|outlook)\.com$", guest_email):
             self.guest_email = guest_email
         
         else:
@@ -27,5 +28,5 @@ class Guest:
             f"Phone: {self.guest_phone}\n"
             f"Email: {self.guest_email}\n"
             f"RSVP: {self.rsvp_status}\n"
-            + "=" * 30 #Check 
+            + "=" * 30 
         )    
