@@ -65,3 +65,14 @@
  - Type 'load_event' to load & view the saved event.
  - Type 'export_guests_to_csv' to export the guest list to a CSV file.
 
+
+
+
+### Example Usage:
+ Please Use These Event Names if You Like, So You Can Display All Event, Search Event, and Delete Event
+ Also, You Can Add Guests to Thoes Events, Display All Guests in Thoes Events, Search for Guest, and Remove Guest
+ and Many More Things You Can Do in My Program:
+ - Company Annual Meeting
+ - Product Launch Party
+ - Tech Conference 2024
+
