@@ -10,7 +10,7 @@ load_dotenv()
 
 class Workout:
 
-    fileName = 'user_dataa_files/workouts.json'
+    fileName = 'user_data_files/workouts.json'
 
     def __init__(self):
         """
@@ -18,7 +18,7 @@ class Workout:
         """
 
         self.workouts = []
-        self.fileName = 'user_dataa_files/workouts.json'
+        self.fileName = 'user_data_files/workouts.json'
         self.workout_type = ""
         self.workout_duration = ""
         self.calories_burned = 0
@@ -152,9 +152,17 @@ class Workout:
         else:
             return f"Error: {response.status_code}, {response.text}"
 
-
     def isWorkoutsAvailable(self):
         if self.workouts is None:
             return False
         else:
             return True
+
+    def remove_workout(self, num):
+        self.workouts = base.load_from_file(self.fileName)
+        if len(self.workouts) > 0:
+            del self.workouts[num - 1]
+            base.save_to_file(self.fileName, self.workouts)
+            print("State is Deleted Successfully")
+        else:
+            print("You have no workouts available")

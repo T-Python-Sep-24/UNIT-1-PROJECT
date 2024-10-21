@@ -11,14 +11,14 @@ load_dotenv()
 
 class Meal:
 
-    fileName = 'user_dataa_files/meals.json'
+    fileName = 'user_data_files/meals.json'
 
     def __init__(self):
         """
         init / constructor
         """
         self.meals = []
-        self.fileName = 'user_dataa_files/meals.json'
+        self.fileName = 'user_data_files/meals.json'
         self.meal_name = ""
         self.meal_calories = ""  # API is recommended
         self.meal_macronutrients = {}  # API is recommended
@@ -120,9 +120,6 @@ class Meal:
         else:
             return f"Error: {response.status_code}, {response.text}"
 
-
-
-
     def suggest_meals(self,diet = None, maxCalories = 500, numOfSuggestions = 5, type = 'main course'):
         """
         this method uses the spoonacular api to suggest meals using default or customized inputs from the user
@@ -151,3 +148,12 @@ class Meal:
             # print(f"{i}. {meal['name']} has ({meal['calories']}) And {meal['macronutrients']} macronutrients, "
             #       f"Your Water Intakes is {meal['water']} Liters, Date:{meal['date']}")
         print("-"*32)
+
+    def remove_meal(self, num):
+        self.meals = base.load_from_file(self.fileName)
+        if len(self.meals) > 0:
+            del self.meals[num - 1]
+            base.save_to_file(self.fileName, self.meals)
+            print("Meal is Deleted Successfully")
+        else:
+            print("You have no meals available")
