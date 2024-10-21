@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "year": 1925,
+        "description": "A novel about the American dream.",
+        "likes": 6,
+        "comments": [
+            "wow"
+        ],
+        "ratings": [
+            4.0,
+            4.5
+        ]
+    },
+    {
+        "id": 2,
+        "title": "1984",
+        "author": "George Orwell",
+        "year": 1949,
+        "description": "A dystopian novel about totalitarianism.",
+        "likes": 11,
+        "comments": [
+            "wow"
+        ],
+        "ratings": [
+            3.0,
+            2.0
+        ]
+    },
+    {
+        "id": 3,
+        "title": "6",
+        "author": "6",
+        "year": 6,
+        "description": "6",
+        "likes": 0,
+        "comments": [],
+        "ratings": []
+    }
+]
