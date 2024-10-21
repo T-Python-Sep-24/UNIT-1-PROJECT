@@ -48,7 +48,7 @@ class Person:
                                    ''')
         
 
-    def get_name(self)->str:
+    def get_user_name(self)->str:
         return self.__user_name
     
     def get_email(self)->str:
