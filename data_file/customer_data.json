@@ -1,1 +1,41 @@
-{"name": "fahad", "id": 1, "rented": []}
+[
+    {
+        "name": "fahad",
+        "id": 1,
+        "rented": [],
+        "rental_history": [
+            {
+                "action": "rented",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-21 20:30:11"
+            },
+            {
+                "action": "returned",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-21 20:30:14"
+            }
+        ]
+    },
+    {
+        "name": "ahmed",
+        "id": 2,
+        "rented": [
+            {
+                "cname": "ford",
+                "year": 2023,
+                "price": 200.0,
+                "available": false
+            }
+        ],
+        "rental_history": [
+            {
+                "action": "rented",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-21 20:30:27"
+            }
+        ]
+    }
+]

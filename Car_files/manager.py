@@ -6,6 +6,7 @@ class Manager:
         self.name = name
         self.password = password
         self.car_storage = car_storage
+        self.customers = []
 
 
     def login(self, name, password):
@@ -45,3 +46,18 @@ class Manager:
             print(f"Car found: {car}")
         else:
             print("Car not found")
+
+
+    def add_customer(self, customer):
+        self.customers.append(customer)
+
+
+    def rental_history(self):
+        for customer in self.customers:
+            print(f"Rental history for {customer.name} (ID: {customer.id}):")
+            for record in customer.rental_history:
+                action = record['action']
+                car_name = record['car_name']
+                car_year = record['car_year']
+                date = record['date']
+                print(f"  {action.capitalize()} car {car_name} ({car_year}) on {date}")
