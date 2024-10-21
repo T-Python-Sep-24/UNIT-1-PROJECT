@@ -1,0 +1,3 @@
+Inside this Images_Destination folder:
+- You will have the result of executing the program inside this folder.
+- Your original images that you want to work on it should be putted inside the Images_Source folder.

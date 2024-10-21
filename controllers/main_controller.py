@@ -1,5 +1,5 @@
 from views import main_view as v
-
+from models import orgnizer_model as m
 
 class MainController:
     def __init__(self, main_view: v.MainView):
@@ -9,11 +9,10 @@ class MainController:
         """ Show menu by calling display menu from MainView"""
         self.view.display_menu()
 
-    def display_orginal(self):
-        """ Show tree structure of the Original_images folder """
-        self.view.display_tree("./Original_images")
+    def display_source(self):
+        """ Show tree structure of the Images_Source folder """
+        self.view.display_tree("./Images_Source")
     
-    def display_result(self):
-        """ Show tree structure of the Result_images folder """
-        self.view.display_tree("./Result_images")
-
+    def display_destination(self):
+        """ Show tree structure of the Images_Destination folder """
+        self.view.display_tree("./Images_Destination")

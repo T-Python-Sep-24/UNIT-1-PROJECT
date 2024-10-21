@@ -1,4 +1,4 @@
-Inside this Original_images folder: 
+Inside this Images_Source folder: 
 - You can put your images that you would like the program to work on it.
-- After executing the program you will find the result on Result_images folder.
+- After executing the program you will find the result in Images_Destination folder.
 - We provided some images on this folder to help you test the program using it.
