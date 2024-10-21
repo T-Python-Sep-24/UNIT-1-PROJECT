@@ -1,12 +1,10 @@
 import csv
-
+import pandas as pd
 
 class DataExporter:
     """
     The DataExporter class handles exporting data to CSV files.
     """
-
-
     def export_to_csv(self, data_manager, filename, data_type):
         """
         Exports specified data to a CSV file.
@@ -30,9 +28,9 @@ class DataExporter:
             print("No data to export.")
             return
 
-        with open(filename, mode='w', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=data[0].keys())
-            writer.writeheader()
-            writer.writerows(data)
-
+        # Convert list of dictionaries to DataFrame
+        df = pd.DataFrame(data)
+        # Export to CSV
+        df.to_csv(filename, index=False)
         print(f"{data_type.capitalize()} data exported to {filename}.")
+
