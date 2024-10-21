@@ -2,7 +2,7 @@ import os
 import pickle
 import subprocess
 from rich.console import Console
-from rich.markup import render
+
 from rich.table import Table
 def fil_ter():
     with open('tasks.pkl', 'rb') as file:
@@ -27,7 +27,7 @@ class Task:
     @staticmethod
     def task_adding():
         try:
-            with open('tasks.pkl', 'rb') as file:
+            with open('tasks.pkl', 'wb') as file:
                 tasks = pickle.load(file)
         except FileNotFoundError:
             tasks = []
@@ -42,6 +42,8 @@ class Task:
 
 def task_return():
     try:
+
+        console= Console()
         with open('tasks.pkl', 'rb') as file:
             tasks = pickle.load(file)
             table = Table(title="Tasks")
@@ -50,18 +52,43 @@ def task_return():
             table.add_column("Ready", justify="center", style="magenta")
             table.add_column("In progress", justify="center", style="magenta")
             table.add_column("done", justify="center", style="magenta")
-            for task  in tasks:
-                table.add_row(task["task_des"],task["task_type"],task["task_type"])
-            console = Console()
-
             console.print(table, justify="center")
-    except FileNotFoundError as e:
-        console.print(e)
+            task_hold=[]
+            task_ready=[]
+            task_progress=[]
+            task_done=[]
+            for task  in tasks:
+                task_des=task["task_des"]
+                task_type=task["task_type"]
+
+                if task_type=="hold":
+                    task_hold.append(task_des)
+
+
+                elif task_type=="ready":
+                    task_ready.append(task_des)
+
+                elif task_type=="progress":
+                    task_progress.append(task_des)
+
+                elif task_type=="done":
+                    task_done.append(task_des)
+                else:
+                    console.print()
+            table_max=max(len(task_hold),len(task_ready),len(task_progress),len(task_done))
+            print(table_max)
+            for i in range(table_max):
+                table.add_row(task_hold[i],task_progress[i],task_ready[i],task_done[i])
+            console.print(table,justify="center")
+    except Exception as e:
+        print(e)
+
 
 
 class ProductOwner(Team):
     def __init__(self, task: str, role: str):
         super().__init__(task, role)
+
 
 class DevTeam:
     pass
