@@ -1,24 +1,29 @@
 import json
 from datetime import datetime
-from users import dataEmployee  # Import the Employee class
+from users import dataEmployee  
 from users import dataCustomerOrTraveler
 
 class FlightsManagement:
-    def __init__(self, id_flight: int, date_flight: datetime, employee: dataEmployee.Employee):
-        self.id_flight = id_flight
-        self.date_flight = date_flight
-        self.employee = employee  # Employee object
+    def __init__(self):
         self.keepDatafli = {}  # Dictionary to hold flight data
+        self.reservations = {}  # Dictionary to hold reservations
+        self.payments = {}
 
 
-    def addFlight(self):
+    def addFlight(self, id_flight, date_flight: datetime, employee: dataEmployee.Employee ):
         # Only allow "manager" to add a flight
+        self.id_flight = input("Enter the flight ID: ")
+        origin = input("Enter the origin city: ")
+        destination = input("Enter the destination city: ")
+        route_key = f"{origin} to {destination}"           
+        date_flight = datetime.today().strftime('%Y-%m-%d') 
         if self.employee.position.lower() == "manager":
             if self.id_flight not in self.keepDatafli:
                 # Add flight data to the keepDatafli dictionary
                 self.keepDatafli[self.id_flight] = {
                     "id_flight": self.id_flight,
-                    "date_flight": self.date_flight
+                    "date_flight": date_flight,
+                    "route": route_key  
                 }
                 return "Flight added successfully."
             else:
@@ -28,7 +33,7 @@ class FlightsManagement:
 
 
     def removeFlight(self):
-        # Only allow "manager" to remove a flight
+        
         if self.employee.position.lower() == "manager":
             if self.id_flight in self.keepDatafli:
                 del self.keepDatafli[self.id_flight]
@@ -47,7 +52,7 @@ class FlightsManagement:
 
     
     def saveDataFlight(self):
-        # Save the keepDatafli dictionary to the JSON file
+       
         with open("information.json", "a", encoding="UTF-8") as fileData:
             json_data = json.dumps(self.keepDatafli, indent=3)
             fileData.write(json_data + "\n")
@@ -55,16 +60,16 @@ class FlightsManagement:
 
     
     def loadDataFlight(self):
-        # Load flight data from the JSON file
+     
         with open("information.json", "r", encoding="UTF-8") as fileData:
             loaded_data = json.load(fileData)
         return loaded_data
 
 
     def boardingPlane(self, traveler: dataCustomerOrTraveler.Traveler):
-        # Only allow "manager" or "GM" to permit boarding and offer customer services
+        
         if self.employee.position.lower() in ["manager", "gm" ,"services customer"]:
-            # Traveler is boarding the plane
+            
             return f"Traveler {traveler.name} with ID {traveler.id} is boarding Flight {self.id_flight}."
         else:
             return "Permission denied. Only managers or GMs can permit boarding and offer services."
