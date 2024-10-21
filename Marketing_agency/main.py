@@ -10,47 +10,92 @@ def main():
     data_exporter = DataExporter()
 
     while True:
-        command = input("> ").strip().lower()
-        if command.startswith("generate employees "):
-            _, _, number = command.split()
-            data_generator.generate_employees(int(number), data_manager)
+        print("\nPlease choose an action:")
+        print("1. Generate Employees")
+        print("2. Generate Clients")
+        print("3. Generate Products")
+        print("4. Generate Transactions")
+        print("5. View Employees")
+        print("6. View Clients")
+        print("7. View Products")
+        print("8. View Transactions")
+        print("9. Export Data")
+        print("10. Exit")
 
-        elif command.startswith("generate clients"):
-            _, _, number = command.split()
-            data_generator.generate_clients(int(number), data_manager)
+        try:
+            choice = int(input("> "))  # Capture the user's choice
+        except ValueError:
+            print("Please enter a valid number.")
+            continue
 
-        elif command.startswith("generate products"):
-            _, _, number = command.split()
-            data_generator.generate_products(int(number), data_manager)
+        if choice == 1:
+            number = int(input("Enter number of employees to generate: "))
+            data_generator.generate_employees(number, data_manager)
 
-        elif command.startswith("generate transactions"):
-            _, _, number = command.split()
-            data_generator.generate_transactions(int(number), data_manager)
 
-        elif command == "view employees":
+        elif choice == 2:
+
+            number = int(input("Enter number of clients to generate: "))
+
+            data_generator.generate_clients(number, data_manager)
+
+
+        elif choice == 3:
+
+            number = int(input("Enter number of products to generate: "))
+
+            data_generator.generate_products(number, data_manager)
+
+
+        elif choice == 4:
+
+            number = int(input("Enter number of transactions to generate: "))
+
+            data_generator.generate_transactions(number, data_manager)
+
+
+        elif choice == 5:
+
             data_manager.view_employees()
 
-        elif command == "view clients":
+
+        elif choice == 6:
+
             data_manager.view_clients()
 
-        elif command == "view products":
+
+        elif choice == 7:
+
             data_manager.view_products()
 
-        elif command == "view transactions":
+
+        elif choice == 8:
+
             data_manager.view_sales()
 
-        elif command == "export data":
+
+        elif choice == 9:
+
             data_exporter.export_to_csv(data_manager, 'employees.csv', 'employees')
+
             data_exporter.export_to_csv(data_manager, 'clients.csv', 'clients')
+
             data_exporter.export_to_csv(data_manager, 'products.csv', 'products')
+
             data_exporter.export_to_csv(data_manager, 'sales.csv', 'sales')
+
             print("Data exported successfully.")
 
-        elif command == "exit":
+
+        elif choice == 10:
+
             print("Exiting the sales management system. Goodbye!")
+
             break
 
+
         else:
-            print("Invalid input")
+
+            print("Invalid choice. Please select a valid option.")
 
 main()
