@@ -1,26 +1,37 @@
 from generators import DataGenerators
 from data_exporter import DataExporter
 from data_manager import DataManager
+from colorama import Fore , Style
+import os
+def clear_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def main():
     """in this class we take inputs from the user and call the methods to do what he want """
-    print("Welcome to the Sales and Marketing Management System!")
     data_generator = DataGenerators()
     data_manager = DataManager()
     data_exporter = DataExporter()
 
     while True:
-        print("\nPlease choose an action:")
-        print("1. Generate Employees")
-        print("2. Generate Clients")
-        print("3. Generate Products")
-        print("4. Generate Transactions")
-        print("5. View Employees")
-        print("6. View Clients")
-        print("7. View Products")
-        print("8. View Transactions")
-        print("9. Export Data")
-        print("10. Exit")
+        clear_console()
+        print(Fore.CYAN + "=" * 40)
+        print(Fore.YELLOW + Style.BRIGHT + "  Sales and Marketing Management System  ".center(40))
+        print(Fore.CYAN + "=" * 40 + "\n")
+
+        print(Fore.GREEN + "Please choose an action:".center(40))
+        print(Fore.MAGENTA + "1. " + Fore.WHITE + "Generate Employees".center(40))
+        print(Fore.MAGENTA + "2. " + Fore.WHITE + "Generate Clients".center(40))
+        print(Fore.MAGENTA + "3. " + Fore.WHITE + "Generate Products".center(40))
+        print(Fore.MAGENTA + "4. " + Fore.WHITE + "Generate Transactions".center(40))
+        print(Fore.MAGENTA + "5. " + Fore.WHITE + "View Employees".center(40))
+        print(Fore.MAGENTA + "6. " + Fore.WHITE + "View Clients".center(40))
+        print(Fore.MAGENTA + "7. " + Fore.WHITE + "View Products".center(40))
+        print(Fore.MAGENTA + "8. " + Fore.WHITE + "View Transactions".center(40))
+        print(Fore.MAGENTA + "9. " + Fore.WHITE + "Export Data".center(40))
+        print(Fore.MAGENTA + "10. " + Fore.WHITE + "Delete Data".center(40))
+        print(Fore.MAGENTA + "11. " + Fore.WHITE + "Exit".center(40))
+        print(Fore.CYAN + "=" * 40)
 
         try:
             choice = int(input("> "))  # Capture the user's choice
