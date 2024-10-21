@@ -2,6 +2,8 @@ import random
 import time
 from art import *
 from colorama import *
+from gtts import gTTS
+import os
 from nltk.corpus import words, wordnet
 
 class SpellingActivity:
@@ -24,6 +26,16 @@ class SpellingActivity:
         if synsets:
             return synsets[0].definition()  
         return "Definition not available for this word."
+    
+    def speak(self, text):
+        voice = gTTS(text=text, lang='en')
+        voice.save("temp.mp3")
+        
+        for _ in range(3): 
+            os.system("afplay temp.mp3")
+            time.sleep(1)
+
+    
 
     def spelling_activity(self):
         print("Welcome to the Spelling Challenge!")
@@ -74,6 +86,7 @@ class SpellingActivity:
 
             if random_word:
                 print(f"Your word is: {random_word}")
+                self.speak(random_word) 
                 print(f"Meaning: {self.get_word_meaning(random_word)}")  
                 time.sleep(25)  
                 
