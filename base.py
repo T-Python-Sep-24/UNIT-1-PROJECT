@@ -1,19 +1,19 @@
 import json
 #
-def save_to_file(fileName: str, data: list):
+def save_to_file(filePath: str, data: list):
     """
     This method save the accounts data to the pickle file after it has been serialized
     :param fileName:
     :return:
     """
     try:
-        with open(fileName, 'w') as f:
+        with open(filePath, 'w') as f:
             json.dump(data, f, indent=4)
     except Exception as e:
         print(e)
 
 
-def load_from_file(fileName) -> list:
+def load_from_file(filePath) -> list:
     """
     This method loads all the accounts data from the pickle file and deserialize it
     :param fileName:
@@ -21,7 +21,7 @@ def load_from_file(fileName) -> list:
     """
 
     try:
-        with open(fileName, 'r') as file:
+        with open(filePath, 'r') as file:
             data = json.load(file)
             print(f"Loading Data ... ⏳")
             return data

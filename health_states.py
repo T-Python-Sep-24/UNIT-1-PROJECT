@@ -6,6 +6,7 @@ class Health_states():
         """
         initializer / constructor
         """
+        self.date = None
         self.health_states = []
         self.fileName = 'user_dataa_files/health_states.json'
         self.weight = 0
@@ -23,13 +24,13 @@ class Health_states():
         """
         self.weight = weight
         self.height = height
-        self.bmi = self.calc_bmi()
+        self.bmi = self.get_bmi()
         self.date = date
         self.health_states = []
         new_measurement = {
             "height": height,
             "weight": weight,
-            "bmi": self.calc_bmi(),
+            "bmi": self.get_bmi(),
             "date": self.date
 
         }
@@ -60,8 +61,7 @@ class Health_states():
         :return:
         """
         self.health_states = base.load_from_file(self.fileName)
-        for i in self.health_states:
-            print(i)
+        self.formatOutput()
     def bmi_categorization(self, bmi):
         """
         this method categorize user bmi and returns the appropriate msg
@@ -91,7 +91,7 @@ class Health_states():
         :return:
         """
         pass
-
+        # todo track progress
     def formatOutput(self):
         """
         Formats and prints a task from the to-do list.
