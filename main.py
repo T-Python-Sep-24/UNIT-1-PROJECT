@@ -1,6 +1,12 @@
 from bloodBank import BloodBank
 
-
+def display_menu():
+    print("\n--- Blood Bank Management System ---")
+    print("1. Add Donor")
+    print("2. View Donors")
+    print("3. Search Donor")
+    print("4. Total Blood Quantity")
+    print("5. Exit")
 
 def main():
     blood_bank = BloodBank()
