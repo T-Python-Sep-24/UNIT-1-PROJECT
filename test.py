@@ -2,6 +2,7 @@ import json
 import os
 from datetime import datetime , date
 import time
+from plyer import notification 
 
 
 # Def user add
@@ -82,6 +83,7 @@ def display_users():
      with open('users.json')as file:
           data=json.loads(file.read())
           print(json.dumps(data, indent=4))
+#add count how many borrower
 #display_users()
 
 
@@ -112,24 +114,28 @@ def change_user_status(user_id):
      if user_id_not_found:
         print(f"User ID {user_id}'s not found")
         
-userid= int(input("Enter user ID: "))
-change_user_status(userid)
+#userid= int(input("Enter user ID: "))
+#change_user_status(userid)
 
 
 #def check pay alert ***
-'''def check_pay():
+def check_pay():
+    try:
+        with open('users.json', 'r') as f:
+            users= json.load(f)
+    except FileExistsError:
+            users= []
+
     today= date.today().strftime("%Y-%m-%d")
-    with open('users.json','r')as file:
-       data=json.load(file)
-       for line in file:
-           values=line.split()
-           if today >= values[18]:
-               notification.notify(
-                title = 'ALERT!!!',
-                message = f'Today {values[4]} should be paying',
-                timeout= 10
-                )
-               time.sleep(5)
-               print("Today " + values[4] + " should be paying !")
-           else:
-               pass'''
+    for pay in users:
+              if today >= pay["pay_date"] and pay["status"] != True:
+                   notification.notify(
+                        title = 'ALERT!!!',
+                        message = f'Today {pay["name"]} should be paying',
+                        timeout= 10
+                        )
+                   time.sleep(5)
+                   print(f"Today {pay["name"]} should be paying !")
+              else:
+                   pass
+check_pay()
