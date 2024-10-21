@@ -1,6 +1,9 @@
-from bakery.order import OrderedProduct, Order
-import pickle, json
-
+from bakery.order import *
+import json
+from rich import print
+from rich.table import Table
+from rich import box
+from rich.prompt import Prompt, IntPrompt, FloatPrompt
 
 class Person:
 
@@ -78,18 +81,25 @@ class Person:
         '''
         return self.__role
     
-    def listAllProducts(self):
+    def listAllProducts(self) -> Table:
         '''
-        This method retrieves the list of all products from json file and returns a formatted string containing the menu
+        This method retrieves the list of all products from json file and returns a Table object containing the menu
         '''
-        menuFormatted: str = ""
         menu: dict = self.__loadFromJSON()
 
+        #Creating a table object to display menu
+        menuTable: Table = Table(title = "[bold purple]Stellar Bakery Menu[/]", expand=False, box=box.SIMPLE)
+
+        #Adding columns to the table
+        menuTable.add_column("Product Name", style = "bold cyan")
+        menuTable.add_column("Quantity", style = "bold magenta", justify = "center")
+        menuTable.add_column("Price Per Piece", style = "bold green", justify = "center")
+
         if menu:
-            #Format and store the menu 
+            #Create a row for each product in the menu 
             for prod in menu:
-                menuFormatted += f"⟡ {prod}.\tQuantity: {menu[prod]['qty']}\tPrice per piece: {menu[prod]['qty']}SR.\n"
-            return menuFormatted
+                menuTable.add_row(f"[bold #f2f4bd]{prod}[/]",f"[bold #f2f4bd]{menu[prod]['qty']}[/]",f"[bold #a4d5b5]{menu[prod]['price']} SR[/]")
+            return menuTable
         else: 
             return "Your menu is empty."
         
@@ -109,7 +119,6 @@ class Person:
         finally:
             return menu
         
-    
 class Customer(Person):
 
     def __init__(self, name: str, age: int, gender: str, phone: str, password: str):
@@ -145,24 +154,6 @@ class Customer(Person):
             info += {order.orderInfo()}
         
         return info
-
-    def loadFromFile(self) -> list[Order]: 
-        '''
-        Call this method whenever you want to load from a pickle file and make neccessary checks
-        '''
-        customers: list[Customer] = []
-        try:
-            with open("bakeryData/customerDetails.pkl", "rb") as file:
-                #Get the information from the json file by using .load() function
-                customers = pickle.load(file)
-            for customer in customers:
-                if customer.getName() == self.getName():
-                    return customer.getOrderHistory()
-        except FileNotFoundError:
-            print("File doesn't Exist.")
-        except Exception as e:
-            print(f"An error occured, {e.__class__}")
-    
 
 class Employee(Person):
 
@@ -278,22 +269,15 @@ class Employee(Person):
         If the choice was 2 -> update product quantity
         If the choice was 3 -> update product price
         '''
-        while choice != '4':
-            try:
-                if choice == '1':
-                    newName: str = input("Enter the new name: ")
-                    return self.updateProductName(prodName, newName)
-                elif choice == '2':
-                    newQty: int = int(input("Enter the new quantity: "))
-                    if not isinstance(newQty, int):
-                        raise ValueError
-                    return self.updateProductQty(prodName, newQty)
-                elif choice == '3':
-                    newPrice: float = float(input("Enter the new price: "))
-                    if not isinstance(newPrice, float):
-                        raise ValueError
-                    return self.updateProductPrice(prodName, newPrice)
-                else:
-                    print("Invalid choice, try again..")
-            except ValueError:
-                print("Please enter numbers only.")
+        if choice == '1':
+            newName: str = Prompt.ask("[#f2f4bd]Enter the new name[/]")
+            return self.updateProductName(prodName, newName)
+        elif choice == '2':
+            newQty: int = IntPrompt.ask("[#f2f4bd]Enter the new quantity[/]")
+            return self.updateProductQty(prodName, newQty)
+        elif choice == '3':
+            newPrice: float = FloatPrompt.ask("[#f2f4bd]Enter the new price[/]")
+            return self.updateProductPrice(prodName, newPrice)
+
+    def checkExpiry(self):
+        '''This method checks if there are any expired objects'''
