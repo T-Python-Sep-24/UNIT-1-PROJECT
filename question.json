@@ -1,0 +1,53 @@
+{
+    "1": [
+        {
+            "question": "Who challenged the hare to a race?",
+            "options": ["cat", "bird", "turtle"],
+            "answer": "turtle"
+        },
+        {
+            "question": "What did the hare do during the race?",
+            "options": ["cheated", "slept", "ran slowly"],
+            "answer": "slept"
+        },
+        {
+            "question": "Who won the race?",
+            "options": ["hare", "turtle", "both of them"],
+            "answer": "turtle"
+        }
+    ],
+    "2": [
+        {
+            "question": "What did the elephant do to the ants?",
+            "options": ["played with them", "harassed them", "gave them gifts"],
+            "answer": "harassed"
+        },
+        {
+            "question": "How did the ants respond?",
+            "options": ["taught him a lesson", "screamed for help", "cried"],
+            "answer": "taught him a lesson"
+        },
+        {
+            "question": "What did the elephant do after realizing his mistake?",
+            "options": ["ran away", "cried", "apologized"],
+            "answer": "apologized"
+        }
+    ],
+    "3": [
+        {
+            "question": "What did the mouse do to the lion?",
+            "options": ["woke him up", "scared him", "bit him"],
+            "answer": "woke him up"
+        },
+        {
+            "question": "What did the mouse promise the lion?",
+            "options": ["to be friends", "to find food", "to help him someday"],
+            "answer": "to help him someday"
+        },
+        {
+            "question": "How did the mouse help the lion later?",
+            "options": ["gave him food", "gnawed through the ropes", "scared the hunters"],
+            "answer": "gnawed through the ropes"
+        }
+    ]
+}

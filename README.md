@@ -14,14 +14,13 @@
 #### Overview : A program created to assist children with learning disabilities in improving their skills.
 
 #### As a user I should be able to do the following :
-- Select the desired activity (spelling, reading, writing, Matching,math).
+- Select the desired activity (spelling, reading, writing, math).
 - Engage in spelling exercises featuring selected words.
 - View a list of available stories with titles 
-- Select a story to read in a clear and engaging format.
+- Select a story to read.
 - Answer questions about the story.
 - Create and save personal stories.
-- matching....
-- math....
+- Offer math problems based on selected operations (addition, subtraction, multiplication, division).
 - 
 
 

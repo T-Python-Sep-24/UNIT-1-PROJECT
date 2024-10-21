@@ -1,105 +1,139 @@
 import time
-from art import *  
-from colorama import *
+import json
+from art import *
+from colorama import Fore
+from spellchecker import SpellChecker
+
 class Story:
+
     def __init__(self):
-        self.stories = {
-            "1": ("The Hare and the Tortoise", '''
-One day, a hare was showing off how fast he could run. He laughed at the turtle for being so slow. After seeing the overconfidence, the turtle challenged him to a race. The hare laughed at the turtle's challenge and accepted.
+        self.load_stories()
+        self.load_questions()
+        self.spell_checker = SpellChecker()
 
-As the race began, the hare ran extremely quickly and went far ahead of the turtle. He thought he had plenty of time to relax, so he lay down to sleep, thinking he would win easily.
+    def load_stories(self):
+        try:
+            with open("story.json", "r") as file:
+                self.stories = json.load(file)
+        except FileNotFoundError:
+            print("No stories found. Please create some stories first.")
+            self.stories = {}
+        except json.JSONDecodeError:
+            print("Error reading the story file. Please check the file format.")
+            self.stories = {}
 
-However, the turtle kept walking slowly but steadily until he arrived at the finish line. When the hare woke up, he saw the turtle had already crossed the finish line. The turtle had won the race.
-            '''),
+    def load_questions(self):
+        try:
+            with open("question.json", "r") as file:
+                self.questions = json.load(file)
+        except FileNotFoundError:
+            print("No questions found. Please create some questions first.")
+            self.questions = {}
+        except json.JSONDecodeError:
+            print("Error reading the question file. Please check the file format.")
+            self.questions = {}
 
-            "2": ("The Elephant and the Ants", '''
-There was once a proud elephant who enjoyed harassing smaller animals. He would go to the ant colony and shower them with water. The ants, being small, could only cry. The elephant laughed and threatened them.
-
-The ants had enough and decided to teach the elephant a lesson.
-
-They entered the elephant's trunk and started causing chaos. The elephant cried out in pain, realizing his mistake. He apologized to the ants and to all the animals he had bullied.
-            '''),
-
-            "3": ("The Talking Birds", '''
-Once upon a time, there lived two talking birds with their parents. One day, when their parents were away, a villager caught them. One of the birds escaped and searched for its parents. Eventually, it found a hermitage where it was welcomed and fed, living happily there.
-
-Meanwhile, the captured bird was discovered by an explorer. He spoke rudely to the bird, shocked to see a talking creature. The explorer later visited the hermitage and met the other bird, who spoke respectfully and welcomed him.
-            '''),
-        }
-
-        self.questions = {
-            "1": [
-                {"question": "Who challenged the hare to a race?", "answer": "turtle"},
-                {"question": "What did the hare do during the race?", "answer": "slept"},
-                {"question": "Who won the race?", "answer": "turtle"}
-            ],
-            "2": [
-                {"question": "What did the elephant do to the ants?", "answer": "harassed"},
-                {"question": "How did the ants respond?", "answer": "taught him a lesson"},
-                {"question": "What did the elephant do after realizing his mistake?", "answer": "apologized"}
-            ],
-            "3": [
-                {"question": "What happened to one of the birds?", "answer": "caught by a villager"},
-                {"question": "Where did the escaped bird go?", "answer": "hermitage"},
-                {"question": "How did the explorer react to the talking bird?", "answer": "rudely"}
-            ]
-        }
+    def display_menu(self):
+        print(text2art("Welcome to the Reading and Writing Challenge! \n", font='straight'))
+        print(text2art('''
+           1. The Hare and the Tortoise
+           2. The Elephant and the Ants
+           3. The Lion and the Mouse
+           4. Write your own story 
+           5. Display all kids stories
+           6. Exit
+        ''', font='straight'))
 
     def write_to_file(self, content):
         with open('story.txt', 'a') as file:
             file.write(content)
 
-    def display_menu(self):
-        print(text2art("Welcome to the Reading and Writing Challenge! \n ",font = 'straight'))
-        print(text2art('''
-           1. The Hare and the Tortoise
-           2. The Elephant and the Ants
-           3. The Talking Birds
-           4. Write your own story 
-           5. Display all kids stories
-           6. Exit 
-        ''', font ='straight'))
+    def check_spelling(self, text):
+        words = text.split()
+        corrected_text = []
+        corrections = []
+        for word in words:
+            corrected_word = self.spell_checker.candidates(word)
+            
+            if corrected_word:  # Check if candidates is not empty
+                correct_word = corrected_word.pop()  # Get one of the suggestions
+                corrected_text.append(correct_word)
+                corrections.append((word, correct_word))
+            else:
+                corrected_text.append(word)  # If no correction found, keep the original word
+                
+        return ' '.join(corrected_text), corrections
+
 
     def read_story(self, title, content):
         start_time = time.time()
-
         print(content)
         input("Press 'Enter' when you finish reading...")  
         
         end_time = time.time()
         time_taken = (end_time - start_time) / 60
-        print(f"You took {time_taken:.2f} minutes to read '{title}'.")
+        print(f"{Fore.GREEN}You took {time_taken:.2f} minutes to read '{title}'.{Fore.RESET}")
 
     def ask_questions(self, story_number):
-        start_time = time.time() 
+        start_time = time.time()
+        
+        for q in self.questions.get(story_number, []):
+            print(q["question"])
+            for idx, option in enumerate(q["options"], start=1):
+                print(f"{idx}. {option}")
 
-        for q in self.questions[story_number]:
-            user_answer = input(q["question"] + " ").strip().lower()
-            if user_answer == q["answer"]:
-                print("Correct!")
-            else:
-                print(f"Wrong! The correct answer is: {q['answer']}")
+            attempts = 0
+            while attempts < 2: 
+                user_answer = input("Choose the correct option number: ")
+                if int(user_answer) - 1 < len(q["options"]):
+                    selected_answer = q["options"][int(user_answer) - 1].lower()
+                    if selected_answer == q["answer"].lower():
+                        print(Fore.GREEN + "Correct!" + Fore.RESET)
+                        break
+                    else:
+                        print(Fore.RED + "Wrong! Try again." + Fore.RESET)
+                        attempts += 1
+                else:
+                    print(Fore.RED + "Invalid option. Try again." + Fore.RESET)
 
-        end_time = time.time() 
+            if attempts == 2:
+                print(Fore.RED + f"The correct answer is: {q['answer']}" + Fore.RESET)
+
+        end_time = time.time()
         time_taken = (end_time - start_time) / 60  
-        print(f"You took {time_taken:.2f} minutes to answer the questions.")
+        print(f"{Fore.GREEN}You took {time_taken:.2f} minutes to answer the questions.{Fore.RESET}")
+
+    def display_loaded_stories(self):
+        print(Fore.YELLOW + "Loaded Stories from JSON:" + Fore.RESET)
+        for key, (title, content) in self.stories.items():
+            print(f"{Fore.CYAN}Title: {title}{Fore.RESET}")
+            print(content)
+            print("-" * 40)
+
 
     def read_write(self):
         self.display_menu()
-        choose = input("Choose number 1 - 6: ")
+        choose = input("Choose number 1 - 5: ")
 
         while True:
             if choose in self.stories:
                 title, story_content = self.stories[choose]
                 self.read_story(title, story_content)
-                input ("Press 'Enter' to answer the questions ")
+                input("Press 'Enter' to answer the questions ")
+                print("\033[H\033[J")  
                 self.ask_questions(choose)
 
             elif choose == '4':
                 story_title = input("Write your story title then press enter: ")
                 your_story = input("Write your story then press enter: ")
-                self.write_to_file(f"{story_title} : \n{your_story} . \n ")
-                print(f"\nYour story titled '{story_title}' \n{your_story}\n")  
+                corrected_story, corrections = self.check_spelling(your_story)  
+                self.write_to_file(f"{story_title} : \n{corrected_story} . \n ")
+                
+                print(f"\nYour story titled '{story_title}': \n{corrected_story}\n")  
+                if corrections:  
+                    print("Corrections made:")
+                    for original, corrected in corrections:
+                        print(f"'{original}' -> '{corrected}'")  
 
             elif choose == '5':
                 with open('story.txt','r') as file:
@@ -109,10 +143,9 @@ Meanwhile, the captured bird was discovered by an explorer. He spoke rudely to t
             elif choose == '6':
                 print("Exiting the program.")
                 break
+
             else:
                 print("Invalid choice. Please select again.")
 
             self.display_menu()
             choose = input("Choose number 1 - 6: ")
-
-
