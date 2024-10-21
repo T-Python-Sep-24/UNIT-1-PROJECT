@@ -2,6 +2,7 @@ import os
 import pickle
 import subprocess
 from rich.console import Console
+from rich.markup import render
 from rich.table import Table
 def fil_ter():
     with open('tasks.pkl', 'rb') as file:
@@ -45,19 +46,16 @@ def task_return():
             tasks = pickle.load(file)
             table = Table(title="Tasks")
 
-            table.add_column("Task Description", justify="center", style="cyan", no_wrap=True)
-            table.add_column("Task Type", justify="center", style="magenta")
+            table.add_column("Hold", justify="center", style="cyan", no_wrap=True)
             table.add_column("Ready", justify="center", style="magenta")
-            table.add_column("Hold", justify="center", style="magenta")
             table.add_column("In progress", justify="center", style="magenta")
             table.add_column("done", justify="center", style="magenta")
-
-
-            for task in tasks:
-                table.add_row(task["task_des"], task["task_type"])
+            for task  in tasks:
+                table.add_row(task["task_des"],task["task_type"],task["task_type"])
             console = Console()
+
             console.print(table, justify="center")
-    except Exception as e:
+    except FileNotFoundError as e:
         console.print(e)
 
 
