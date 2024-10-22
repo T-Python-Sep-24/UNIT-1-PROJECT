@@ -1,12 +1,6 @@
 import datetime
-import json
-
 from colorama import Fore, Style
 import base
-import health_states
-import nutrition
-import user_data
-import workouts
 from user_data import User
 from workouts import Workout
 from nutrition import Meal
@@ -14,7 +8,7 @@ from health_states import Health_states
 from reports import Reports
 
 # user = User()
-user1 = user_data.User()
+user1 = User()
 
 # generate reports
 def reportsMenu():
@@ -99,8 +93,11 @@ def healthStatesTracking():
                 height = user1.get_height()
                 date = datetime.date.today()
             else:
-                height = int(input("Enter New Height: "))
-                date = input("Enter date")
+                height = float(input("Enter New Height in miters (e.g. 1.67): "))
+                date_new = input("Enter date or press enter to add today's date: ")
+                if date_new == "":
+                    print(date_new)
+                    date = datetime.date.today()
 
             health_states_instance.add_health_states(weight, height, str(date))
             input(" >>> Press any Key to continue <<< ")
@@ -159,10 +156,11 @@ def nutritionsTrackingMenu():
     print("=" * 40 + Style.RESET_ALL)
     print("Please choose an option from the menu below:")
     print(Fore.GREEN + "1. Query Meals")
-    print("2. Update Meal data")
-    print("3. Display Meals")
-    print("4. Suggest meals")
-    print("5. Remove Meal")
+    print("2. Add Meal")
+    print("3. Update Meal data")
+    print("4. Display Meals")
+    print("5. Suggest meals")
+    print("6. Remove Meal")
     print(Fore.RED + "[Q/q] Return to Main Menu" + Style.RESET_ALL)
     print("=" * 40)
 
@@ -201,8 +199,18 @@ def nutritionTracking():
                 nutrition_instance.add_meal(meal_name, meal_calories, meal_macronutrients, water_intake, str(meal_date))
 
             input(" >>> Press any Key to continue <<< ")
-
         elif choice == '2':
+
+            meal_name = input("Enter the meal name: ")
+            quantity = input("Enter meal quantity in grams: ")
+            query = quantity + " grams of " + meal_name
+            water_intake = input("Enter your water intake in liters: ")
+            meal_date = datetime.date.today()
+            meal_calories, meal_macronutrients = nutrition_instance.calcFoodNutrients(query)
+            nutrition_instance.add_meal(meal_name, meal_calories, meal_macronutrients, water_intake, str(meal_date))
+            input(" >>> Press any Key to continue <<< ")
+
+        elif choice == '3':
 
             nutrition_instance.get_meals()
             m_num = input("Enter the meal number to update: ")
@@ -211,12 +219,12 @@ def nutritionTracking():
             nutrition_instance.update_meal(m_num, m_attribute, m_new_value)
             input(" >>> Press any Key to continue <<< ")
 
-        elif choice == '3':
+        elif choice == '4':
             # print all meals function
             nutrition_instance.get_meals()
             input(" >>> Press any Key to continue <<< ")
 
-        elif choice == '4':
+        elif choice == '5':
 
             isCutomized = input("Do you want a customized Suggestion [y/n] otherwise Random? ")
             if isCutomized.lower() == "y":
@@ -231,7 +239,7 @@ def nutritionTracking():
                 nutrition_instance.suggest_meals()
             input(" >>> Press any Key to continue <<< ")
 
-        elif choice == '5':
+        elif choice == '6':
 
             nutrition_instance.get_meals()
             num = int(input("Enter Meal number to delete: "))
@@ -343,6 +351,7 @@ def workoutTracking():
             workout_instance.get_workouts()
             num = int(input("Enter workout number to delete: "))
             workout_instance.remove_workout(num)
+            input(" >>> Press any Key to continue <<< ")
 
         elif choice.lower() == 'q':
             print("Returning to the main menu >>>")
@@ -387,7 +396,9 @@ def userAuth():
             age = int(input("Enter You age: "))
             gender = input("Enter your gender: ")
             weight = float(input("Enter your weight in kg (i.e. 60) : "))
-            height = float(input("Enter your height in meters (i.e. 1.72): "))
+            height_in = float(input("Enter your height in meters (i.e. 1.72): "))
+            if height_in > 20:
+                height = height_in / 100
         except Exception as e:
             print("Error occurred !!", e, e.__class__)
 
@@ -507,7 +518,7 @@ def settings():
                 print("Profile data Updated Successfully")
                 input(">> Press Enter To Continue <<")
             elif choice == "3":
-                f1, f2, f3 = workouts.Workout.fileName, nutrition.Meal.fileName, health_states.Health_states.fileName
+                f1, f2, f3 = Workout.fileName, Meal.fileName, Health_states.fileName
                 base.clear_files(f1, f2, f3)
                 print("Data is cleared Successfully")
                 input(">> Press Enter To Continue <<")

@@ -1,15 +1,17 @@
-import base
+from static import base
+
 
 class Health_states():
 
-    fileName = 'user_data_files/health_states.json'
+    fileName = '../user_data_files/health_states.json'
+
     def __init__(self):
         """
         initializer / constructor
         """
         self.date = None
         self.health_states = []
-        self.fileName = 'user_data_files/health_states.json'
+        self.fileName = '../user_data_files/health_states.json'
         self.weight: float = 0
         self.height: float = 0
         self.measure_date = ""
@@ -27,7 +29,7 @@ class Health_states():
         self.height = height
         self.bmi = self.get_bmi()
         self.date = date
-        self.health_states = []
+
         new_measurement = {
             "height": height,
             "weight": weight,
@@ -37,7 +39,7 @@ class Health_states():
         }
         self.health_states.append(new_measurement)
         base.save_to_file(self.fileName, self.health_states)
-        print("data saved successfully ")
+        print("data saved successfully ✅ ")
 
     def calc_bmi(self, weight: float, height: float) -> float:
         """

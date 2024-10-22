@@ -1,11 +1,8 @@
 import os
 import time
-
-import dotenv
 import requests
-
-import base
-import suggestmeals
+from static import base
+from apis import suggestmeals
 from tqdm import tqdm
 from dotenv import load_dotenv
 load_dotenv()
@@ -13,14 +10,14 @@ load_dotenv()
 
 class Meal:
 
-    fileName = 'user_data_files/meals.json'
+    fileName = '../user_data_files/meals.json'
 
     def __init__(self):
         """
         init / constructor
         """
         self.meals = []
-        self.fileName = 'user_data_files/meals.json'
+        self.fileName = '../user_data_files/meals.json'
         self.meal_name = ""
         self.meal_calories = ""  # API is recommended
         self.meal_macronutrients = {}  # API is recommended
@@ -53,8 +50,6 @@ class Meal:
 
         # Append meal to the list once
         self.meals.append(meal)
-        print(self.meals)
-        # Save to file
         base.save_to_file(self.fileName, self.meals)
         print(" >> Meal added successfully ✅ ")
 

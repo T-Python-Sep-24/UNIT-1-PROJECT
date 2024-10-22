@@ -1,18 +1,18 @@
 import time
 
 from dotenv import load_dotenv
-import base
+from static import base
 import os
 import requests
 from tqdm import tqdm
-import json
+
 # Load secrets from dotenv
 load_dotenv()
 
 
 class Workout:
 
-    fileName = 'user_data_files/workouts.json'
+    fileName = '../user_data_files/workouts.json'
 
     def __init__(self):
         """
@@ -20,7 +20,7 @@ class Workout:
         """
 
         self.workouts = []
-        self.fileName = 'user_data_files/workouts.json'
+        self.fileName = '../user_data_files/workouts.json'
         self.workout_type = ""
         self.workout_duration = ""
         self.calories_burned = 0
@@ -40,7 +40,7 @@ class Workout:
         self.workout_duration = duration
         self.calories_burned = calories_burned
         self.workout_date = workout_date
-        self.workout_goals = []
+        self.workout_goals = []  # todo separate the lists make goals totally in dependent
 
         workout = {
             "type": self.workout_type,
