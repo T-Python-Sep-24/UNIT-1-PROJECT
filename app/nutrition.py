@@ -20,10 +20,10 @@ class Meal:
         self.meal_name = ""
         self.meal_calories = ""  # API is recommended
         self.meal_macronutrients = {}  # API is recommended
-        self.water_intake = 0  # litre
+        self.water_intake: float = 0  # litre
         self.meal_date = ""
 
-    def add_meal(self, meal_name, meal_calories, meal_macronutrients, water_intake, meal_date):
+    def add_meal(self, meal_name, meal_calories, meal_macronutrients, water_intake: float, meal_date):
         """
         method to add meals data to files
         :param meal_name:
@@ -36,7 +36,7 @@ class Meal:
         self.meal_name = meal_name
         self.meal_calories = meal_calories
         self.meal_macronutrients = meal_macronutrients
-        self.water_intake = water_intake
+        self.water_intake: float = water_intake
         self.meal_date = meal_date
 
         meal = {

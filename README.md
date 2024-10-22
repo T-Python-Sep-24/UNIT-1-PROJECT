@@ -68,7 +68,7 @@ This project can be extended by integrating external APIs such as:
 
 1. Clone this repository:
    ```bash
-   https://github.com/HmzhDubh/UNIT-1-PROJECT.git
+    git clone https://github.com/HmzhDubh/UNIT-1-PROJECT.git
 
 2. Install the dependencies:
    ```bash

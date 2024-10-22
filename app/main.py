@@ -198,7 +198,7 @@ def nutritionTracking():
             c = input("Do you want to add this meal to your file [y/n] ? ")
             if c.lower() == 'y':
 
-                water_intake = input("Enter your water intake in liters: ")
+                water_intake = float(input("Enter your water intake in liters: "))
                 meal_date = datetime.date.today()
 
                 nutrition_instance.add_meal(meal_name, meal_calories, meal_macronutrients, water_intake, str(meal_date))
@@ -209,7 +209,7 @@ def nutritionTracking():
             meal_name = input("Enter the meal name: ")
             quantity = input("Enter meal quantity in grams: ")
             query = quantity + " grams of " + meal_name
-            water_intake = input("Enter your water intake in liters: ")
+            water_intake = float(input("Enter your water intake in liters: "))
             meal_date = datetime.date.today()
             meal_calories, meal_macronutrients = nutrition_instance.calcFoodNutrients(query)
             nutrition_instance.add_meal(meal_name, meal_calories, meal_macronutrients, water_intake, str(meal_date))
@@ -554,6 +554,8 @@ if __name__ == "__main__":
         print("Please Check Your Internet Connection")
     except FileNotFoundError as fe:
         print("Please Correct Files Paths")
+    except TypeError as le:
+        print("File is Empty, no data Available")
     except ValueError as v:
         print("Please Enter Correct Inputs")
     except Exception as e:

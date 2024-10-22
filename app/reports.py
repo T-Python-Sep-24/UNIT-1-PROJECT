@@ -1,3 +1,5 @@
+import time
+
 from app import base, health_states, nutrition
 import workouts
 from tabulate import tabulate
@@ -5,6 +7,7 @@ import dotenv
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from tqdm import tqdm
 import os
 dotenv.load_dotenv()
 
@@ -123,14 +126,24 @@ class Reports:
         health_states_data = base.load_from_file(health_states_file)
         health_states_table = []
 
+        total_calories = 0
+        total_water_intake = 0
+        # Initialize variables to store all the tables
+        all_meals_table = ""
+        all_workouts_table = ""
+        all_health_states_table = ""
+
+        # Process each meal and accumulate the HTML tables
         for meal in meals_data:
+            total_calories += meal['calories']
+            total_water_intake += meal['water']
 
             meal_details = [
                 ["Meal Details"],
                 ["Name", meal['name']],
                 ["Date", meal['date']],
                 ["Calories", f"{meal['calories']} kcal"],
-                ["Water", f"{meal['water']} glasses"]
+                ["Water", f"{meal['water']} Liters"]
             ]
             meals_table = tabulate(meal_details, tablefmt="html")
 
@@ -147,8 +160,11 @@ class Reports:
             ]
             macronutrientsTable = tabulate(macronutrients, headers=["Nutrient", "Value"], tablefmt="html")
 
-        for workout in workout_data:
+            # Accumulate the current meal tables
+            all_meals_table += meals_table + macronutrientsTable + "<br>"
 
+        # Process each workout and accumulate the HTML tables
+        for workout in workout_data:
             workout_details = [
                 ["Workout Details"],
                 ["Type", workout['type']],
@@ -158,94 +174,99 @@ class Reports:
             ]
             workoutsTable = tabulate(workout_details, tablefmt="html")
 
-            # If there are goals, display them as well
+            # Handle goals for the workout
             if workout['goals']:
-
                 goals = tabulate([[goal] for goal in workout['goals']], headers=["Goal"], tablefmt="html")
             else:
-                goals = ["\nNo goals for this workout."]
+                goals = "\nNo goals for this workout."
 
+            # Accumulate the current workout tables
+            all_workouts_table += workoutsTable + "<br>" + goals + "<br>"
+
+        # Process each health state and accumulate the HTML tables
         for state in health_states_data:
-            # Format data into table rows
             measurement_details = [
                 ["Height", f"{state['height']} cm"],
                 ["Weight", f"{state['weight']} kg"],
                 ["BMI", f"{state['bmi']:.4f}"],
                 ["Date", state['date']]
             ]
+            health_states_table = tabulate(measurement_details, tablefmt="html")
 
-            # Display the table
-            health_states_table = (tabulate(measurement_details, tablefmt="html"))
+            # Accumulate the current health state tables
+            all_health_states_table += health_states_table + "<br>"
+
+
+
+# Now use your email sending logic to send `email_content` as the body
+
 
         html_content = f"""\
         <html>
-          <head>
-            <style>
-                table {{
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin: 20px 0;
-                    font-family: Arial, sans-serif;
-                    font-size: 14px;
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }}
-                th, td {{
-                    padding: 10px;
-                  text-align: left;
-                  border: 1px solid #ddd;
-                }}
-                table, th, td {{
-                    border: 1px solid #dddddd;
-                }}
-            
-                th, td {{
-                    padding: 10px;
-                    text-align: left;
-                }}
-            
-                th {{
-                    background-color: #f4f4f4;
-                    font-weight: bold;
-                }}
-            
-                tr:nth-child(even) {{
-                    background-color: #f9f9f9;
-                }}
-            
-                tr:hover {{
-                    background-color: #f1f1f1;
-                }}
-            
-                caption {{
-                    font-size: 18px;
-                    margin-bottom: 10px;
-                    font-weight: bold;
-                    text-align: left;
-                }}
-          </style>
-
-          </head>
-          <body>
-            <h1>Hello!</h1>
-            <p>Hello, this is a Your Meals daily Report sent from Python.</p>
-            <p><strong>Enjoy coding!</strong></p>
+            <head>
+                <style>
+                    table {{
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 20px 0;
+                        font-family: Arial, sans-serif;
+                        font-size: 14px;
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                    }}
+                    th, td {{
+                        padding: 10px;
+                      text-align: left;
+                      border: 1px solid #ddd;
+                    }}
+                    table, th, td {{
+                        border: 1px solid #dddddd;
+                    }}
+                
+                    th, td {{
+                        padding: 10px;
+                        text-align: left;
+                    }}
+                
+                    th {{
+                        background-color: #f4f4f4;
+                        font-weight: bold;
+                    }}
+                
+                    tr:nth-child(even) {{
+                        background-color: #f9f9f9;
+                    }}
+                
+                    tr:hover {{
+                        background-color: #f1f1f1;
+                    }}
+                
+                    caption {{
+                        font-size: 18px;
+                        margin-bottom: 10px;
+                        font-weight: bold;
+                        text-align: left;
+                    }}
+                </style>
+            </head>
+            <body>
+                <h1>Hello!</h1>
+                <p>Hello, this is a Your Meals daily Report sent from Python.</p>
+                <p><strong>Enjoy coding!</strong></p>
                 <div>
-                    <h2> Meals </h2>
-                    {meals_table}
-                    <h2> Macronutrients </h2>
-                    {macronutrientsTable}
-                    <h2> Workouts </h2>
-                    {workoutsTable}
-                    <h2> Goals </h2>
-                    {goals}
-                    <h2> Health States </h2>
-                    {health_states_table}
+                    <h2>Meal Information</h2>
+                    {all_meals_table}
+            
+                    <h2>Workout Information</h2>
+                    {all_workouts_table}
+            
+                    <h2>Health States</h2>
+                    {all_health_states_table}
                 </div>
-            <a href="https://www.example.com">Click here to visit our website</a>
-            <h3> THANK YOU ! </h3>
-          </body>
+                <a href="https://www.example.com">Click here to visit our website</a>
+                <h3> THANK YOU ! </h3>
+            </body>
         </html>
         """
         message.attach(MIMEText(html_content, 'html'))
@@ -256,9 +277,13 @@ class Reports:
             smtp_server = smtplib.SMTP('smtp.gmail.com', 587)
             smtp_server.starttls()  # Upgrade the connection to a secure encrypted SSL/TLS connection
             smtp_server.login(sender_email, app_password)  # Login with App Password
-
-            # Send the email
-            smtp_server.sendmail(sender_email, receiver_email, message.as_string())
+            with tqdm(total=100, desc="Sending Reports", ncols=100) as send_par:
+                for i in range(90):
+                    time.sleep(0.02)
+                    send_par.update(1)
+                # Send the email
+                smtp_server.sendmail(sender_email, receiver_email, message.as_string())
+                send_par.update(10)
             print('Email sent successfully!')
 
         except Exception as e:
