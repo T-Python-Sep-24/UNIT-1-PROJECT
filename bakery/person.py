@@ -124,12 +124,21 @@ class Person:
         
 class Customer(Person):
 
-    def __init__(self, name: str, age: int, gender: str, phone: str, password: str):
+    def __init__(self, name: str, age: int, gender: str, phone: str, password: str, deliveryAddress: str):
         super().__init__(name, age, gender, phone, password)
+        self.__deliveryAdress = deliveryAddress
         self.__orderHistory: list[Order] = []
         self.__role = "customer"
         self.__cart = Cart()
     
+    def setDeliveryAddress(self, deliveryAddress: str):
+        '''Setter for delivery address attribute'''
+        self.__deliveryAdress = deliveryAddress
+
+    def getDeliveryAddress(self):
+        '''Getter for delivery adress attribute'''
+        return self.__deliveryAdress
+
     def setOrderHistory(self, orderHistory: list[Order]):
         '''
         setter for orderHistory attribute
@@ -158,14 +167,22 @@ class Customer(Person):
 
     def getInfo(self) -> str:
         '''
-        This method returns a formatted string containing customer info
+        This method returns a Table object containing customer info
         '''
-        info: str = f"Name: {self.getName()}.\nAge: {self.getAge()}.\nGender: {self.getGender()}.\nPhone number: {self.getPhone()}.\nOrder history:\n"
-
-        for order in self.getOrderHistory():
-            info += {order.orderInfo()}
-        
-        return info
+        #Using rich to style the customer info below 
+        infoTable: Table =  Table("[bold #5dd6ff]Personal information:[/]", title_justify="left", box=box.MINIMAL_DOUBLE_HEAD, border_style="#daf5ff")
+        infoTable.add_row(f"[#aceaff]Name:[/] [not bold #daf5ff]{self.getName()}.[/]", style="bold")
+        infoTable.add_row(f"[#aceaff]Age:[/] [not bold #daf5ff]{self.getAge()}.[/]", style="bold")
+        infoTable.add_row(f"[#aceaff]Gender:[/] [not bold #daf5ff]{self.getGender()}.[/]", style="bold")
+        infoTable.add_row(f"[#aceaff]Phone number:[/] [not bold #daf5ff]{self.getPhone()}.[/]", style="bold")
+        infoTable.add_row(f"[#aceaff]Delivery address:[/] [not bold #daf5ff]{self.getDeliveryAddress()}.[/]", style="bold")
+        #Make sure that there are previous orders to display
+        if self.__orderHistory != []:
+            for order in self.__orderHistory:
+                infoTable.add_row(order.orderInfo())
+        else:
+            infoTable.add_row(f"[bold #aceaff]Order History:[/] [italic #daf5ff]You have no previous orders..[/]")
+        return infoTable
 
 class Employee(Person):
 

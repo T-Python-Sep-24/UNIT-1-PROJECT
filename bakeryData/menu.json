@@ -1,27 +1,22 @@
 {
-    "Chocolate Chip Cookies": 
-    {
-        "qty": 50 ,
+    "Chocolate Chip Cookies": {
+        "qty": 50,
+        "price": 6.0
+    },
+    "Double Chocolate Cookies": {
+        "qty": 50,
+        "price": 6.5
+    },
+    "Brownies": {
+        "qty": 38,
+        "price": 7.0
+    },
+    "Carrot Cake": {
+        "qty": 25,
         "price": 10.0
     },
-    "Double Chocolate Cookies": 
-    {
-        "qty": 50 ,
-        "price": 11.50
-    },
-    "Brownies": 
-    {
-        "qty": 40 ,
-        "price": 15.0
-    }, 
-    "Carrot Cake": 
-    {
-        "qty": 25 ,
-        "price": 15.0
-    }, 
-    "Croissant": 
-    {
-        "qty": 30 ,
-        "price": 20.0
+    "Croissant": {
+        "qty": 30,
+        "price": 12.0
     }
 }

@@ -1,5 +1,5 @@
-from order import OrderedProduct
-import pickle, json
+from bakery.order import OrderedProduct
+import json
 
 #Using rich library to style output on terminal
 from rich.table import Table
@@ -11,18 +11,21 @@ class Cart:
     def __init__(self):
         self.__orderedProducts: list[OrderedProduct] = []
         
+    def getOrderedProducts(self):
+        '''Getter for ordered products attribute'''
+        return self.__orderedProducts
+
     def addToCart(self, productName, qty):
         '''A method that adds a product with a name and quantity to the cart'''
         menu: dict = self.__loadFromJSON()
         price: float = 0.0
         if menu:
             if productName in menu:
-                price = menu[productName]["price"] * qty
+                price = menu[productName]["price"]
 
         product: OrderedProduct = OrderedProduct(productName, qty, price)
         self.decreaseAvailableProductsQty(productName, qty)
         self.__orderedProducts.append(product)
-        self.saveCartData()
 
     def removeFromCart(self, prodName):
         '''A method that removes a product with a specific name from the cart'''
@@ -32,8 +35,6 @@ class Cart:
                 self.returnProductsToMenu(prodName, prod.getQty())
                 #Remove the product from the list of ordered products 
                 self.__orderedProducts.remove(prod)
-                #Save modified cart details
-                self.saveCartData()
                 return True
         return False
 
@@ -47,8 +48,6 @@ class Cart:
                 self.decreaseAvailableProductsQty(prodName, qty)
                 #Set the new quantity value
                 prod.setQty(qty)
-                #Save modified cart details
-                self.saveCartData()
                 return True
         return False
 
@@ -88,7 +87,6 @@ class Cart:
     
     def viewCart(self) -> Table:
         '''This method displays cart contents when called'''  
-        products: str = ""  
 
         #Creating a table object to display menu
         cartTable: Table = Table(title = "Cart Details", title_style="italic bold #fdffc3", border_style="#dadada",expand=False, box=box.SIMPLE_HEAVY)
@@ -98,31 +96,15 @@ class Cart:
         cartTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
         cartTable.add_column("[bold #a4d5b5]Price[/]", justify = "center")
 
-        try:
-            with open("bakeryData/cartDetails.pkl", "rb") as file:
-                #Get the information from the json file by using .load() function
-                self.__orderedProducts = pickle.load(file)
+        if self.__orderedProducts != []:
             #Add a row for each product in the cart
             for prod in self.__orderedProducts:
                 cartTable.add_row(f"[#fdffc3]{prod.getName()}[/]", f"[#bdeeff]{prod.getQty()}[/]", f"[#a4d5b5]{prod.getPrice()} SR[/]")
             cartTable.add_section()
-            cartTable.add_row(None, None, f"{products}Total price: {self.calculateTotal()} SR.", style="white bold")
+            cartTable.add_row(None, None, f"Total price: {self.calculateTotal()} SR", style="white")
             return cartTable
-        
-        except FileNotFoundError:
-            return Text("File doesn't Exist.", style="#fdffc3")
-        except EOFError:
+        else:
             return Text("Your cart is empty", style="#fdffc3")
-        except Exception as e:
-            return Text(f"An error occured, {e.__class__}", style="#fdffc3")
-        
-    def saveCartData(self):
-        '''
-        This method stores cart data in a pickle file to retrieve when needed
-        '''
-        with open("bakeryData/cartDetails.pkl", "wb") as file:
-            #Store the customer in a pickle file
-            pickle.dump(self.__orderedProducts, file)
 
     def clearCart(self) -> bool:
         '''This method clears all products from the cart and returns the products to the menu of available products'''
@@ -131,8 +113,6 @@ class Cart:
                 self.returnProductsToMenu(prod.getName(), prod.getQty())
             #Empty the list of ordered products
             self.__orderedProducts = []
-            #Open the cart in write mode to clear its contents
-            open("bakeryData/cartDetails.pkl", "wb").close()
             return True
         #If the cart is already empty return false
         return False

@@ -1,5 +1,4 @@
 from datetime import datetime
-import pickle, json
 
 #Using rich library to style output on terminal
 from rich.table import Table
@@ -39,14 +38,42 @@ class OrderedProduct:
 
 class Order:
 
-    def __init__(self, orderedProducts: list[OrderedProduct]):
+    def __init__(self, orderedProducts: list[OrderedProduct], payment: str, delivered: bool=False, deliveryAddress: str = ""):
         self.__date = datetime.today()
         self.__orderedProducts = orderedProducts
+        self.__payment = payment
+        self.__delivered = delivered
+        self.__deliveryAddress = deliveryAddress
 
-    def orderInfo(self) -> str:
+    def getPayment(self) -> str:
+        '''Getter for payment attribute'''
+        return self.__payment
+    
+    def isDelivered(self) -> bool:
+        '''This method returns True if the order was delivered and False otherwise'''
+        return self.__delivered
+    
+    def setDeliveryAddress(self, deliveryAdd: str):
+        '''Setter for delivery address attribute'''
+        self.__deliveryAddress = deliveryAdd
+
+    def getDeliveryAddress(self) -> str:
+        '''Getter for delivery address attribute'''
+        return self.__deliveryAddress
+    
+    def orderInfo(self) -> Table:
         '''This method returns the details of the order'''
-        products: str = ""
+        #Create table of ordered products in an order
+        productsTable: Table = Table(title="Order Details:",title_style="bold #aceaff" ,title_justify="left", box=box.SIMPLE, show_footer=True, border_style="#daf5ff")
+        
+        #Adding columns to the table 
+        productsTable.add_column("[bold #fdffc3]Product Name[/]")
+        productsTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center", footer=f"Ordered on: {datetime.strftime(self.__date, '%Y-%m-%d %H:%M:%S')}", footer_style="#aceaff")
+        productsTable.add_column("[bold #a4d5b5]Price[/]", justify = "center")
+        
+        #Adding rows for each product in the ordered products
         for prod in self.__orderedProducts:
-            total: float = prod.getQty() * prod.getPrice()
-            products += f"Product name: {prod.getName()}. Quantity: {prod.getQty()}. Price: {total}\n"
-        return f"{products} Ordered on: {self.__date}\n"
+            totalPerProduct: float = prod.getQty() * prod.getPrice()
+            productsTable.add_row(f"[#fdffc3]{prod.getName()}[/]", f"[#bdeeff]{prod.getQty()}[/]", f"[#a4d5b5]{totalPerProduct}[/]")
+        
+        return productsTable
