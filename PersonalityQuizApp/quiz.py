@@ -3,6 +3,7 @@ from questions import emotional_intelligence_questions
 from questions import learning_style_questions
 from results import save_results, load_results
 from famous_people import famous_people
+from Emotions_Tips import emotional_intelligence_advice  
 
 class PersonalityQuiz:
     def __init__(self):
@@ -10,13 +11,13 @@ class PersonalityQuiz:
         self.answers = []
 
     def display_question(self, question):
-        """Display a single question with its options."""
+        # Display a single question with its options.
         print(question["question"])
         for i, option in enumerate(question["options"]):
             print(f"{i + 1}. {option}")
 
     def get_user_answer(self, question):
-        """Prompt user for their answer to a question and return the index."""
+        # Prompt user for their answer to a question and return the index.
         while True:
             try:
                 answer = int(input("Select option (1-4): ")) - 1
@@ -27,14 +28,14 @@ class PersonalityQuiz:
                 print(e)
 
     def calculate_score(self):
-        """Calculate the total score based on user responses."""
+        # Calculate the total score based on user responses.
         score = 0
         for question, answer in zip(self.questions, self.answers):
             score += question["weights"][answer]
         return score
 
     def take_quiz(self):
-        """Main method to take the quiz."""
+        # Main method to take the quiz.
         for question in self.questions:
             self.display_question(question)
             answer = self.get_user_answer(question)
@@ -68,17 +69,17 @@ class PersonalityQuiz:
 
 class EmotionalIntelligenceQuiz:
     def __init__(self):
-        self.questions = emotional_intelligence_questions
+        self.questions = emotional_intelligence_questions  
         self.answers = []
 
     def display_question(self, question):
-        """Display a single question with its options."""
+        # Display a single question with its options
         print(question["question"])
         for i, option in enumerate(question["options"]):
             print(f"{i + 1}. {option}")
 
     def get_user_answer(self, question):
-        """Prompt user for their answer to a question and return the index."""
+        # Prompt user for their answer to a question and return the index
         while True:
             try:
                 answer = int(input("Select option (1-4): ")) - 1
@@ -89,21 +90,21 @@ class EmotionalIntelligenceQuiz:
                 print(e)
 
     def calculate_score(self):
-        """Calculate the total score based on user responses."""
+        # Calculate the total score based on user responses
         score = 0
         for question, answer in zip(self.questions, self.answers):
             score += question["weights"][answer]
         return score
 
     def take_quiz(self):
-        """Main method to take the quiz."""
+        # Main method to take the quiz
         for question in self.questions:
             self.display_question(question)
             answer = self.get_user_answer(question)
             self.answers.append(answer)
 
         score = self.calculate_score()
-        
+
         # Determine emotional intelligence level based on score
         if score < 5:
             ei_level = "Low Emotional Intelligence"
@@ -112,10 +113,27 @@ class EmotionalIntelligenceQuiz:
         else:
             ei_level = "High Emotional Intelligence"
 
-        print(f"Your emotional intelligence level is: {ei_level}")
+        # Get tailored advice and books based on emotional intelligence level
+        advice_data = emotional_intelligence_advice[ei_level]
 
-        # Save results
-        user_results = {"score": score, "level": ei_level}
+        # Display results in the CLI
+        print(f"\nYour emotional intelligence level is: {ei_level}")
+        print("\nAdvice Based on Your Emotional Intelligence Level:")
+        for item in advice_data["advice"]:
+            print(item)
+
+        print("\nRecommended Books:")
+        for book in advice_data["books"]:
+            print(book)
+
+        # Prepare results to save
+        user_results = {
+            "score": score,
+            "level": ei_level,
+            "advice": advice_data["advice"],
+            "books": advice_data["books"]
+        }
+        
         save_results(user_results)
 
 class LearningStyleQuiz:
@@ -124,13 +142,13 @@ class LearningStyleQuiz:
         self.answers = []
 
     def display_question(self, question):
-        """Display a single question with its options."""
+        # Display a single question with its options.
         print(question["question"])
         for i, option in enumerate(question["options"]):
             print(f"{i + 1}. {option}")
 
     def get_user_answer(self, question):
-        """Prompt user for their answer to a question and return the index."""
+        # Prompt user for their answer to a question and return the index.
         while True:
             try:
                 answer = int(input("Select option (1-4): ")) - 1
@@ -141,14 +159,14 @@ class LearningStyleQuiz:
                 print(e)
 
     def calculate_score(self):
-        """Calculate the total score based on user responses."""
+        # Calculate the total score based on user responses.
         score = 0
         for question, answer in zip(self.questions, self.answers):
             score += question["weights"][answer]
         return score
 
     def take_quiz(self):
-        """Main method to take the quiz."""
+       # Main method to take the quiz.
         for question in self.questions:
             self.display_question(question)
             answer = self.get_user_answer(question)
