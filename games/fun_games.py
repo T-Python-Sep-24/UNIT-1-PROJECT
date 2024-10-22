@@ -1,4 +1,5 @@
 import random
+import time
 
 def play_guessing_game():
     """A simple number guessing game."""
@@ -98,16 +99,32 @@ def play_riddles():
 
     print(f"\n🎉 Riddle Game Over! Your score: {score}/{total_riddles}")
 
+def play_breathing_exercise():
+    """Guides the user through a breathing exercise."""
+    print("🧘‍♂️ Let's do a breathing exercise.")
+    print("We'll breathe in for 4 seconds, hold for 4 seconds, and breathe out for 4 seconds.")
+    
+    for _ in range(3):  # Repeat 3 times
+        print("Inhale... (4 seconds)")
+        time.sleep(4)
+        print("Hold... (4 seconds)")
+        time.sleep(4)
+        print("Exhale... (4 seconds)")
+        time.sleep(4)
+
+    print("😊 Great job! You completed the breathing exercise.")
+
 def play_game():
     """Main game menu for users to choose a game."""
-    print("🎮 Choose a game to play:")
+    print("🎮 Choose a game or activity to play:")
     print("1️⃣ Guessing Game")
     print("2️⃣ Trivia Quiz")
     print("3️⃣ Word Scramble")
     print("4️⃣ Riddle Game")
+    print("5️⃣ Breathing Exercise")
     
     while True:
-        choice = input("Select an option (1-4): ")
+        choice = input("Select an option (1-5): ")
 
         if choice == '1':
             play_guessing_game()
@@ -121,5 +138,8 @@ def play_game():
         elif choice == '4':
             play_riddles()
             break
+        elif choice == '5':
+            play_breathing_exercise()
+            break
         else:
-            print("❌ Invalid choice. Please select a valid game.")
+            print("❌ Invalid choice. Please select a valid game or activity.")
