@@ -23,6 +23,7 @@ class OrgnizerController:
             else:
                 # create the directories and copy the relevant images to it
                 for year, img_list in by_year_dict.items():
+                    # create the directory if not existed
                     try:
                         # use os.path.join() for better portability across operating systems
                         directory_path: str = os.path.join("Images_Destination", year)
@@ -31,28 +32,43 @@ class OrgnizerController:
                         self.orgnizer_view.display_file_exist_error_msg(year)
                     except Exception as e:
                         self.orgnizer_view.display_Exception_msg(e)
+
+                    # loop through images then copy it to the aproprite destination folder
                     for img in img_list:
                         img_source = os.path.join("Images_Source", img)
                         img_destination = os.path.join("Images_Destination", year)
                         shutil.copy2(img_source, img_destination)
+
                 self.orgnizer_view.display_orgniz_msg(True)
 
     def orgnize_images_by_month(self):
-        by_month_dict: dict = self.orgnizer_model.get_orgnized_by_month()
-        if len(by_month_dict) > 0:
-            for year, month in by_month_dict.items():
-                for month_key, img_list in month.items():
-                    # create the directory if not existed
-                    try:
-                        os.makedirs(f"Images_Destination/{year}/{month_key}")
-                    except FileExistsError:
-                        pass
-                    # loop through images then copy it to the aproprite destination folder
-                    for img in img_list:
-                        img_source = f"Images_Source/{img}"
-                        img_destination = f"Images_Destination/{year}/{month_key}"
-                        shutil.copy2(img_source, img_destination)
-            self.orgnizer_view.display_orgniz_msg(True)
+        images_dest_files: list = self.orgnizer_model.get_images_dest_files()
+        if len(images_dest_files) > 0:
+            # exit the method because the Images_Destination alread have contents
+            self.orgnizer_view.display_try_again_after_delete_dest()
+            return
         else:
-            # display failure message because the dict is empty
-            self.orgnizer_view.display_orgniz_msg(False)
+            by_month_dict: dict = self.orgnizer_model.get_orgnized_by_month()
+            if len(by_month_dict) < 1:
+                # display failure message because there is no images to copy
+                self.orgnizer_view.display_orgniz_msg(False)
+            else:
+                for year, month in by_month_dict.items():
+                    for month_key, img_list in month.items():
+                        # create the directory if not existed
+                        try:
+                            # use os.path.join() for better portability across operating systems
+                            directory_path: str = os.path.join("Images_Destination", year, month_key)
+                            os.makedirs(directory_path)
+                        except FileExistsError:
+                            self.orgnizer_view.display_file_exist_error_msg(year)
+                        except Exception as e:
+                            self.orgnizer_view.display_Exception_msg(e)
+
+                        # loop through images then copy it to the aproprite destination folder
+                        for img in img_list:
+                            img_source = os.path.join("Images_Source", img)
+                            img_destination = os.path.join("Images_Destination", year, month_key)
+                            shutil.copy2(img_source, img_destination)
+
+                self.orgnizer_view.display_orgniz_msg(True)                
