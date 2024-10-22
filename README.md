@@ -40,18 +40,22 @@
 
 ### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
 #### Project name : (Salf)
-#### Overview : 
+#### Overview : Salf Reminder is simple program that helps you keep track of who has taken money from you. It makes it easy to record borrower information (ID , name ,amount, today , pay_date , status)
+
 
 
 #### As a lender I should be able to do the following :
-Lender user can choose from the list ,
-- number 1 to add user to borrower 
+Lender can choose from the list ,
+- Automatic reminder when the program is running 
+- number 1 to add user to the borrower list 
 - number 2 to display borrower users
-- number 3 to change the status
-
+- number 3 to change user status to paid
+- number 0 to exist
 
 #### Usage:
 Lender user can choose from the list ,
+- Automatic reminder when the program is running 
 - number 1 to add user to borrower 
 - number 2 to display borrower users
-- number 3 to change the status
+- number 3 to change user status to paid
+- number 0 to exist
