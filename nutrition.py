@@ -99,7 +99,7 @@ class Meal:
         data = {
             "query": query,
         }
-        with tqdm(total=100, desc="Calculating meal's Calories", ncols=100) as progress_par:
+        with tqdm(total=100, desc="Calculating meal Calories and Nutrition", ncols=100) as progress_par:
             for i in range(90):
                 time.sleep(0.03)
                 progress_par.update(1)
