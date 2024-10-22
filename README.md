@@ -47,11 +47,10 @@ player public user✅
 player registed✅
 Player(Home)✅
 Get recommendations for best 3 games "trending" section.
-Search for scores in games(achievements and badges).display money you have.
-Enter to communityChat->write his comment
-get my hints and adds.
+Search for scores in games(achievements and badges).display money you have.✅
+Enter to communityChat->write his comment✅
 
-scores->money-> كسبهااعلان
+scores->money-> best 5 players
 hints or adds-.اشتريها بالفلوس
 - Are you sure?before buying. 
 - Save my purchases.
@@ -68,48 +67,4 @@ Rock, Paper, Scissors-> win-score+2 Multi-Player Options
 XO game->win-score+3 Multi-Player Options
 Timer Challenge->fingers speed->win-score+3
 memory challenge->hints
-
-
-
->>>
-Home Screen
-Quick access to recommended games, current scores, and community chats.
-Notifications for new messages, events, or friend activities.
-Games Section
-
-Community Section
-A chat interface for player discussions, as well as forums for specific topics or games.
-Profile Management
-
-Games Section
-List of available games with descriptions, scores, and options to play.
-Highlight featured games or new releases.
-Community Section
-
-Profile Management
-Options to manage account settings, view purchases, and track game history.
-
-
-
-
-2-Personalized Travel Planner:
-User
-travel-country,intrests,days,budget
-generate plan
-
-CLI Fashion Advisor:
-whether,occasiion,mood
-recommendation
-stores of clothes if you need somthing (recommendation)
-
-medical app
-your information
-BMI claculator
-tracker wight and health
-recommend healthy food or scedhuel
-
-Book app
-my library
-My notes in each book
-Store books->manager
 

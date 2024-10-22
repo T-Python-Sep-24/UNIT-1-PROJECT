@@ -9,8 +9,8 @@ while True:
 2- NO
 0- Exit ''')
     player_state=input("Your Choice: ")
-    print("--------------------")
-    os.system('cls')
+    print("-"*50)
+    os.system('cls')#diff systems
 
     if player_state == "1":
         print("Join our community and enjoy more features! ✨")
@@ -35,7 +35,7 @@ while True:
                 if is_valid_name:
                     #show list of his home page (member)
                     print(f"\nWe’re excited to have you join us, {new_member.get_member_name().capitalize()}! Let’s get started!\n")
-                    new_member.home_page_member()    
+                    new_member.home_page_member()
             else:
                 print("Invalid password format.\nPlease enter password as 6 digits\n--------------------") 
                 input('Press Enter to continue >>>\n')  
@@ -75,4 +75,5 @@ while True:
             break
     else:
             print("Invalid choice. Please try again.")
+            input('Press Enter to continue >>>\n')
 

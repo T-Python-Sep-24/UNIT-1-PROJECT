@@ -2,11 +2,13 @@ from Player import Player
 import pickle
 import os
 class Member(Player):
-    def __init__(self, style: str,name:str,password:str) -> None:
+    def __init__(self,style: str,name:str,password:str) -> None:
         super().__init__(style)
+        self.set_player_style('member')
         self.__memberData=self.__load_from_file('members.pkl')
         self.__name = name
-        self.__password = password  
+        self.__password = password
+        
 
               
     def record_new_member(self,name):
@@ -30,7 +32,7 @@ class Member(Player):
         print("Your are not a member. Check from your name or password")
         input('Press Enter to continue >>>\n')
         return member_found
-        
+    # Setter & Getter    
     def set_member_name(self,name):
         self.__name = name
 
@@ -41,7 +43,14 @@ class Member(Player):
         self.__password = password
 
     def get_member_password(self):
-        return self.__password   
+        return self.__password 
+
+    def get_memberData_list(self):
+        return self.__memberData 
+
+    def set_memberData_list(self,memberData):
+        self.__memberData =  memberData
+        self.__save_to_file("members.pkl")
     
     def __save_to_file(self, filename: str):
         try:
@@ -74,13 +83,16 @@ class Member(Player):
         while True:
                 os.system('cls')
                  # Welcoming the user by its name
-                print(f"Hi {self.get_member_name().capitalize()}, Welcome to Our Galaxy 😄")
+                print(f"Hi {self.get_member_name().capitalize()}, Welcome to Our Galaxy 🌌")
+                print(self.get_player_type())
                 print("Home page (member)")
-                #trendig games
+                
+                #show his score
+                self.display_member_score()
                 print("1- Games")
                 print("2- Community")
-                print("3- Achievements and badges (money)")
-                print("4- My purchases")
+                #print("3- Achievements and badges (money)")
+                #print("4- My purchases")
                 print("5- Update my information")#Done
                 print("6- Delete my membership")#Done
                 print("0- Exit")#Done
@@ -94,6 +106,7 @@ class Member(Player):
                     os.system('cls')
                 elif player_choice2=="2":
                     #display the community (can write)
+                    self.write_chat_community()
                     pass
                 elif player_choice2=="3":
                     #display Achievements and badges (money)
@@ -170,7 +183,8 @@ class Member(Player):
     def add_member(self):
         member={
             "name":self.get_member_name(),
-            "password":self.get_member_password()
+            "password":self.get_member_password(),
+            "score":0
         }
         self.__memberData.append(member)
         self.__save_to_file('members.pkl')
@@ -203,6 +217,14 @@ class Member(Player):
             print("Invalid choice. Please try again.")
             input('Press Enter to continue >>>')
             return member_state
+    
+    def display_member_score(self):
+        member_list= self.__load_from_file('members.pkl')
+        for item in member_list:
+                if item['name'] == self.get_member_name():  
+                    print(f"Your Score: ({item['score']})")
+                    break 
+        pass    
     
     
 

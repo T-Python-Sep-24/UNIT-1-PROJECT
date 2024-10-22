@@ -1,12 +1,20 @@
 import pickle
 import random
+import json
+import time
+import keyboard
 class Game:
-    def __init__(self,name:str,game_disc:str,game_adds:list=[],game_style:str='computer') -> None:
+    def __init__(self,name:str,game_disc:str,game_style:str='computer') -> None:
         self.__name=name
         self.__game_disc=game_disc
         self.__game_style=game_style
-        self.__game_adds=game_adds#load from file
         self.__games_list=self.__load_from_file('games.pkl')
+        self.board = [[" " for _ in range(3)] for _ in range(3)]#X-O game
+        self.current_player = "X"#X-O game
+        self.location = "village" #Advanture game
+        self.treasure_found = False #Advanture game
+        self.rythemscore = 0#rythem game
+        self.game_duration = 15#rythem game
         search_game=any(game['name'] == self.get_game_name() for game in self.__games_list)
         if search_game:
             return
@@ -42,15 +50,23 @@ class Game:
 
     def __save_to_file(self, filename: str):
         try:
-            with open(filename,'wb') as file:
-                pickle.dump(self.__games_list,file)
+            if filename =='games.pkl':
+                with open(filename,'wb') as file:
+                    pickle.dump(self.__games_list,file)
+            '''if filename =='players.pkl':
+                with open(filename,'wb') as file:
+                    pickle.dump(self.__players,file) '''       
         except Exception as e:
             print(f"Error saving data to file: {e}")        
 
     def __load_from_file(self, filename: str):
         try:
-            with open(filename,'rb') as file:
-                return pickle.load(file) 
+            if filename.endswith(".json"):
+                with open(filename,'r') as file:
+                    return json.load(file)
+            elif filename.endswith(".pkl"):
+                with open(filename,'rb') as file:
+                    return pickle.load(file) 
         except (FileNotFoundError, EOFError):
             return []    
     def add_game_to_list(self):       
@@ -62,36 +78,56 @@ class Game:
         self.__save_to_file('games.pkl')
 
     def intro_game(self):
-        print("\n" + "=" * 60)
+        print("\n" + "=" * 50)
         print(f"🎮 Welcome to the {self.get_game_name()} Game! 🎮")
-        print("=" * 60)
+        print("=" * 50)
         print("\nHere's how to play:")
         print(self.get_game_disc())
         input('\nPress Enter to start 🌟\n')
-        print("\n" + "=" * 60)
+        print("\n" + "=" * 50)
     
-    def rock_paper_scissors(self):
+    def __increase_game_repetition(self):
+        search_game=list(filter(lambda game:game['name'] == self.get_game_name() ,self.__games_list))
+        search_game[0]['repetition']=search_game[0]['repetition']+1
+        self.__save_to_file("games.pkl")
+        self.__games_list=self.__load_from_file('games.pkl')
+
+    def increase_player_score(self,player):
+        if player.get_player_type()=='member':
+            members_list=player.get_memberData_list()
+            for item in members_list :
+                if item['name']==player.get_member_name():
+                    item['score']+=2
+                    break    
+            player.set_memberData_list(members_list)
+    
+    '''rock_paper_scissors game'''
+    def rock_paper_scissors(self) -> bool:
+         #increase game repetition
+        self.__increase_game_repetition()
+        game_result=False
         #Computer-mode
         if self.get_game_style()=='computer':
             while True:
-                print("Rock ✊, Paper 📄, Scissors ✂️...")
+                print("Rock ✊, Paper 📄, Scissors ✂️ ...")
                 player_move=input("Enter your move: ")
                 computer_move=(self.__computer_rock_paper_scissors()).lower()
                 if player_move.lower() == computer_move :
                     print("It's a draw! ⚖️ ")
-                    print("Press Enter to try again 🔥") 
+                    print("Press Enter to try again 🔥\n") 
                 elif (player_move.lower() == "rock" and computer_move == "scissors") or \
                     (player_move.lower() == "scissors" and computer_move == "paper") or \
                     (player_move.lower() == "paper" and computer_move== "rock"):
                     print("Computer move was: ",computer_move)
-                    print("You are the winner 🏆")
+                    print("You are the winner 🏆")##color it green($$$)
+                    game_result=True
                     input('\nPress Enter to go back 🔚')
                     break
                 elif (computer_move == "rock" and player_move.lower() == "scissors") or \
                     (computer_move == "scissors" and player_move.lower() == "paper") or \
                     (computer_move == "paper" and player_move.lower() == "rock"):
                     print("Computer move was: ",computer_move)
-                    print("You lost 💔")
+                    print("You lost 💔")##color it red($$$)
                     input('\nPress Enter to go back 🔚')
                     break
                 else:
@@ -105,33 +141,271 @@ class Game:
                 player2_move=input("Player 2, enter your choice: ")
                 if player1_move.lower() == player2_move.lower():
                     print("It's a draw! ⚖️ ")
-                    print("Press Enter to try again 🔥") 
+                    print("Press Enter to try again 🔥\n") 
                 elif (player1_move.lower() == "rock" and player2_move.lower() == "scissors") or \
                     (player1_move.lower() == "scissors" and player2_move.lower() == "paper") or \
                     (player1_move.lower() == "paper" and player2_move.lower() == "rock"):
-                    print("Player 1 wins!🏆") 
+                    print("Player 1 wins!🏆") ##color it green($$$)
+                    game_result=True
                     input('\nPress Enter to go back 🔚')
                     break
                 elif (player2_move.lower() == "rock" and player1_move.lower() == "scissors") or \
                     (player2_move.lower() == "scissors" and player1_move.lower() == "paper") or \
                     (player2_move.lower() == "paper" and player1_move.lower() == "rock"):
-                    print("Player 2 wins!🏆")
+                    print("Player 2 wins!🏆")##color it green($$$)
+                    game_result=True
                     input('\nPress Enter to go back 🔚')
                     break
                 else:
                     print("Invalid choice.\nPlease enter 'Rock','Paper' or 'Scissors'")
                     input('Press Enter to continue >>>\n')            
 
-        #increase game repetition
-        self.__increase_game_repetition()
-                
+       
+        return game_result       
+    
     def __computer_rock_paper_scissors(self) -> str:
         choices = ["rock", "paper", "scissors"]
         random_choice = random.choice(choices)
         return random_choice
     
-    def __increase_game_repetition(self):
-        search_game=list(filter(lambda game:game['name'] == self.get_game_name() ,self.__games_list))
-        search_game[0]['repetition']=search_game[0]['repetition']+1
-        self.__save_to_file("games.pkl")
-        self.__games_list=self.__load_from_file('games.pkl')
+
+
+
+    '''# X-O game'''
+
+    def init_board(self) -> list:
+        self.board = [[" " for _ in range(3)] for _ in range(3)]
+        return self.board
+
+    def init_current_player(self):
+        self.current_player = "X"  # Player 1 is X, Player 2 is O 
+        return self.current_player
+
+    def print_board(self):
+        for row in self.board:
+            print(" | ".join(row))
+            print("-" * 9)
+
+    def print_numbered_board(self):
+        numbered_board = [
+            ["1", "2", "3"],
+            ["4", "5", "6"],
+            ["7", "8", "9"]
+        ]
+        for row in numbered_board:
+            print(" | ".join(row))
+            print("-" * 9)
+
+    def check_winner(self):
+        for i in range(3):
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] != " ":
+                return True
+            if self.board[0][i] == self.board[1][i] == self.board[2][i] != " ":
+                return True
+
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] != " ":
+            return True
+        if self.board[0][2] == self.board[1][1] == self.board[2][0] != " ":
+            return True
+
+        return False
+
+    def is_board_full(self):
+        return all(cell != " " for row in self.board for cell in row)
+
+    def player_move(self):
+        while True:
+            move = input(f"Player {self.current_player}, choose your move (1-9): ")
+            try:
+                move = int(move)
+                if move < 1 or move > 9:
+                    print("Invalid input. Please enter a number between 1 and 9.")
+                    input('Press Enter to continue >>>\n')
+                    continue
+                row, col = divmod(move - 1, 3)
+                if self.board[row][col] != " ":
+                    print("Cell already taken, try again.")
+                    input('Press Enter to continue >>>\n')
+                    continue
+                return row, col
+            except ValueError:
+                print("Invalid input. Please enter a number between 1 and 9.")
+                input('Press Enter to continue >>>\n')
+
+    def computer_move(self):
+        empty_cells = [(i, j) for i in range(3) for j in range(3) if self.board[i][j] == " "]
+        return random.choice(empty_cells)
+
+    def XO_game(self):
+        self.__increase_game_repetition()
+        self.init_board()  # Initialize the board
+        self.init_current_player()  # Initialize the current player
+
+        while True:
+            print("Choose the game mode:")
+            print("1- Computer Mode")
+            print("2- Multi-Players Mode")
+            mode = input("Your Choice: ")
+            if mode in ["1", "2"]:
+                break
+            else:
+                print("Invalid choice. Please try again.")
+                input('Press Enter to continue >>>\n')
+        self.print_numbered_board()
+        while True:
+            self.print_board()
+
+            if mode == "2" or (mode == "1" and self.current_player == "X"):
+                row, col = self.player_move()
+            else:
+                row, col = self.computer_move()
+                print(f"Computer chose: {row * 3 + col + 1}")
+
+            self.board[row][col] = self.current_player
+
+            if self.check_winner():
+                self.print_board()
+                print(f"Player {self.current_player} wins! 🎉")
+                input('\nPress Enter to go back 🔚')
+                if self.current_player=="O" and mode=="1":
+                    return False
+                else:
+                    return True
+
+            if self.is_board_full():
+                self.print_board()
+                print("It's a draw! 🤝")
+                input('\nPress Enter to go back 🔚')
+                return False
+
+            # Switch players
+            self.current_player = "O" if self.current_player == "X" else "X"
+            
+    '''Adventure game'''
+    def adventure_game(self):
+        self.__increase_game_repetition()
+
+        print("Welcome to the Lost Treasure of Eldoria!")
+        while not self.treasure_found:
+            if self.location == "village":
+                self.village()
+            elif self.location == "forest":
+                self.forest()
+            elif self.location == "treasure":
+                self.treasure()
+            elif self.location == "End":
+                return False
+            else:
+                print("Invalid location.")
+      
+        return True        
+
+    def village(self):
+        print("\nYou are in a small village. The villagers speak of a hidden treasure.")
+        choice = input("Do you want to go to the Enchanted Forest to find the treasure? (yes/no) ").strip().lower()
+        if choice == "yes":
+            self.location = "forest"
+        else:
+            print("You grew old and weak over the years 👵. Despite your many attempts,\n \
+you were unable to find the treasure you had always dreamed of. In the end,\n\
+you passed away without realizing your dream. 😔")
+            input('\nPress Enter to go back 🔚')
+            self.location = "End"
+
+    def forest(self):
+        print("\nYou enter the Enchanted Forest. It's dark and full of strange noises.")
+        choice = input("Do you want to explore deeper into the forest? (yes/no) ").strip().lower()
+        if choice == "yes":
+            self.location = "treasure"
+        else:
+            print("You lost your courage halfway and returned to your village feeling \n\
+disappointed. 🏡 After a while, you discovered that another adventurer \n\
+had found the treasure. Thus, you lost your dream of finding it.🚫")
+            input('\nPress Enter to go back 🔚')
+            self.location = "End"
+
+    def treasure(self):
+        print("\nYou find the Eldoria Oak tree! The treasure is buried beneath its roots!")
+        choice = input("Do you want to dig for the treasure? (yes/no) ").strip().lower()
+        if choice == "yes":
+            self.treasure_found = True
+            print("Congratulations! You've found the treasure of Eldoria! 🎉")
+            input('\nPress Enter to go back 🔚')
+        else:
+            print("You decide not to dig and leave the treasure buried. 🚫")
+            input('\nPress Enter to go back 🔚')
+            self.location = "End"
+
+    '''Rhythm game'''
+    def rhythm_game(self):
+        start_time = time.time()
+        while time.time() - start_time < self.game_duration:
+            key = random.choice(['a', 's', 'd', 'f'])
+            print(f"Press '{key}'! ⏳")
+            start_time_key = time.time()
+            while time.time() - start_time_key < 1.5:  # 1 second to press
+                if keyboard.is_pressed(key):
+                    print("Nice! 🎉")
+                    self.rythemscore += 1
+                    break
+            else:
+                print(f"Oops! You missed '{key}'! 💔")
+            time.sleep(0.5) 
+        if (self.rythemscore>4):
+            print(f"Great! Your score is: {self.rythemscore} 🎮")
+            input('\nPress Enter to go back 🔚')
+            return True
+        else:
+            print(f"Game Over! Your score is: {self.rythemscore} 🎮")
+            input('\nPress Enter to go back 🔚')
+            return False   
+        
+    '''Crazy game'''
+    def crazy_game(self):
+        ques_list=self.__load_from_file("questions.json")
+        print(ques_list)
+        ques_choosen=random.choice(ques_list)
+        while True:
+            print(f'''Question:\n{ques_choosen["question"]}\n1- 
+    {ques_choosen["choices"][0]}\n2- {ques_choosen["choices"][1]}\n3- {ques_choosen["choices"][2]}''')
+            identifier=input("Your Choice:")
+            player_answer=""
+            if identifier=="1":
+                player_answer=ques_choosen["choices"][0]
+            elif identifier=="2":
+                player_answer=ques_choosen["choices"][1]
+            elif identifier=="3":
+                player_answer=ques_choosen["choices"][2]
+            else:
+                print("invalid")
+            if(player_answer==ques_choosen["right"]):
+                print("Congratulations! 🎉 You answered correctly! ✅")
+                input('\nPress Enter to go back 🔚')
+                return True
+            else:
+                print(f'''Unfortunately, that's an incorrect answer. ❌\n
+Correct Answer: {ques_choosen["right"]}''')
+                input('\nPress Enter to go back 🔚')
+                return False  
+
+
+    '''Pacman game'''
+    def pacman_game(self):
+        
+        try:
+            from freegames import pacman
+        except Exception as e:
+            print(e)
+        finally:
+            return True
+
+    '''Simon Says game'''
+    def memory_game(self):
+        try:
+            from freegames import memory
+        except Exception as e:
+            print(e)
+        finally:
+            return True
+
+  
