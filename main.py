@@ -22,7 +22,8 @@ def manager_menu():
         print("3. List All Cars")
         print("4. Search for a Car")
         print("5. Rental history")
-        print("6. Logout")
+        print("6. Show rented cars")
+        print("7. Logout")
         choice = input("Enter your choice: ")
 
         try:
@@ -42,8 +43,24 @@ def manager_menu():
                 year = int(input("Enter car year: "))
                 manager.search_car(cname, year)
             elif choice == "5":
-                manager.rental_history()
+                if not manager.customers:  # Ensure there are customers
+                    print("No customers available.")
+                else:
+                    for customer in manager.customers:  # Iterate through each customer
+                        rental_history = customer.get_rental_history()  # Call on the instance
+                        print(f"Rental history for {customer.name} (ID: {customer.id}):")
+                        if rental_history:
+                            for record in rental_history:
+                                action = record['action']
+                                car_name = record['car_name']
+                                car_year = record['car_year']
+                                date = record['date']
+                                print(f"  {action.capitalize()} car {car_name} ({car_year}) on {date}")
+                        else:
+                            print("  No rental history.")
             elif choice == "6":
+                manager.rented_cars()
+            elif choice == "7":
                 print("Logging out...")
                 break
             else:
@@ -61,8 +78,8 @@ def customer_menu():
             print("Invalid input, Please enter a valid number!")
 
     customer = Customer(customer_name, customer_id, car_storage, manager)
-    customer.save_customer_file()
     customer.load_customer_file()
+    customer.save_customer_file()
     while True:
         print("\nCustomer Menu:")
         print("1. Rent a Car")
@@ -75,9 +92,7 @@ def customer_menu():
 
         try:
             if choice == "1":
-                cname = input("Enter car name: ")
-                year = int(input("Enter car year: "))
-                customer.rent_car(cname, year)
+                customer.rent_car()
             elif choice == "2":
                 cname = input("Enter car name: ")
                 year = int(input("Enter car year: "))
@@ -89,7 +104,13 @@ def customer_menu():
             elif choice == "4":
                 customer.list_available_cars(car_storage)
             elif choice == "5":
-                customer.my_rented_cars()
+                rented_cars = customer.get_rented_cars()
+                if rented_cars:
+                    print("Your rented cars:")
+                    for car in rented_cars:
+                        print(car)
+                else:
+                    print("You haven't rented any cars yet.")
             elif choice == "6":
                 print("Logging out...")
                 customer.save_customer_file()

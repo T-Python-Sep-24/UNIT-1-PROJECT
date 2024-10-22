@@ -46,10 +46,10 @@ class CarStorage():
     
     def search_car(self, cname, year):
         for car in self.cars:
-            if car.cname == cname and car.year == year and car.available :
+            if car.cname.lower() == cname.lower() and car.year == year and car.available:
                 return car
             
-        print("car not found")
+        print("Car not found")
         return None
 
 
@@ -58,6 +58,12 @@ class CarStorage():
             print("no cars found")
         else:
             for car in self.cars:
+                print(car)
+
+    
+    def list_available_cars(self):
+        for car in self.cars:
+            if car.available:
                 print(car)
 
 

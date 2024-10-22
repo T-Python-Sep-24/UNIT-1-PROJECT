@@ -4,14 +4,17 @@ import json
 class Manager:
     def __init__(self, name, password, car_storage):
         self.name = name
-        self.password = password
+        self._password = password
         self.car_storage = car_storage
         self.customers = []
 
 
+    def _validate_password(self, password):
+        return self._password == password
+    
+
     def login(self, name, password):
-        if self.name == name and self.password == password:
-            print("Login successful")
+        if self.name == name and self._validate_password(password):
             return True
         else:
             print("Invalid user details")
@@ -49,6 +52,9 @@ class Manager:
 
 
     def add_customer(self, customer):
+        for existing_customer in self.customers:
+            if existing_customer.id == customer.id:
+                return  
         self.customers.append(customer)
 
 
@@ -61,3 +67,19 @@ class Manager:
                 car_year = record['car_year']
                 date = record['date']
                 print(f"  {action.capitalize()} car {car_name} ({car_year}) on {date}")
+
+    
+    def rented_cars(self):
+        print("Rented Cars and their Renters:")
+        any_rented = False 
+    
+        for customer in self.customers:
+            rented_cars = customer.get_rented_cars()
+            if rented_cars:
+                any_rented = True  
+                print(f"Customer {customer.name} (ID: {customer.id}) has rented the following cars:")
+                for car in rented_cars:
+                    print(f"  - {car.cname} ({car.year})")
+
+        if not any_rented:
+            print("No rented cars.")

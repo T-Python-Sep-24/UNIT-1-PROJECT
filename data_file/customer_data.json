@@ -8,34 +8,70 @@
                 "action": "rented",
                 "car_name": "ford",
                 "car_year": 2023,
-                "date": "2024-10-21 20:30:11"
+                "date": "2024-10-22 20:14:56"
             },
             {
                 "action": "returned",
                 "car_name": "ford",
                 "car_year": 2023,
-                "date": "2024-10-21 20:30:14"
+                "date": "2024-10-22 20:15:20"
+            },
+            {
+                "action": "rented",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-22 20:26:34"
+            },
+            {
+                "action": "returned",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-22 20:27:13"
             }
         ]
     },
     {
         "name": "ahmed",
         "id": 2,
-        "rented": [
-            {
-                "cname": "ford",
-                "year": 2023,
-                "price": 200.0,
-                "available": false
-            }
-        ],
+        "rented": [],
         "rental_history": [
             {
                 "action": "rented",
                 "car_name": "ford",
                 "car_year": 2023,
-                "date": "2024-10-21 20:30:27"
+                "date": "2024-10-22 11:31:42"
+            },
+            {
+                "action": "returned",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-22 11:31:47"
             }
         ]
+    },
+    {
+        "name": "nasser",
+        "id": 3,
+        "rented": [],
+        "rental_history": [
+            {
+                "action": "rented",
+                "car_name": "sonata",
+                "car_year": 2022,
+                "date": "2024-10-22 10:58:50"
+            },
+            {
+                "action": "returned",
+                "car_name": "sonata",
+                "car_year": 2022,
+                "date": "2024-10-22 10:58:59"
+            }
+        ]
+    },
+    {
+        "name": "fahad",
+        "id": 123,
+        "rented": [],
+        "rental_history": []
     }
 ]
