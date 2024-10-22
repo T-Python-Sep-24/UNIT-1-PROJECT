@@ -1,5 +1,6 @@
 from event_planning.event import Event
 from event_planning.guest import Guest
+from termcolor import colored
 
 def main():
     
@@ -12,32 +13,33 @@ def main():
 #I added a space from No.1 to No.9 to Make the List align in one line
     while True:
         print("\nMain Menu:")
-        print("1.  To Create a New Event")
-        print("2.  To View All Events")
-        print("3.  To Search For a Specific Event")
-        print("4.  To Delete an Event")
-        print("5.  To Add a Guest To a Specific Event")
-        print("6.  To List All The Guests From a Specific Event")
-        print("7.  To Search For a Specific Guest")
-        print("8.  To Remove a Guest From an Event")
-        print("9.  To Update a Guest's RSVP Status")
-        print("10. To Filter Guests by RSVP Status")
-        print("11. To Send Reminders to Guests With Pending RSVPs")
-        print("12. To View Attendance Count for a Specific Event")
-        print("13. To Save Events")
-        print("14. To Load Events")
-        print("15. To Export The Guest List to a CSV File")
-        print("16. To Exit")
+        print("1.  Create a New Event")
+        print("2.  View All Events")
+        print("3.  Search For a Specific Event")
+        print("4.  Delete an Event")
+        print("5.  Add a Guest to a Specific Event")
+        print("6.  List All Guests for a Specific Event")
+        print("7.  Search for a Specific Guest")
+        print("8.  Remove a Guest from an Event")
+        print("9.  Update a Guest's RSVP Status")
+        print("10. Filter Guests by RSVP Status")
+        print("11. Send Reminders to Guests with Pending RSVPs")
+        print("12. View Attendance Count for a Specific Event")
+        print("13. Save Events")
+        print("14. Load Events")
+        print("15. Export Guest List to a CSV File")
+        print("16. Exit")
         
-        user_input = input("\nPlease Enter The Number corresponding to your choice: ")#
+        user_input = input("\nReady to Manage Your Events? Type the Number of the Option You'd Like to Explore: ")
 
 
         if user_input == "1":
-            event_name = input("Enter Event Name: ")
-            event_date = input("Enter Event Date (YYYY-MM-DD): ")
-            description = input("Enter Event Description: ")
-            location = input("Enter Event Location: ")
-            event = Event(event_name, event_date, description, location)
+            event_name = input("Enter Event Name: ").strip()
+            event_date = input("Enter Event Date (YYYY-MM-DD): ").strip()
+            event_time = input("Enter Event Time (HH:MM) AM/PM: ").strip()
+            description = input("Enter Event Description: ").strip()
+            location = input("Enter Event Location: ").strip()
+            event = Event(event_name, event_date, event_time, description, location)
             event.create_event()
 
 
@@ -68,12 +70,13 @@ def main():
                 guest_name = input("Enter Guest Name: ")
                 guest_phone = input("Enter Guest Phone Number (10 Digit): ")
                 guest_email = input("Enter Guest Email: ")
-                rsvp_status = input("Enter RSVP Status (Attending / Not Attending / Pending): ")
+                rsvp_status = input("Enter RSVP Status (Attending/ Not Attending/ Pending): ")
                 event.add_guest(guest_name, guest_phone, guest_email, rsvp_status)
 
 
             else:
-                print("Event Not Found")    
+                print(colored("Event Not Found", "red"))    
+
 
 
         elif user_input == "6":
@@ -83,7 +86,8 @@ def main():
                 event.display_guests()
 
             else:
-                print("Event Not Found")    
+                print(colored("Event Not Found", "red"))    
+
 
 
         elif user_input == "7":
@@ -94,7 +98,8 @@ def main():
                 event.search_guest(guest_email)
 
             else:
-                print("Event Not Found")    
+                print(colored("Event Not Found", "red"))    
+
 
 
         elif user_input == "8":
@@ -103,13 +108,14 @@ def main():
             if event:
                 guest_email = input("Enter Guest Email to Remove: ")
                 if event.remove_guest(guest_email):
-                    print("Guest Removed Successfully")
+                    print(colored("Guest Removed Successfully", "green"))
 
                 else:
-                    print("Failed To Remove Guest")
+                    print(colored("Failed To Remove Guest", "red"))
 
             else:
-                print("Event Not Found")            
+                print(colored("Event Not Found", "red"))            
+
 
 
         elif user_input == "9":
@@ -117,11 +123,12 @@ def main():
             event = Event.search_event(event_name)
             if event:
                 guest_email = input("Enter Guest Email to Update RSVP: ")
-                rsvp_status = input("Enter New RSVP Status (Attending / Not Attending / Pending): ")
+                rsvp_status = input("Enter New RSVP Status (Attending/ Not Attending/ Pending): ")
                 event.update_rsvp(guest_email, rsvp_status)
 
             else:
-                print("Event Not Found")    
+                print(colored("Event Not Found", "red"))    
+
 
 
         elif user_input == "10":
@@ -131,23 +138,30 @@ def main():
                 rsvp_status = input("Enter RSVP Status to Filter By: ")
                 matching_guests = event.filter_by_rsvp(rsvp_status)
                 if matching_guests:
-                    print(f"Found {len(matching_guests)} Guests With Status '{rsvp_status}'")
+                    print(colored(f"Found {len(matching_guests)} Guests With Status '{rsvp_status}'","yellow"))
 
                 else:
-                    print("No Guests Found With That Status")
+                    print(colored("No Guests Found With That Status", "red"))
 
             else:
-                print("Event Not Found")            
+                print(colored("Event Not Found", "red"))            
 
 
         elif user_input == "11":
             event_name = input("Enter Event Name: ")
             event = Event.search_event(event_name)
             if event:
-                event.send_reminder()
-
+                sender_email = input("Enter Your Gmail Address: ")
+                sender_password = input("Enter Your Gmail App Password: ")
+                
+                if sender_email and sender_password:
+                    event.send_reminder(sender_email, sender_password)
+                
+                else:
+                    print(colored("Email and password cannot be empty.", "red"))
+                    
             else:
-                print("Event Not Found")    
+                print(colored("Event Not Found", "red"))   
 
 
         elif user_input == "12":
@@ -157,7 +171,7 @@ def main():
                 event.attendance_count()
 
             else:
-                print("Event Not Found")    
+                print(colored("Event Not Found", "red"))    
 
 
         elif user_input == "13":
@@ -178,11 +192,11 @@ def main():
                 event.export_guest_to_csv(filename)
 
             else:
-                print("Event Not Found")    
+                print(colored("Event Not Found", "red"))    
 
 
         elif user_input == "16":
-            save_choice = input("Do you want to save changes before exiting? (yes/no): ").strip().lower()
+            save_choice = input(colored("Do you want to save changes before exiting? (yes/no): ", "magenta")).strip().lower()
             if save_choice == "yes":
                 Event.save_event()
 

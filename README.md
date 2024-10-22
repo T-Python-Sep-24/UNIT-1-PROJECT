@@ -68,11 +68,10 @@
 
 
 
-### Example Usage:
- Please Use These Event Names if You Like, So You Can Display All Event, Search Event, and Delete Event
- Also, You Can Add Guests to Thoes Events, Display All Guests in Thoes Events, Search for Guest, and Remove Guest
- and Many More Things You Can Do in My Program:
- - Company Annual Meeting
- - Product Launch Party
- - Tech Conference 2024
+ ### Please note that when you chooes 11 (Send Reminders to Guests with Pending RSVPs) you will need to enter you gmail account and your gmail App Password so the reminder email for pending guests can be send.
+ ### It is better if you add your email when you try 5 (Add a Guest to a Specific Event) then send a reminder to yourself to see the reminder email.
+
+ ### Regarding Gmail App Password, you need to genrate it, please, since gmail no longer allow access with gmail passwords. Read more on this link: https://stackoverflow.com/questions/16512592/login-credentials-not-working-with-gmail-smtp
+
+ ### Thank you *
 
