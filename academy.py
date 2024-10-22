@@ -4,6 +4,7 @@ from teacher import Teacher
 from student import Student
 from course import Course
 from data_handler import load_data_from_json, save_data_to_json
+from colorama import Fore
 
 class Academy:
     def __init__(self):
@@ -20,17 +21,16 @@ class Academy:
         '''Generates a unique 4-digit ID that is not already used.'''
         existing_ids = {t['teacher_id'] for t in self.data['teachers']}
         existing_ids.update(s['student_id'] for s in self.data['students'])
-        while True:
-            new_id = int(''.join(map(str, random.sample(range(10), 4))))
-            if new_id not in existing_ids:
-                return new_id
+        existing_ids.update(c['course_id'] for c in self.data['courses'])
 
-    def validate_name(self, name: str):
-        '''Validates that the name contains only letters (no numbers or symbols).'''
-        if re.match("^[A-Za-z\s]+$", name):
-            return True
-        else:
-            return False
+        new_id = random.randint(1000, 9999)
+        while new_id in existing_ids:
+            new_id = random.randint(1000, 9999)
+        return new_id
+
+    def validate_name(self, name: str) -> bool:
+         '''Validates that the name contains only letters (no numbers or symbols).'''
+         return bool(re.match("^[A-Za-z\s]+$", name))
 
     def add_teacher(self, name: str, specialization: str):
         ''' Adds a new teacher to the academy. '''
@@ -44,6 +44,14 @@ class Academy:
         self.save()
         print(f"Teacher '{name}' added with specialization '{specialization}' and ID '{teacher_id}'")
 
+    def add_course(self, name: str):
+        ''' Adds a new course to the academy. '''
+        course_id = self.generate_unique_id()
+        new_course = Course(course_id, name)
+        self.data['courses'].append(new_course.__dict__)
+        self.save()
+        print(f"Course '{name}' added with ID '{course_id}'")
+
     def add_student(self, name: str):
         ''' Adds a new student to the academy. '''
         if not self.validate_name(name):
@@ -56,13 +64,6 @@ class Academy:
         self.save()
         print(f"Student '{name}' added with ID '{student_id}'")
 
-    def add_course(self, name: str):
-        ''' Adds a new course to the academy. '''
-        course_id = self.generate_unique_id()
-        new_course = Course(course_id, name)
-        self.data['courses'].append(new_course.__dict__)
-        self.save()
-        print(f"Course '{name}' added with ID '{course_id}'")
 
     def register_student_in_course(self, student_id: int, course_id: int):
         '''  Registers a student in a specific course. '''
@@ -95,6 +96,7 @@ class Academy:
 
 
     def list_courses_with_students_and_teacher(self):
+        '''Lists all courses along with their assigned students and teachers.'''
         try:
             if not self.data['courses']:
                 print("No courses available.")
@@ -103,14 +105,14 @@ class Academy:
             for course in self.data['courses']:
                 print(f"\nCourse ID: {course['course_id']}, Name: {course['name']}")
                 
-                # teachers
+                # display teachers names
                 if 'teachers' in course and course['teachers']:
                     teacher_names = [t['name'] for t in self.data['teachers'] if t['teacher_id'] in course['teachers']]
                     print(f"Teacher(s): {', '.join(teacher_names)}")
                 else:
                     print("No teachers assigned to this course.")
                 
-                # students
+                # display students nams
                 if 'students' in course and course['students']:
                     student_names = [s['name'] for s in self.data['students'] if s['student_id'] in course['students']]
                     print(f"Student(s): {', '.join(student_names)}")
@@ -122,9 +124,15 @@ class Academy:
 
 
     def delete_teacher(self, teacher_id: int):
-        '''  Deletes a teacher from the academy. '''
+        '''Deletes a teacher from the academy and removes them from all courses.'''
+        
         teacher = next((t for t in self.data['teachers'] if t['teacher_id'] == teacher_id), None)
         if teacher:
+            ## Remove teacher from all courses
+            for course in self.data['courses']:
+                if 'teachers' in course and teacher_id in course['teachers']:
+                    course['teachers'].remove(teacher_id)
+            
             self.data['teachers'].remove(teacher)
             self.save()
             print(f"Teacher with ID {teacher_id} has been deleted.")
@@ -132,15 +140,21 @@ class Academy:
             print("Teacher not found!")
 
     def delete_student(self, student_id: int):
-        '''  Deletes a student from the academy. '''
-
+        '''Deletes a student from the academy and removes them from all courses.'''
+        
         student = next((s for s in self.data['students'] if s['student_id'] == student_id), None)
         if student:
+            ### Remove student from all courses
+            for course in self.data['courses']:
+                if 'students' in course and student_id in course['students']:
+                    course['students'].remove(student_id)
+            
             self.data['students'].remove(student)
             self.save()
             print(f"Student with ID {student_id} has been deleted.")
         else:
             print("Student not found!")
+
 
     def delete_course(self, course_id: int):
         '''  Deletes a course from the academy. '''
@@ -152,6 +166,70 @@ class Academy:
             print(f"Course with ID {course_id} has been deleted.")
         else:
             print("Course not found!")
+
+    def update_course(self, old_course_id: int, new_name: str):
+        '''Updates the name of an existing course.'''
+        
+        course = next((c for c in self.data['courses'] if c['course_id'] == old_course_id), None)
+        
+        if not course:
+            print(Fore.RED + ' ' * 10 + f"Course with ID {old_course_id} not found!")
+            return
+
+        course['name'] = new_name
+        self.save()
+        print(f"Course ID {old_course_id} has been updated to '{new_name}'.")
+
+    def get_statistics(self):
+        '''Prints the total number of teachers, students, and courses.'''
+        
+        total_teachers = len(self.data['teachers'])
+        total_students = len(self.data['students'])
+        total_courses = len(self.data['courses'])
+        
+        print(f"Total Teachers: {total_teachers}")
+        print(f"Total Students: {total_students}")
+        print(f"Total Courses: {total_courses}")
+
+    def remove_person_from_course(self, person_id: int, course_id: int, person_type: str):
+        '''Removes a student or teacher from a specific course.'''
+        
+        course = next((c for c in self.data['courses'] if c['course_id'] == course_id), None)
+
+        if not course:
+            print("Course not found!")
+            return
+        
+        # If the person to be deleted is a student
+        if person_type.lower() == 'student':
+            student = next((s for s in self.data['students'] if s['student_id'] == person_id), None)
+            if not student:
+                print("Student not found!")
+                return
+            #> If the student is registered in the course, delete him.
+            if 'students' in course and person_id in course['students']:
+                course['students'].remove(person_id)
+                self.save()
+                print(f"Student with ID {person_id} has been removed from course ID {course_id}.")
+            else:
+                print(f"Student with ID {person_id} is not registered in course ID {course_id}.")
+        ## If the person to be deleted is a teacher
+        elif person_type.lower() == 'teacher':
+            teacher = next((t for t in self.data['teachers'] if t['teacher_id'] == person_id), None)
+            if not teacher:
+                print("Teacher not found!")
+                return
+            ##> If the teacher is registered in the course, delete him.
+            if 'teachers' in course and person_id in course['teachers']:
+                course['teachers'].remove(person_id)
+                self.save()
+                print(f"Teacher with ID {person_id} has been removed from course ID {course_id}.")
+            else:
+                print(f"Teacher with ID {person_id} is not registered in course ID {course_id}.")
+
+        else:
+            print("Invalid person type! Use 'student' or 'teacher'.")
+
 
     def save(self):
         '''Saves the current data to the JSON file.'''
@@ -171,4 +249,4 @@ class Academy:
         '''Lists all courses in the academy.'''
 
         for course in self.data['courses']:
-            print(f"ID: {course['course_id']}, Name: {course['name']}, Students: {course.get('students', [])}, Teachers: {course.get('teachers', [])}")
+            print(f"ID: {course['course_id']}, Name: {course['name']}")
