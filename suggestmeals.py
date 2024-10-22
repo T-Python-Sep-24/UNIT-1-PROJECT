@@ -1,8 +1,10 @@
 import random
+import time
 
 import requests
 from dotenv import load_dotenv
 import os
+from tqdm import tqdm
 load_dotenv()
 def getSuggestions(diet = None, maxCalories = 500, numOfSuggestions = 5, type = 'main course'):
     # Replace with your own API key from Spoonacular
@@ -21,11 +23,14 @@ def getSuggestions(diet = None, maxCalories = 500, numOfSuggestions = 5, type = 
         'type': type  # Type of meal: 'main course', 'snack', etc.
 
     }
+    with tqdm(total=100, desc="Preparing meals Suggestions", ncols=100) as progress_par:
+        for i in range(90):
+            time.sleep(0.03)
+            progress_par.update(1)
 
-    # Send GET request to Spoonacular API
-    response = requests.get(url, params=params)
+        response = requests.get(url, params=params)
+        progress_par.update(10)
 
-    # Check if request was successful
     if response.status_code == 200:
         meal_data = response.json()
 

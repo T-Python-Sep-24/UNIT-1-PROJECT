@@ -277,7 +277,7 @@ def workoutTracking():
         if choice == '1':
 
             activity = input("Enter workout Type: (e.g. Walking, Running, etc): ")
-            duration = int(input("Enter workout duration in minutes(e.g. 30 ): "))
+            duration = input("Enter workout duration in minutes(e.g. 30 ): ")
             query = activity + " " + str(duration) + "minutes"
 
             height = user1.get_height()
@@ -378,7 +378,7 @@ def userAuth():
     # print(x)
     if x is None:
         print("")
-        print("-"*8 + " Welcome To " + Fore.MAGENTA + "FitTracker " + Style.RESET_ALL + "-"*8)
+        print("-"*8 + " Welcome To " + Fore.RED + "FitTracker " + Style.RESET_ALL + "-"*8)
         print()
         print(Fore.BLUE+"> Please Register for New Account")
         print("~"*39)
@@ -412,12 +412,19 @@ def userAuth():
     else:
         notAuthorized = True
         while notAuthorized:
-            print("-"*8 + " Welcome To " + Fore.MAGENTA + "FitTracker " + Style.RESET_ALL + "-"*8)
+            print("-"*8 + " Welcome To " + Fore.RED + "FitTracker " + Style.RESET_ALL + "-"*8)
             print(" >> Please Log in << ")
 
             name = input("Enter Your name: ")
             if name == x['username']:
-                print(Fore.GREEN + "        welcome to FitTracker ")
+                print(Fore.GREEN + "        welcome Back")
+
+                user1.set_age(x['age'])
+                user1.set_gender(x['gender'])
+                user1.set_height(x['height'])
+                user1.set_weight(x['weight'])
+                user1.set_email(x['email'])
+
                 main()
                 notAuthorized = False
             else:
@@ -448,15 +455,15 @@ def main():
             base.clear_files(f1, f2, f3)
 
         elif choice.lower() == 'q':
-            print(Fore.MAGENTA + "Exiting the Health and Fitness Tracker. Goodbye!")
+            print(Fore.GREEN + "Goodbye!, Exiting the Health and Fitness Tracker... ")
             break
         else:
-            print("Invalid choice! Please enter a number between 1 and 8.")
+            print("Invalid choice! Please enter a valid choice from the list")
 
 if __name__ == "__main__":
     try:
         userAuth()
     except KeyboardInterrupt as e:
-        print(Fore.LIGHTMAGENTA_EX + "GoodBye !!")
+        print(Fore.LIGHTGREEN_EX + "GoodBye !!")
     except Exception as e:
         print(f"An Error occurred : {e}")

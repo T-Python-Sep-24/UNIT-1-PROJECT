@@ -1,8 +1,10 @@
+import time
 
 from dotenv import load_dotenv
 import base
 import os
 import requests
+from tqdm import tqdm
 import json
 # Load secrets from dotenv
 load_dotenv()
@@ -135,8 +137,13 @@ class Workout:
             "age": age
         }
 
-        response = requests.post(url, headers=headers, json=data)
+        with tqdm(total=100, desc="Calculating Calories", ncols=100) as progress_par:
+            for i in range(90):
+                time.sleep(0.04)
+                progress_par.update(1)
 
+            response = requests.post(url, headers=headers, json=data)
+            progress_par.update(10)
         if response.status_code == 200:
 
             exercise_data = response.json()
@@ -144,7 +151,7 @@ class Workout:
                 nf_calories = exercise_data['exercises'][0]['nf_calories']
                 self.calories_burned = nf_calories
                 # print(f"Calories burned: {nf_calories}")
-                return  nf_calories
+                return nf_calories
             else:
                 print("No exercises found in the response.")
 

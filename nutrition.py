@@ -1,10 +1,12 @@
 import os
+import time
 
 import dotenv
 import requests
 
 import base
 import suggestmeals
+from tqdm import tqdm
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -97,7 +99,13 @@ class Meal:
         data = {
             "query": query,
         }
-        response = requests.post(url, headers=headers, json=data)
+        with tqdm(total=100, desc="Calculating meal's Calories", ncols=100) as progress_par:
+            for i in range(90):
+                time.sleep(0.03)
+                progress_par.update(1)
+
+            response = requests.post(url, headers=headers, json=data)
+            progress_par.update(10)
 
         if response.status_code == 200:
 
@@ -131,7 +139,6 @@ class Meal:
         """
         # APIs are recommended
         suggestmeals.getSuggestions(diet, maxCalories, numOfSuggestions, type)
-        # print("Coming Soon (; ")
 
     def formatOutput(self):
         """
