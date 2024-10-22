@@ -1,5 +1,9 @@
 import json
-
+from rich.console import Console
+from rich.table import Table
+from rich.prompt import Prompt
+from rich import print
+console = Console()
 BOOK_FILE = 'data/books.json'
 
 def load_books():
@@ -12,32 +16,36 @@ def save_books(books):
 
 def list_books():
     books = load_books()
-    for book in books:
-        print(f"ID: {book['id']}")
-        print(f"Title: {book['title']}")
-        print(f"Author: {book['author']}")
-        print(f"Year: {book['year']}")
-        print()
+    table = Table(title="Books List")
+    table.add_column("ID", justify="center", style="cyan")
+    table.add_column("Title", style="magenta")
+    table.add_column("Author", style="green")
+    table.add_column("Year", justify="right", style="yellow")
+
+    for book in books: # to iterates over each book in the books list
+        table.add_row(str(book['id']), book['title'], book['author'], str(book['year'])) # accept only string
+    
+    console.print(table)
 
 def book_details(book_id):
     books = load_books()
     book_id = int(book_id)
     for book in books:
         if book['id'] == book_id:
-            print(f"Title: {book['title']}")
-            print(f"Author: {book['author']} ({book['year']})")
-            print(f"Description: {book['description']}")
-            print(f"Likes: {book['likes']}")
-            print(f"Comments: {book['comments']}")
-            print(f"Ratings: {book['ratings']}")
+            console.print(f"Title: {book['title']}", style="bold yellow")
+            console.print(f"Author: {book['author']} ({book['year']})", style="bold blue")
+            console.print(f"Description: {book['description']}" , style="bold green")
+            console.print(f"Likes: {book['likes']}", style="bold cyan")
+            console.print(f"Comments: {book['comments']}", style="bold magenta")
+            console.print(f"Ratings: {book['ratings']}",  style="bold cyan")
             if book['ratings']:
                 average_rating = sum(book['ratings']) / len(book['ratings'])
-                print(f"Average Rating: {average_rating:.1f}")
+                console.print(f"Average Rating: {average_rating:.1f}", style="bold magenta")
             else:
-                print("Average Rating: No ratings yet.")
+                console.print("Average Rating: No ratings yet.", style="red")
             break
     else:
-        print("Book not found!")
+        console.print("Book not found!", style="red")
 
 
 def like_book(book_id):

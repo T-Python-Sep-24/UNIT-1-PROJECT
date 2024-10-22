@@ -1,32 +1,35 @@
-# UNIT-1-PROJECT
+# UNIT-1-PROJECT: Abjad Library
 
+## Overview
+Abjad is an interactive Command Line Interface (CLI) application that allows users to engage with a diverse collection of books. This library has two main user types: Admin and Viewer. Each user can perform specific tasks to facilitate the management and exploration of books.
 
+### User Stories
+As a **Viewer**, I should be able to:
+- Browse books available in the library.
+- View detailed information about each book (title, author, description, likes, comments, ratings, Average Rating).
+- Search for specific books by the book ID.
+- Like my favorite books.
+- Leave comments on the books.
+- Rate the books on a scale from 1 to 5.
 
-## Based on what you’ve learned until now , create a project of your choosing (impress us with your imagination) . This project must at least satisfy the following minimum requirements :
+As an **Admin**, I should be able to:
+- Add new books to the library.
+- Remove books from the library.
+- List all available books in the library.
 
-- Must be interactive on CLI.
-- Use your coding skills in Python accurately.
-- Organize Your Code into modules & (or packages)
-- Use Best practices.
+## Usage
+To use Abjad, follow these instructions:
 
-## Rasma, Art Gallery :
+### For Viewer:
+- Type `list` to browse all books.
+- Type `view` then `book_id` to see detailed information about a specific book.
+- Type `comment` then `book_id` then `Your Comment` to leave feedback on a book.
+- Type `like` then `book_id` to like a book.
+- Type `rate` then `book_id` then `rating` to rate a book.
+- Type `logout` to log out from admin mode.
 
-#### Overview : Rasma, Art Gallery where users can browse artworks, view details about artworks, like their favorite pieces, and leave comments.
-
-
-
-#### As a user I should be able to do the following :
--	Comment on the artworks
--	Search for the artworks
--	Get more details about the artworks
--   Like the artworks
-
-
-
-
-#### Usage :
- Explain to the user how to use your project. 
-
-
-
-### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
+### For Admin:
+- Type `list` to list all books.
+- Type `add` to add a new book.
+- Type `remove` then `book_id` to delete a book from the library.
+- Type `logout` to log out from admin mode.
