@@ -8,7 +8,7 @@ class ProductsOrder:
     def __init__(self, customer:Customer, cart:ProductsCart):
         self.cart = cart
         self.customer = customer
-        self.__previous_products_orders = self.__load_from_json()[self.customer.username]
+        self.__previous_products_orders = self.__load_from_json()
         
     def order_summary(self):
         print(f"Product order summary for {self.name}:")
@@ -16,15 +16,12 @@ class ProductsOrder:
         print(f"\nTotal cost: SAR {self.cart.total_cost()}")
     
     def checkout_cart(self):    
-        self.__previous_products_orders[len(self.__previous_products_orders) + 1] = self.cart
+        self.__previous_products_orders[self.customer.username] = {}
+        self.__previous_products_orders[self.customer.username][len(self.__previous_products_orders) + 1] = self.cart
         self.__save_to_file(self.__previous_products_orders)
-        self.__Reset_ProductsCart()
-    
-    def __Reset_ProductsCart(self):
-        self.cart = ProductsCart()
         
-    def get_previous_products_orders(self):
-        return self.__previous_products_orders
+    def get_all_products_orders(self):
+        return self.__load_from_json()
            
     def __save_to_file(self, previous_products_orders: dict):
         with open('previous_products_orders.json', 'w') as file:
@@ -35,7 +32,7 @@ class ProductsOrder:
             with open('previous_products_orders.json', 'r') as file:
                 return json.load(file)
         else:
-            return {{}}
+            return {}
         
     # def save_to_file(self, customers: dict):
     #     with open("previous_products_orders", 'wb') as file:

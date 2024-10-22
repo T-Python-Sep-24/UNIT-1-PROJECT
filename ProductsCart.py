@@ -6,7 +6,7 @@ class ProductsCart:
         
     def add_to_cart(self, product:Products, quantity:int):
         if quantity <= product.quantity:
-            if product.product_id not in self.cart[product.product_id]:
+            if product.product_id not in self.cart:
                 self.cart[product.product_id] = {'product': product, 'quantity': quantity}
                 product.quantity -= quantity
                 return True
@@ -29,7 +29,7 @@ class ProductsCart:
             return True
     
     def delete_from_cart(self, product:Products, unWantedQuantity:int, all=False):
-        if product.product_id in self.cart[product.product_id]:
+        if product.product_id in self.cart:
             if unWantedQuantity <= self.cart[product.product_id]['quantity']:
                 newQuantity = self.cart[product.product_id]['quantity'] - unWantedQuantity
                 if all or newQuantity <= 0:

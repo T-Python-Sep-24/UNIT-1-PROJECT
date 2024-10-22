@@ -1,46 +1,63 @@
 from ProductsCart import ProductsCart
+from ProductsOrder import ProductsOrder
 import os
 import pickle
 import json
+from ServiceCart import ServiceCart
+from ServiceOrder import ServiceOrder
 
 class Customer:
     def __init__(self, name:str, username:str, password:str):
         self.name = name
         self.username = username
         self.__password = password
-        self.cart = ProductsCart()
-        self.previous_products_orders = self.__load_from_json()[self.username]
+        
+        self.product_cart = ProductsCart()
+        self.previous_products_orders = self.__load_products_orders_from_json()
+        
+        self.service_cart = ServiceCart()
+        self.previous_products_orders = self.__load_products_services_from_json()
         
     def get_password(self):
         return self.__password
     
-    def products_order_summary(self):
-        print(f"Product order summary for {self.name}:")
-        self.cart.display()
-        print(f"\nTotal cost: ${self.cart.total_cost()}")
-    
     def checkout_products_cart(self):    
-        self.previous_products_orders[len(self.previous_products_orders) + 1] = self.cart
-        self.__save_to_file(self.previous_products_orders)
-        self.__Reset_ProductsCart()
+        products_order = ProductsOrder(self, self.product_cart)
+        products_order.order_summary()
         
+        checkout = input('\nDo you want to add more items to your shopping cart? ("y" for Yes and "n" for No)')
+        if checkout.lower() == 'y':
+            products_order.checkout_cart()
+            self.__Reset_ProductsCart()
+            return True
+        
+        return False
+    
     def __Reset_ProductsCart(self):
-        self.cart = ProductsCart()
+        self.product_cart = ProductsCart()
         
-    def __save_to_file(self, previous_products_orders: dict):
-        with open('previous_products_orders.json', 'w') as file:
-            json.dump(previous_products_orders, file)
+    def checkout_service_cart(self):    
+        products_order = ServiceOrder(self, self.service_cart)
+        products_order.order_summary()
+        products_order.checkout_cart()
+        self.__Reset_servicesCart()
+                
+    def __Reset_servicesCart(self):
+        self.cart = ServiceCart()
             
-    def __load_from_json(self):
+    def __load_products_orders_from_json(self):
         if os.path.exists('previous_products_orders.json'):
             with open('previous_products_orders.json', 'r') as file:
                 return json.load(file)
         else:
-            return {{}}
+            return {}
         
-    # def save_to_file(self, customers: dict):
-    #     with open("previous_products_orders", 'wb') as file:
-    #         pickle.dump(customers, file)
+    def __load_products_services_from_json(self):
+        if os.path.exists('previous_services_orders.json'):
+            with open('previous_services_orders.json', 'r') as file:
+                return json.load(file)
+        else:
+            return {}
             
     # def load_from_file(self):
     #     if not os.path.exists("previous_products_orders"):
