@@ -15,11 +15,11 @@
 -Exit  
 ### As an Authortie in a specfic ministry I shoild be able to do the following:
 -Login/Register for manamge  
--Fine a violation for the customers  
--check the violations for a customer  
--Objections review from customers and response  
--make a discount to all customer  
--make a discount for one of the customer  
+-Fine a violation for a Resident
+-check the violations for a Resident  
+-Objections review from Resident and response  
+-make a discount to all Resident  
+-make a discount for one of the Resident  
 -Manager log  
 -Exit  
 ## For Management Users They only can do the tasks to their ministry only and they can not interfer with other ministries
@@ -35,9 +35,9 @@ After logging in as a resident, you can:
 Follow the on-screen instructions to complete each action.  
 ## As for the Management :
 After logging in as a management user, you can:  
-.Fine violations for customers under your ministry.  
-.Review and respond to customer objections.  
-.Apply discounts to all or specific customers.  
+.Fine violations for Residents under your ministry.  
+.Review and respond to Resident objections.  
+.Apply discounts to all or specific Residents.  
 .Check logs of issued fines and actions you've taken.  
 You will only be able to interact with violations that assigned to your ministry  
 

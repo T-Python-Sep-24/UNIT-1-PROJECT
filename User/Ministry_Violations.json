@@ -1,0 +1,65 @@
+{
+    "Ministry of Human Resources and Social Development": [
+        {"Violation_type": "Failure to provide adequate working conditions", "Amount": 10000},
+        {"Violation_type": "Delayed or non-payment of employee wages", "Amount": 5000},
+        {"Violation_type": "Discrimination in the workplace", "Amount": 15000},
+        {"Violation_type": "Employment of minors without permits", "Amount": 8000},
+        {"Violation_type": "Lack of workplace safety measures", "Amount": 7000}     
+    ],
+    "Ministry of Interior": [
+        {"Violation_type": "Driving without a valid license", "Amount": 1000},
+        {"Violation_type": "Possession of unlicensed firearms", "Amount": 10000},
+        {"Violation_type": "Breach of public order", "Amount": 3000},
+        {"Violation_type": "Refusal to cooperate with law enforcement", "Amount": 5000},
+        {"Violation_type": "Unauthorized public gatherings", "Amount": 6000}
+    ],
+    "Ministry of Commerce": [
+        {"Violation_type": "Selling expired or counterfeit products", "Amount": 50000},
+        {"Violation_type": "False advertising or misleading promotions", "Amount": 25000},
+        {"Violation_type": "Operating a business without a license", "Amount": 10000},
+        {"Violation_type": "Failure to comply with VAT regulations", "Amount": 5000},
+        {"Violation_type": "Price manipulation or monopolistic practices", "Amount": 100000}
+    ],
+    "Ministry of Environment, Water, and Agriculture": [
+        {"Violation_type": "Illegal hunting or fishing activities", "Amount": 20000},
+        {"Violation_type": "Water wastage or improper use of resources", "Amount": 5000},
+        {"Violation_type": "Deforestation without a permit", "Amount": 30000},
+        {"Violation_type": "Use of banned pesticides or chemicals", "Amount": 15000},
+        {"Violation_type": "Failure to comply with environmental regulations", "Amount": 10000}
+    ],
+    "Saudi Arabian Cybersecurity Authority (SCA)": [
+        {"Violation_type": "Unauthorized access to sensitive data", "Amount": 100000},
+        {"Violation_type": "Failure to protect personal data", "Amount": 50000},
+        {"Violation_type": "Cyberstalking or online harassment", "Amount": 5000},
+        {"Violation_type": "Operating without a cybersecurity compliance certificate", "Amount": 20000},
+        {"Violation_type": "Phishing or online fraud", "Amount": 50000}
+    ],
+    "Ministry of Islamic Affairs, Dawah, and Guidance":[
+        {"Violation_type": "Unauthorized religious gatherings", "Amount": 10000},
+        {"Violation_type": "Disrespect of Islamic values in public", "Amount": 5000},
+        {"Violation_type": "Violating guidelines for mosque maintenance", "Amount": 7000},
+        {"Violation_type": "Preaching without a permit", "Amount": 15000},
+        {"Violation_type": "Failure to observe Islamic customs in public spaces", "Amount": 3000}
+    ],
+    "Ministry of Health": [
+        {"Violation_type": "Operating a healthcare facility without a license", "Amount": 50000},
+        {"Violation_type": "Sale of unregistered medical drugs or devices", "Amount": 100000},
+        {"Violation_type": "Failure to comply with health standards in food establishments", "Amount": 10000},
+        {"Violation_type": "Medical malpractice or negligence", "Amount": 30000},
+        {"Violation_type": "Violating patient privacy", "Amount": 20000}
+    ],
+    "General Authority of Zakat and Tax (GAZT)":[
+        {"Violation_type": "Failure to register for VAT", "Amount": 10000},
+        {"Violation_type": "Non-payment or underpayment of zakat/tax", "Amount": 50000},
+        {"Violation_type": "Filing incorrect financial statements", "Amount": 20000},
+        {"Violation_type": "Delayed submission of tax returns", "Amount": 5000},
+        {"Violation_type": "Engaging in tax evasion practices", "Amount": 100000}
+    ],
+    "Ministry of Interior (Traffic Department)":[
+        {"Violation_type": "Speeding over the limit", "Amount": 300},
+        {"Violation_type": "Running a red light", "Amount": 4000},
+        {"Violation_type": "Illegal parking", "Amount": 150},
+        {"Violation_type": "Using a mobile phone while driving", "Amount": 500},
+        {"Violation_type": "Driving under the influence of alcohol or drugs", "Amount": 5000}
+    ]
+    }

@@ -7,20 +7,20 @@ class Authenticator:
     def register_resident(user_name, email, password, phone_number, resident_id):
         residents=Data_management.load_file('Residents.pkl')
         if resident_id in residents:
-            raise RegisterError(Fore.RED+"The Resident with this id allready registered!!")
+            raise RegisterError(Fore.RED+"The Resident with this id allready registered!!"+Fore.RESET)
         new_resident=Resident(user_name,email,password,phone_number,resident_id)
         residents[resident_id]=new_resident
         Data_management.save_file(residents,'Residents.pkl')
-        print(Fore.GREEN+f"The resident: {user_name} has been registered Successfully") 
+        print(Fore.GREEN+f"The resident: {user_name} has been registered Successfully"+Fore.RESET) 
     
     def register_manager(user_name, email, password, phone_number, authentication_number):
         Managers=Data_management.load_file('Managers.pkl')
         if email in Managers:
-            raise RegisterError(Fore.RED+"The Managers with this email allready registered!!")
+            raise RegisterError(Fore.RED+"The Managers with this email allready registered!!"+Fore.RESET)
         new_manager=Manager(user_name,email,password,phone_number,authentication_number)
         Managers[email]=new_manager
         Data_management.save_file(Managers,'Managers.pkl')
-        print(Fore.GREEN+f"The Manager: {user_name} has been registered Successfully") 
+        print(Fore.GREEN+f"The Manager: {user_name} has been registered Successfully"+Fore.RESET) 
     
     def login_resident(id,password):
         residents=Data_management.load_file('Residents.pkl')
