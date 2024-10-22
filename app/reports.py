@@ -114,29 +114,34 @@ class Reports:
 
         meals_file = nutrition.Meal().fileName
         meals_data = base.load_from_file(meals_file)
-        meals_table = []
-        macronutrientsTable = []
 
         workoutsFile = workouts.Workout().fileName
         workout_data = base.load_from_file(workoutsFile)
-        workoutsTable = []
-        goals = []
 
         health_states_file = health_states.Health_states().fileName
         health_states_data = base.load_from_file(health_states_file)
-        health_states_table = []
 
-        total_calories = 0
+
+        # meals Total nutrition count
+        total_meals_calories = 0
         total_water_intake = 0
-        # Initialize variables to store all the tables
+        total_protein_intake = 0
+        total_carbs_intake = 0
+        total_fats_intake = 0
+        total_sugar_intake = 0
+        # workouts
+        total_burned_calories = 0
+        total_time_workouts = 0
+        # health states
+        weights_counter = 0
+        weights = 0
+        # all tables
         all_meals_table = ""
         all_workouts_table = ""
         all_health_states_table = ""
 
         # Process each meal and accumulate the HTML tables
         for meal in meals_data:
-            total_calories += meal['calories']
-            total_water_intake += meal['water']
 
             meal_details = [
                 ["Meal Details"],
@@ -145,6 +150,10 @@ class Reports:
                 ["Calories", f"{meal['calories']} kcal"],
                 ["Water", f"{meal['water']} Liters"]
             ]
+
+            total_meals_calories += meal['calories']
+            total_water_intake += meal['water']
+
             meals_table = tabulate(meal_details, tablefmt="html")
 
             macronutrients = [
@@ -158,6 +167,11 @@ class Reports:
                 ["Protein", meal['macronutrients']['protein']],
                 ["Potassium", meal['macronutrients']['potassium']]
             ]
+            total_protein_intake += meal['macronutrients']['protein']
+            total_carbs_intake += meal['macronutrients']['carbohydrate']
+            total_fats_intake += meal['macronutrients']['total_fats']
+            total_sugar_intake += meal['macronutrients']['sugars']
+
             macronutrientsTable = tabulate(macronutrients, headers=["Nutrient", "Value"], tablefmt="html")
 
             # Accumulate the current meal tables
@@ -172,6 +186,10 @@ class Reports:
                 ["Calories Burned", f"{workout['calories_burned']} kcal"],
                 ["Date", workout['date']]
             ]
+            total_burned_calories += workout['calories_burned']
+            durationS = workout['duration'].split()
+            total_time_workouts += int(durationS[0])
+
             workoutsTable = tabulate(workout_details, tablefmt="html")
 
             # Handle goals for the workout
@@ -191,12 +209,15 @@ class Reports:
                 ["BMI", f"{state['bmi']:.4f}"],
                 ["Date", state['date']]
             ]
+            weights_counter += 1
+            weights += state['weight']
+
             health_states_table = tabulate(measurement_details, tablefmt="html")
 
             # Accumulate the current health state tables
             all_health_states_table += health_states_table + "<br>"
 
-
+        avgWeight = round((weights / weights_counter), 2)
 
 # Now use your email sending logic to send `email_content` as the body
 
@@ -252,17 +273,34 @@ class Reports:
             </head>
             <body>
                 <h1>Hello!</h1>
-                <p>Hello, this is a Your Meals daily Report sent from Python.</p>
+                <p>Hello, This is a Your Total Report sent from FitTracker.</p>
                 <p><strong>Enjoy coding!</strong></p>
                 <div>
                     <h2>Meal Information</h2>
                     {all_meals_table}
-            
+                    <hr>
+                    <h4>Summary</h4>
+                    <p>Total Calories Intake: {total_meals_calories} Kcal</p>
+                    <p>Total water Intake: {total_water_intake} Liters</p>
+                    <p>Total protein Intake: {total_protein_intake} Liters</p>
+                    <p>Total carbs Intake: {total_carbs_intake} Liters</p>
+                    <p>Total fats Intake: {total_fats_intake} Liters</p>
+                    <p>Total sugar Intake: {total_sugar_intake} Liters</p>
+                    <hr>
+                    
                     <h2>Workout Information</h2>
                     {all_workouts_table}
-            
+                    
+                    <hr>
+                    <p>Total Burned Calories: {total_burned_calories}</p>
+                    <p>Total Time Working Out: {total_time_workouts}</p>
+                    <hr>
+                    
                     <h2>Health States</h2>
                     {all_health_states_table}
+                    <hr>
+                    <p>Your Average weight is: {avgWeight}</p>
+                    <hr>
                 </div>
                 <a href="https://www.example.com">Click here to visit our website</a>
                 <h3> THANK YOU ! </h3>

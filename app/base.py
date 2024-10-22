@@ -33,7 +33,11 @@ def load_from_file(filePath):
                 return data
         except Exception as e:
             print(f"Error loading from file The File might be Empty or {e} ⚠ ")
-
+            # return []
+    else:
+        print(f"File {filePath} is Empty")
+        if not filePath == '../user_data_files/user.json':
+            return []
 
 def clear_files(f1,f2,f3):
     """

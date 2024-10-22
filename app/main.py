@@ -151,7 +151,7 @@ def healthStatesTracking():
             print("returning to main menu <<<")
             break
         else:
-            print("Invalid choice! Please enter a number between 1 and 3 or q to return to main menu.")
+            print("Invalid choice! Please enter a number between 1 and 4 or q to return to main menu.")
 
 # Nutrition's Menu
 def nutritionsTrackingMenu():
@@ -255,7 +255,7 @@ def nutritionTracking():
             break
 
         else:
-            print("Invalid choice! Please enter a number between 1 and 4 or q to return to main menu.")
+            print("Invalid choice! Please enter a number between 1 and 6 or q to return to main menu.")
 
 # workout Menu
 def workoutTrackingMenu():
@@ -363,7 +363,7 @@ def workoutTracking():
             break
 
         else:
-            print("Invalid choice! Please enter a number between 1 and 4 or q to return to main menu.")
+            print("Invalid choice! Please enter a number between 1 and 6 or q to return to main menu.")
 
 # Main menu
 def main_menu():
@@ -477,7 +477,7 @@ def main():
             print(Fore.GREEN + "Goodbye!, Exiting the Health and Fitness Tracker... ")
             break
         else:
-            print("Invalid choice! Please enter a valid choice from the list")
+            print("Invalid choice! Please enter a valid choice from the list between 1 and 5 or q to quit")
 
 def settings():
 
