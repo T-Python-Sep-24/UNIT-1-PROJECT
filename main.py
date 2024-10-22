@@ -223,19 +223,19 @@ def employeeMenu(employee: Employee):
         
         #Display menu of available products
         elif choice == '4':
-            print(Rule, characters="-  ", style="bold #fdffb0")
+            print(Rule(characters="-  ", style="bold #fdffb0"))
             menu: Table = employee.listAllProducts()
             print(menu)
         
         #Display menu of expired products
         elif choice == '5':
-            print(Rule, characters="-  ", style="bold #fdffb0")
+            print(Rule(characters="-  ", style="bold #fdffb0"))
             expMenu: Table = employee.checkExpired()
             print(expMenu)
 
         #Display menu of out of stock products
         elif choice == '6':
-            print(Rule, characters="-  ", style="bold #fdffb0")
+            print(Rule(characters="-  ", style="bold #fdffb0"))
             oofMenu: Table = employee.checkOutOfStock()
             print(oofMenu)
         

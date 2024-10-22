@@ -88,7 +88,7 @@ class Person:
         '''
         This method retrieves the list of all products from json file and returns a Table object containing the menu
         '''
-        menu: dict = self.__loadFromJSON()
+        menu: dict = self.loadFromJSON()
 
         #Creating a table object to display menu
         menuTable: Table = Table(title = "Stellar Bakery Menu", title_style="italic bold #f0cfff", border_style="#dadada",expand=False, box=box.MINIMAL_DOUBLE_HEAD)
@@ -106,7 +106,7 @@ class Person:
         else: 
             return "Your menu is empty."
         
-    def __loadFromJSON(self) -> dict: 
+    def loadFromJSON(self) -> dict: 
         '''
         Call this method whenever you want to load from a json file and make neccessary checks
         '''
@@ -201,7 +201,7 @@ class Employee(Person):
         This method adds a product to a json file containing all products
         '''
         #Use the method below to get the menu from the json file
-        menu: dict = self.__loadFromJSON()
+        menu: dict = Person.loadFromJSON()
 
         menu[prodName]= {
             'qty': qty,
@@ -216,7 +216,7 @@ class Employee(Person):
         '''
         This method removes a product from the menu then saves the modified menu to the json file
         '''
-        menu: dict = self.__loadFromJSON()
+        menu: dict = Person.loadFromJSON()
         
         if menu:
             #Check if the product is on the menu
@@ -235,7 +235,7 @@ class Employee(Person):
         '''
         This method updates a product's name then saves the modified menu to the json file
         '''
-        menu: dict = self.__loadFromJSON()
+        menu: dict = Person.loadFromJSON()
         
         if menu:
             #Check that the product is on the menu
@@ -256,7 +256,7 @@ class Employee(Person):
         '''
         This method updates a product's quantity then saves the modified menu to the json file
         '''
-        menu: dict = self.__loadFromJSON()
+        menu: dict = Person.loadFromJSON()
         
         if menu:
             #Check that the product is on the menu
@@ -276,7 +276,7 @@ class Employee(Person):
         '''
         This method updates a product's price then saves the modified menu to the json file
         '''
-        menu: dict = self.__loadFromJSON()
+        menu: dict = Person.loadFromJSON()
         
         if menu:
             #Check that the product is on the menu
@@ -314,7 +314,9 @@ class Employee(Person):
         '''
         This method retrieves the list of all products from json file and returns a Table object containing the menu
         '''
-        menu: dict = self.__loadFromJSON()
+
+        #Retrieving menu from the json file
+        menu: dict = Person.loadFromJSON(self)
 
         #Creating a table object to display menu
         menuTable: Table = Table(title = "Stellar Bakery Menu", title_style="italic bold #f0cfff", border_style="#dadada",expand=False, box=box.MINIMAL_DOUBLE_HEAD)
@@ -336,14 +338,15 @@ class Employee(Person):
     def checkExpired(self) -> Table:
         '''This method returns a Table containing all expired items'''
 
-        menu: dict = self.__loadFromJSON()
+        #Retrieving menu from the json file
+        menu: dict = Person.loadFromJSON(self)
 
         #Create table of expired products on the menu
         expiredTable: Table = Table(title="Expired Products:",title_style="bold #ffd7f0" ,title_justify="left", box=box.SIMPLE, show_footer=True, border_style="#daf5ff")
         
         #Adding columns to the table 
         expiredTable.add_column("[bold #fdffc3]Product Name[/]")
-        expiredTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center", footer=f"Ordered on: {datetime.strftime(self.__date, '%Y-%m-%d %H:%M:%S')}", footer_style="#aceaff")
+        expiredTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
         expiredTable.add_column("[bold #a4d5b5]Price[/]", justify = "center")
         expiredTable.add_column("[bold #ffd7f0]Expiry Date[/]", justify = "center")
         
@@ -353,26 +356,31 @@ class Employee(Person):
             #Loops over products in the menu and checks expiry date
             for prodName in menu:
                 expDate: datetime = datetime.strptime(menu[prodName]['exp date'], '%Y-%m-%d')
-                todaysDate: datetime = datetime.strptime(datetime.today(), '%Y-%m-%d')
-                if expDate > todaysDate:
+                #Converting datetime object to string then back to datetime to get desired format
+                todayStr: str = datetime.strftime(datetime.today(), '%Y-%m-%d')
+                todaysDate: datetime = datetime.strptime(todayStr, '%Y-%m-%d')
+
+                if expDate < todaysDate:
                     expiredTable.add_row(f"[#feffde]{prodName}[/]",f"[#daf5ff]{menu[prodName]['qty']}[/]",f"[#ccefd8]{menu[prodName]['price']} SR[/]", f"[#ffd7f0]{menu[prodName]['exp date']}")
                     hasExpired = True
             if hasExpired == False:
-                expiredTable.add_row(None, "There are no expired products", None, style="italic #fbfbe2")
+                expiredTable.add_row(None, "There are no expired products..", None, style="italic #fbfbe2")
             return expiredTable
         else:      
             return Text("The menu is empty.", style="italic #fbfbe2")
         
     def checkOutOfStock(self) -> Table:
         '''This method returns a Table containing all out of stock items'''
-        menu: dict = self.__loadFromJSON()
+
+        #Retrieving menu from the json file
+        menu: dict = Person.loadFromJSON(self)
 
         #Create table of out of stock products on the menu
         oofTable: Table = Table(title="Out of Stock Products:",title_style="bold #ffd7f0" ,title_justify="left", box=box.SIMPLE, show_footer=True, border_style="#daf5ff")
         
         #Adding columns to the table 
         oofTable.add_column("[bold #fdffc3]Product Name[/]")
-        oofTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center", footer=f"Ordered on: {datetime.strftime(self.__date, '%Y-%m-%d %H:%M:%S')}", footer_style="#aceaff")
+        oofTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
         oofTable.add_column("[bold #a4d5b5]Price[/]", justify = "center")
         oofTable.add_column("[bold #ffd7f0]Expiry Date[/]", justify = "center")
         
@@ -385,7 +393,7 @@ class Employee(Person):
                     oofTable.add_row(f"[#feffde]{prodName}[/]",f"[#daf5ff]{menu[prodName]['qty']}[/]",f"[#ccefd8]{menu[prodName]['price']} SR[/]", f"[#ffd7f0]{menu[prodName]['exp date']}")
                     ranOut = True
             if ranOut == False:
-                oofTable.add_row(None, "There are no out of stock products", None, style="italic #fbfbe2")
+                oofTable.add_row(None, "There are no out of stock products..", None, style="italic #fbfbe2")
             return oofTable
         else:      
             return Text("The menu is empty.", style="italic #fbfbe2")
