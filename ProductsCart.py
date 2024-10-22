@@ -20,11 +20,13 @@ class ProductsCart:
         return False
         
     def display(self):
-        if self.is_empty():
+        if not self.cart:
             return False
         else:
-            for i, value in enumerate(self.cart, start=1):
+            i=1
+            for key, value in self.cart.items():
                 print(f'{i}. Name: {value['product'].name}, Price: {value['product'].price}, Quantity: {value['quantity']}')
+                i+=1
                 
             return True
     

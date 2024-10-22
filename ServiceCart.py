@@ -6,14 +6,14 @@ class ServiceCart:
         
     def add_to_cart(self, service:Services, date, time):
         if len(service.dates_and_times['dates']) > 0 and len(service.dates_and_times['times']) > 0:
-            self.cart[service.service_id] = {'service': service, 'date': date, 'time': time}
+            self.cart = {'service': service, 'date': date, 'time': time}
             # Here I should remove date and time from there lists in Services class
             return True
             
         return False
         
     def display(self):
-        if self.is_empty():
+        if not self.cart:
             return False
         else:
             print(f'Service. Name: {self.cart['service'].name}, Price: {self.cart['service'].price}, Will be on Date: {self.cart['date']}, At {self.cart['time']}')
