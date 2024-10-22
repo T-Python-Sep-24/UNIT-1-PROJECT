@@ -5,9 +5,7 @@ import pickle
 class RegisterLogin:
     def __init__(self):
         self.customers = self.load_from_file()
-        # Ensure customers is a dictionary
         if not isinstance(self.customers, dict):
-            print("Error: Loaded customers data is not a dictionary. Initializing empty dictionary.")
             self.customers = {}
         
     def register_customer(self, customer: Customer):
@@ -20,9 +18,8 @@ class RegisterLogin:
             else:
                 print("Username already exists.")
                 return False
-        else:
-            print("Provided object is not a valid Customer.")
-            return False
+
+        return False
         
     def login_customer(self, username: str, password: str):
         if username in self.customers:
@@ -39,13 +36,12 @@ class RegisterLogin:
 
     def load_from_file(self):
         if not os.path.exists("customers_data"):
-            return {}  # Return an empty dictionary if the file does not exist
+            return {}  
         
         with open("customers_data", 'rb') as file:
             try:
                 data = pickle.load(file)
                 if not isinstance(data, dict):
-                    print("Loaded data is not a dictionary. Initializing empty dictionary.")
                     return {}
                 return data
             except Exception as e:

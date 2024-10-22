@@ -33,3 +33,9 @@ class Storge:
             
     def get_services(self, services_number:int):
         return self.__services[services_number]
+    
+    def __load_products_data(self):
+        pass
+    
+    def __store_services_data(self):
+        pass

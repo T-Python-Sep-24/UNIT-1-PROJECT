@@ -27,7 +27,7 @@ registerLogin = RegisterLogin()
 registerLogin.register_customer(custumer)
 registerLogin.login_customer('osama_f', '123bb')
 
-# custumer = registerLogin.get_customer('osama_f')
+custumer = registerLogin.get_customer('osama_f')
 
 custumer.product_cart.add_to_cart(storge.get_product(0), 10)
 custumer.product_cart.add_to_cart(storge.get_product(1), 20)
