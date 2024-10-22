@@ -10,6 +10,8 @@ from tqdm import tqdm
 dotenv.load_dotenv()
 
 class User:
+
+    fileName = '../user_data_files/user.json'
     __name: str = ""
     # __id = ""
     __email: str = ""
@@ -20,6 +22,7 @@ class User:
 
     def __init__(self):
 
+        fileName = '../user_data_files/user.json'
         __name: str = ""
         __email: str = ""
         __age: int = 0
@@ -62,7 +65,7 @@ class User:
         return self.__height
 
     def get_weight(self) -> float:
-        return self.__height
+        return self.__weight
 
     def get_gender(self) -> str:
         return self.__gender
@@ -93,7 +96,7 @@ class User:
     #     validate = response['data']['status']
     #     print(validate)
 
-        return response.json()
+        # return response.json()
 
 
 

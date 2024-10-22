@@ -44,11 +44,14 @@ def reportsTracking():
             input(" >>> Press any Key to continue <<< ")
         elif choice == "4":
 
-            email = user1.get_email()
-            isNotValid = user1.validate_email(email)
+            userData = base.load_from_file(user1.fileName)
+            email = userData['email']
+
             while True:
                 if user1.validate_email(email):
                     reports_instance.send_report_via_email(email)
+                    userData['email'] = email
+                    base.save_to_file(user1.fileName, userData)
                     print(f"Reports is sent to {email}")
                     break
                 else:
@@ -114,15 +117,17 @@ def healthStatesTracking():
             if c.lower() == 'y':
                 weight = user1.get_weight()
                 height = user1.get_height()
+                print(f"weight: {weight}, Height: {height}")
             else:
-                weight = float(input("Enter new Weight: "))
-                height = float(input("Enter new Height: "))
+                weight = float(input("Enter new Weight in KG (i.e. 65): "))
+                height = float(input("Enter new Height: in CM (i.e. 176)"))
 
             # calc bmi
             bmi = health_states_instance.calc_bmi(float(weight), float(height))
             cat = health_states_instance.bmi_categorization(bmi)
 
             print(f"Your BMI is {bmi} which is categorized as {cat}")
+            print(f"weight: {weight}, Height: {height}")
 
             # ask the user to save it or not
             saveState = input("Do you want to add this data to your file [y/n] ? ")
@@ -379,7 +384,7 @@ def userAuth():
     Authorize user, and collecting user information
     :return:
     """
-    fileName = 'user_data_files/user.json'
+    fileName = '../user_data_files/user.json'
     x = base.load_from_file(fileName)
     # print(x)
     if x is None:
@@ -396,7 +401,7 @@ def userAuth():
             age = int(input("Enter You age: "))
             gender = input("Enter your gender: ")
             weight = float(input("Enter your weight in kg (i.e. 60) : "))
-            height = float(input("Enter your height in meters (i.e. 1.72): "))
+            height = float(input("Enter your height in centimeters (i.e. 172): "))
 
         except Exception as ex:
             print("Error occurred !!", ex, ex.__class__)
@@ -476,13 +481,12 @@ def main():
 
 def settings():
 
-    fileName = 'user_data_files/user.json'
+    fileName = '../user_data_files/user.json'
     x = base.load_from_file(fileName)
 
+    print(Fore.RED + ">> Account Verification <<" + Style.RESET_ALL)
+    name = input("Please Verify Your username: ")
     while True:
-
-        print(Fore.RED + ">> Account Verification <<" + Style.RESET_ALL)
-        name = input("Please Verify Your username: ")
 
         if name == x['username']:
             print("User Verified Successfully")
@@ -510,6 +514,19 @@ def settings():
 
                 keyToUpdate = input("Please Choose Field To update: [username, age, gender, weight, height, email]: ")
                 newValue = input("Enter the new value: ")
+                if keyToUpdate == 'username':
+                    user1.set_name(newValue)
+                elif keyToUpdate == 'age':
+                    user1.set_age(int(newValue))
+                elif keyToUpdate == 'gender':
+                    user1.set_gender(newValue)
+                elif keyToUpdate == 'weight':
+                    user1.set_weight(float(newValue))
+                elif keyToUpdate == 'height':
+                    user1.set_height(float(newValue))
+                elif keyToUpdate == 'email':
+                    user1.set_email(newValue)
+
                 x[keyToUpdate] = newValue
                 x['emailIsValid'] = user1.validate_email(x['email'])
                 base.save_to_file(fileName, x)
@@ -518,7 +535,7 @@ def settings():
             elif choice == "3":
                 f1, f2, f3 = Workout.fileName, Meal.fileName, Health_states.fileName
                 base.clear_files(f1, f2, f3)
-                print("Data is cleared Successfully")
+
                 input(">> Press Enter To Continue <<")
             elif choice.lower() == "q":
                 print("Saving Your Data")
@@ -535,5 +552,9 @@ if __name__ == "__main__":
         print(Fore.LIGHTGREEN_EX + "GoodBye !!")
     except ConnectionError as c:
         print("Please Check Your Internet Connection")
+    except FileNotFoundError as fe:
+        print("Please Correct Files Paths")
+    except ValueError as v:
+        print("Please Enter Correct Inputs")
     except Exception as e:
         print(f"An Error occurred : {e.with_traceback()}")

@@ -12,7 +12,7 @@ load_dotenv()
 
 class Workout:
 
-    fileName = 'user_data_files/workouts.json'
+    fileName = '../user_data_files/workouts.json'
 
     def __init__(self):
         """
@@ -20,7 +20,7 @@ class Workout:
         """
 
         self.workouts = []
-        self.fileName = 'user_data_files/workouts.json'
+        self.fileName = '../user_data_files/workouts.json'
         self.workout_type = ""
         self.workout_duration = ""
         self.calories_burned = 0
@@ -139,8 +139,8 @@ class Workout:
 
         with tqdm(total=100, desc="Calculating Calories", ncols=100) as progress_par:
             for i in range(90):
-                time.sleep(0.04)
-                progress_par.update(1)
+                time.sleep(0.02)
+                progress_par.update(2)
 
             response = requests.post(url, headers=headers, json=data)
             progress_par.update(10)

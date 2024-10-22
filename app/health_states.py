@@ -3,7 +3,7 @@ from app import base
 
 class Health_states():
 
-    fileName = 'user_data_files/health_states.json'
+    fileName = '../user_data_files/health_states.json'
 
     def __init__(self):
         """
@@ -11,7 +11,7 @@ class Health_states():
         """
         self.date = None
         self.health_states = []
-        self.fileName = 'user_data_files/health_states.json'
+        self.fileName = '../user_data_files/health_states.json'
         self.weight: float = 0
         self.height: float = 0
         self.measure_date = ""
@@ -27,19 +27,19 @@ class Health_states():
         """
         self.weight = weight
         self.height = height
-        self.bmi = self.get_bmi()
+        self.bmi = self.calc_bmi(weight, height)
         self.date = date
 
         new_measurement = {
             "height": height,
             "weight": weight,
-            "bmi": self.get_bmi(),
+            "bmi": self.calc_bmi(weight, height),
             "date": self.date
 
         }
         self.health_states.append(new_measurement)
         base.save_to_file(self.fileName, self.health_states)
-        print("data saved successfully ✅ ")
+        print(">> Health States saved successfully ✅ ")
 
     def calc_bmi(self, weight: float, height: float) -> float:
         """
@@ -49,19 +49,7 @@ class Health_states():
         :return: bmi
         """
         height = height / 100
-        print(height)
-        bmi: float = weight / (height ** 2)
-        return bmi
-
-    def get_bmi(self):
-        """
-        this method calculates the user bmi taking the height and the wight from the current object
-        :return:
-        """
-        self.height = self.height / 100
-        print(self.height)
-        bmi: float = float(self.weight) / (float(self.height) ** 2)
-        self.bmi = bmi
+        bmi: float = round(weight / (height ** 2), 2)
         return bmi
 
     def get_health_states(self):
@@ -116,8 +104,8 @@ class Health_states():
         if (len(self.health_states)) > 0:
             print("-"*30)
             for i, state in enumerate(self.health_states, start=1):
-                print(f"{i}. {state['height']}CM, ({state['weight']}) KG And {state['bmi']} body mass index, "
-                      f"at {state['date']}")
+                print(f"{i}. Height: {state['height']} CM, Weight: {state['weight']} KG And BMI: {state['bmi']}, "
+                      f" Measurement Date: {state['date']}")
             print("-"*30)
         else:
             print("No Data Available")

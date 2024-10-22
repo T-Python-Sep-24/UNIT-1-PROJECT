@@ -26,7 +26,7 @@ class Reports:
                 ["Name", meal['name']],
                 ["Date", meal['date']],
                 ["Calories", f"{meal['calories']} kcal"],
-                ["Water", f"{meal['water']} glasses"]
+                ["Water", f"{meal['water']} Liters"]
             ]
             print(tabulate(meal_details, tablefmt="heavy_grid"))
 
@@ -73,17 +73,20 @@ class Reports:
         health_states_data = base.load_from_file(health_states.Health_states().fileName)
         print("\nBody Measurements")
         print("=============================")
-        for state in health_states_data:
-        # Format data into table rows
-            measurement_details = [
-                ["Height", f"{state['height']} cm"],
-                ["Weight", f"{state['weight']} kg"],
-                ["BMI", f"{state['bmi']:.4f}"],
-                ["Date", state['date']]
-            ]
+
+        if len(health_states_data) !=  None:
+
+            for state in health_states_data:
+            # Format data into table rows
+                measurement_details = [
+                    ["Height", f"{state['height']} cm"],
+                    ["Weight", f"{state['weight']} kg"],
+                    ["BMI", f"{state['bmi']:.4f}"],
+                    ["Date", state['date']]
+                ]
 
         # Display the table
-            print(tabulate(measurement_details, tablefmt="heavy_grid"))
+                print(tabulate(measurement_details, tablefmt="heavy_grid"))
 
     def send_report_via_email(self, user_email):
         """
