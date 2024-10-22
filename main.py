@@ -3,6 +3,7 @@ from Car_files.customer import Customer
 from Car_files.manager import Manager
 
 
+
 # Initialize car storage
 car_storage = CarStorage()
 car_storage.load_file()
@@ -23,7 +24,8 @@ def manager_menu():
         print("4. Search for a Car")
         print("5. Rental history")
         print("6. Show rented cars")
-        print("7. Logout")
+        print("7. Show rented cars stats")
+        print("8. Logout")
         choice = input("Enter your choice: ")
 
         try:
@@ -61,6 +63,8 @@ def manager_menu():
             elif choice == "6":
                 manager.rented_cars()
             elif choice == "7":
+                manager.rental_stats()
+            elif choice == "8":
                 print("Logging out...")
                 break
             else:

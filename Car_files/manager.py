@@ -1,5 +1,7 @@
 from Car_files.car import Car, CarStorage
-import json
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
 
 class Manager:
     def __init__(self, name, password, car_storage):
@@ -83,3 +85,6 @@ class Manager:
 
         if not any_rented:
             print("No rented cars.")
+    
+
+

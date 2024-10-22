@@ -8,25 +8,61 @@
                 "action": "rented",
                 "car_name": "ford",
                 "car_year": 2023,
-                "date": "2024-10-22 20:14:56"
+                "date": "2024-10-01 10:00:00"
             },
             {
                 "action": "returned",
                 "car_name": "ford",
                 "car_year": 2023,
-                "date": "2024-10-22 20:15:20"
+                "date": "2024-10-03 15:00:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "toyota",
+                "car_year": 2021,
+                "date": "2024-10-05 09:30:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "toyota",
+                "car_year": 2021,
+                "date": "2024-10-07 12:00:00"
             },
             {
                 "action": "rented",
                 "car_name": "ford",
                 "car_year": 2023,
-                "date": "2024-10-22 20:26:34"
+                "date": "2024-10-23 02:02:54"
             },
             {
                 "action": "returned",
                 "car_name": "ford",
                 "car_year": 2023,
-                "date": "2024-10-22 20:27:13"
+                "date": "2024-10-23 02:02:59"
+            },
+            {
+                "action": "rented",
+                "car_name": "honda",
+                "car_year": 2020,
+                "date": "2024-10-23 02:05:18"
+            },
+            {
+                "action": "returned",
+                "car_name": "honda",
+                "car_year": 2020,
+                "date": "2024-10-23 02:05:24"
+            },
+            {
+                "action": "rented",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-23 02:09:22"
+            },
+            {
+                "action": "returned",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-23 02:09:26"
             }
         ]
     },
@@ -37,15 +73,39 @@
         "rental_history": [
             {
                 "action": "rented",
-                "car_name": "ford",
+                "car_name": "chevrolet",
                 "car_year": 2023,
-                "date": "2024-10-22 11:31:42"
+                "date": "2024-10-02 11:00:00"
             },
             {
                 "action": "returned",
-                "car_name": "ford",
+                "car_name": "chevrolet ",
                 "car_year": 2023,
-                "date": "2024-10-22 11:31:47"
+                "date": "2024-10-05 16:30:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "bmw ",
+                "car_year": 2022,
+                "date": "2024-10-08 10:00:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "bmw",
+                "car_year": 2022,
+                "date": "2024-10-12 14:00:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "honda",
+                "car_year": 2020,
+                "date": "2024-10-23 02:10:41"
+            },
+            {
+                "action": "returned",
+                "car_name": "honda",
+                "car_year": 2020,
+                "date": "2024-10-23 02:10:47"
             }
         ]
     },
@@ -58,20 +118,229 @@
                 "action": "rented",
                 "car_name": "sonata",
                 "car_year": 2022,
-                "date": "2024-10-22 10:58:50"
+                "date": "2024-10-01 08:00:00"
             },
             {
                 "action": "returned",
                 "car_name": "sonata",
                 "car_year": 2022,
-                "date": "2024-10-22 10:58:59"
+                "date": "2024-10-03 18:00:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "ford f-150",
+                "car_year": 2022,
+                "date": "2024-10-10 09:00:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "ford f-150",
+                "car_year": 2022,
+                "date": "2024-10-11 17:30:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-23 02:13:35"
+            },
+            {
+                "action": "returned",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-23 02:13:39"
             }
         ]
     },
     {
-        "name": "fahad",
-        "id": 123,
+        "name": "ali",
+        "id": 4,
         "rented": [],
-        "rental_history": []
+        "rental_history": [
+            {
+                "action": "rented",
+                "car_name": "chevrolet",
+                "car_year": 2021,
+                "date": "2024-10-05 14:00:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "chevrolet",
+                "car_year": 2021,
+                "date": "2024-10-06 12:00:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "mercedes",
+                "car_year": 2024,
+                "date": "2024-10-12 11:30:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "mercedes",
+                "car_year": 2024,
+                "date": "2024-10-15 09:45:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-23 02:13:59"
+            },
+            {
+                "action": "returned",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-23 02:14:02"
+            }
+        ]
+    },
+    {
+        "name": "norah",
+        "id": 5,
+        "rented": [],
+        "rental_history": [
+            {
+                "action": "rented",
+                "car_name": "honda",
+                "car_year": 2020,
+                "date": "2024-10-02 09:00:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "honda",
+                "car_year": 2020,
+                "date": "2024-10-04 16:00:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "hyundai",
+                "car_year": 2023,
+                "date": "2024-10-08 13:00:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "hyundai",
+                "car_year": 2023,
+                "date": "2024-10-10 15:30:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "honda",
+                "car_year": 2020,
+                "date": "2024-10-23 02:14:29"
+            },
+            {
+                "action": "returned",
+                "car_name": "honda",
+                "car_year": 2020,
+                "date": "2024-10-23 02:14:33"
+            }
+        ]
+    },
+    {
+        "name": "sara",
+        "id": 6,
+        "rented": [],
+        "rental_history": [
+            {
+                "action": "rented",
+                "car_name": "nissan",
+                "car_year": 2021,
+                "date": "2024-10-03 10:30:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "nissan",
+                "car_year": 2021,
+                "date": "2024-10-05 14:15:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "nissan",
+                "car_year": 2021,
+                "date": "2024-10-23 02:14:59"
+            },
+            {
+                "action": "returned",
+                "car_name": "nissan",
+                "car_year": 2021,
+                "date": "2024-10-23 02:15:04"
+            }
+        ]
+    },
+    {
+        "name": "mohammed",
+        "id": 7,
+        "rented": [],
+        "rental_history": [
+            {
+                "action": "rented",
+                "car_name": "toyota",
+                "car_year": 2023,
+                "date": "2024-10-06 11:00:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "toyota",
+                "car_year": 2023,
+                "date": "2024-10-09 15:00:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-23 02:16:19"
+            },
+            {
+                "action": "returned",
+                "car_name": "ford",
+                "car_year": 2023,
+                "date": "2024-10-23 02:16:22"
+            }
+        ]
+    },
+    {
+        "name": "reem",
+        "id": 8,
+        "rented": [],
+        "rental_history": [
+            {
+                "action": "rented",
+                "car_name": "subaru",
+                "car_year": 2022,
+                "date": "2024-10-04 10:00:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "subaru",
+                "car_year": 2022,
+                "date": "2024-10-07 13:30:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "mazda",
+                "car_year": 2020,
+                "date": "2024-10-10 12:00:00"
+            },
+            {
+                "action": "returned",
+                "car_name": "mazda",
+                "car_year": 2020,
+                "date": "2024-10-13 14:30:00"
+            },
+            {
+                "action": "rented",
+                "car_name": "subaru",
+                "car_year": 2022,
+                "date": "2024-10-23 02:17:12"
+            },
+            {
+                "action": "returned",
+                "car_name": "subaru",
+                "car_year": 2022,
+                "date": "2024-10-23 02:17:17"
+            }
+        ]
     }
 ]
