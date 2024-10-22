@@ -8,8 +8,9 @@ class OrgnizerModel(m_m.MainModel):
         self.by_date_dict: dict = {}
 
     def get_orgnized_by_year(self) -> dict:
-        """ method loops through Original_images then return a nested structured by year dict"""
-        for img in self.original_images:
+        """ method loops through images_src_files then return a nested structured by year dict"""
+        self.by_date_dict.clear()
+        for img in self.images_src_files:
             # a variabel to store the year 
             year: str = ""
             # a counter to track the year starting_index
@@ -28,8 +29,9 @@ class OrgnizerModel(m_m.MainModel):
         return self.by_date_dict
     
     def get_orgnized_by_month(self) -> dict:
-        """ method loops through Original_images then return a nested structured by year and months dict"""
-        for img in self.original_images:
+        """ method loops through images_src_files then return a nested structured by year: months dict"""
+        self.by_date_dict.clear()
+        for img in self.images_src_files:
             # variabels to store the year and the month
             year: str = ""
             month: str = ""

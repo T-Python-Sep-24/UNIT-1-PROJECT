@@ -18,3 +18,13 @@ class MainView:
         directory_tree.display_tree(directory_path)
         input("")
     
+    def display_file_exist_error_msg(self, folder_name):
+        print(f"---- You already have a {folder_name} inside the Images_Destination ----")
+
+    def display_Exception_msg(self, e):
+        print(f"---- Please contact admin and provide him with the error message: '{e}' ----")
+        input("")
+
+    def display_try_again_after_delete_dest(self):
+        print(f"---- Please try again after deleting the contents of Images_Destination ----")
+        input("")

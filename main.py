@@ -11,7 +11,7 @@ main_controller = m_c.MainController(main_view)
 
 # creat instances of OrgnizerModel, OrgnizerView, OrgnizerController
 orgnizer_model = o_m.OrgnizerModel()
-orgnizer_view = o_v.Orgnizer_view()
+orgnizer_view = o_v.OrgnizerView()
 orgnizer_controller = o_c.OrgnizerController(orgnizer_view, orgnizer_model)
 
 while True:
