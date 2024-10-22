@@ -183,23 +183,32 @@ def employeeMenu(employee: Employee):
     while True:
         print(Rule(Text(f"Welcome, {employee.getName()}.. What would you like to do?", style="bold italic #e2deff"), characters="-  ", style="bold #aca2f5"))
         #Display a list of options to the employee
-        choicesList: str = "1. Add a product.\n2. Remove a product.\n3. Update a product.\n4. View the menu.\n5. Exit.\nYour choice"
+        choicesList: str = "1. Add a product.\n2. Remove a product.\n3. Update a product.\n4. View the menu.\n5. View expired products.\n6. View out of stock products.\n7. Exit.\nYour choice"
         choice = Prompt.ask(Text(choicesList, style = "#e7e4ff"), choices=['1','2','3','4','5'], show_choices=False)
         
         #Add product to the menu of available products
         if choice == '1':
             print(Rule(Text("Add Product", style="bold #fdffc3"), characters="- ", style="bold #fdffb0"))
-            prodName: str = Prompt.ask("[bold #fbfbe2]Product name[/]")
-            qty: int = IntPrompt.ask("[bold #fbfbe2]Quantity: ")
-            price: float = FloatPrompt.ask("[bold #fbfbe2]Price: ")
-
-            employee.addProduct(prodName, qty, price)
+            prodName: str = Prompt.ask("[#fbfbe2]Product name[/]")
+            qty: int = IntPrompt.ask("[#fbfbe2]Quantity[/]")
+            price: float = FloatPrompt.ask("[#fbfbe2]Price[/]")
+            while True:
+                expDate: str = Prompt.ask("[#fbfbe2]Expiry date[/]")
+                try:
+                    datetime.strptime(expDate, '%Y-%m-%d')
+                except ValueError:
+                    print(Text("Invalid date, make sure format is (yyyy-mm-dd).", style="red"))
+                except Exception as e:
+                    print(Text(f"An error occured,{e}", style="red"))
+                else:
+                    break
+            employee.addProduct(prodName, qty, price, expDate)
             print(Text(f"{prodName} was added successfully.", style="#9affbc"))
 
         #Remove product from the menu of available products
         elif choice == '2':
             print(Rule(Text("Remove Product", style="bold #fdffc3"), characters="- ", style="bold #fdffb0"))
-            prodName: str = Prompt.ask("[bold #feffde]Product name[/]")
+            prodName: str = Prompt.ask("[#feffde]Product name[/]")
             removeMsg: str = employee.removeProduct(prodName)
             print(removeMsg)
                 
@@ -214,11 +223,24 @@ def employeeMenu(employee: Employee):
         
         #Display menu of available products
         elif choice == '4':
+            print(Rule, characters="-  ", style="bold #fdffb0")
             menu: Table = employee.listAllProducts()
             print(menu)
         
-        #Exit program
+        #Display menu of expired products
         elif choice == '5':
+            print(Rule, characters="-  ", style="bold #fdffb0")
+            expMenu: Table = employee.checkExpired()
+            print(expMenu)
+
+        #Display menu of out of stock products
+        elif choice == '6':
+            print(Rule, characters="-  ", style="bold #fdffb0")
+            oofMenu: Table = employee.checkOutOfStock()
+            print(oofMenu)
+        
+        #Exit program
+        elif choice == '7':
             for i in track(range(10), description="[white italic]Exiting program..[/]"):
                 time.sleep(0.05)  # Simulate work being done
             break

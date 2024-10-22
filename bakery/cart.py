@@ -21,11 +21,16 @@ class Cart:
         price: float = 0.0
         if menu:
             if productName in menu:
-                price = menu[productName]["price"]
-
-        product: OrderedProduct = OrderedProduct(productName, qty, price)
-        self.decreaseAvailableProductsQty(productName, qty)
-        self.__orderedProducts.append(product)
+                #If the availble quantity is enough procceed
+                if (menu[productName]["qty"] - qty) > 0:
+                    price = menu[productName]["price"]
+                    product: OrderedProduct = OrderedProduct(productName, qty, price)
+                    self.decreaseAvailableProductsQty(productName, qty)
+                    self.__orderedProducts.append(product)
+                else:
+                    return Text("Available quantity is less than the ordered quantity.", style="red")
+            else:
+                return Text(f"Product '{productName}' isn't on the menu.", style="red")
 
     def removeFromCart(self, prodName):
         '''A method that removes a product with a specific name from the cart'''
