@@ -25,6 +25,7 @@ class DataGenerators:
             }
             data_manager.employees.append(employee)  # Correctly appending to employees
         print(f"Generated {number} employees profiles.")
+        print("----------------------------------------")
 
     def generate_clients(self, number, data_manager):
         """this method take 2 prameters number : the number of Clients to generate
@@ -43,6 +44,7 @@ class DataGenerators:
             }
             data_manager.clients.append(client)  # Add to data_manager
         print(f"Generated {number} client profiles.")
+        print("----------------------------------------")
 
     def generate_products(self, number, data_manager):
         """this method take 2 prameters number : the number of Products to generate
@@ -57,6 +59,7 @@ class DataGenerators:
             }
             data_manager.products.append(product)  # Add to data_manager
         print(f"Generated {number} product profiles.")
+        print("----------------------------------------")
 
     def generate_transactions(self, number, data_manager):
         """this method take 2 prameters number : the number of Transactions to generate
@@ -79,3 +82,5 @@ class DataGenerators:
             }
             data_manager.sales.append(transaction)
         print(f"Generated {number} transaction records.")
+        print("----------------------------------------")
+

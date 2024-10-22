@@ -71,3 +71,33 @@ class DataManager:
         """
         for sale in self.sales:  # each sale and print its info
             print(sale)
+
+    def update_record(self, data_list, record_id):
+        """
+        Updates a record in the specified data list.
+
+        Parameters:
+        - data_list: List of records (employees, clients, products, or sales).
+        - record_id: ID of the record to update.
+        """
+        for record in data_list:
+            if record.get("id") == record_id:
+                print(f"Found record: {record}")
+                for key in record:
+                    new_value = input(f"Enter new value for {key} (leave blank to keep current value): ")
+                    if new_value:
+                        record[key] = new_value
+                print(f"Updated record: {record}")
+                return
+        print("Record not found.")
+
+    def delete_record(self, data_list, record_id):
+        """
+        Deletes a record in the specified data list.
+        """
+        for record in data_list:
+            if record.get("id") == record_id:
+                data_list.remove(record)
+                print(f"Record {record_id} deleted successfully.")
+                return
+        print("Record not found.")

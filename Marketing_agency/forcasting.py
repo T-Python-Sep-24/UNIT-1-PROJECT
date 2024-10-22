@@ -68,4 +68,3 @@ def run_sales_prediction(df):
 
 
 
-#pd.read_csv("Stores.csv")
