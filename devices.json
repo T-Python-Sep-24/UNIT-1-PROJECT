@@ -1,0 +1,14 @@
+[
+    {
+        "name": "laptop",
+        "model": "omen",
+        "daily_price": 50.0,
+        "available": false
+    },
+    {
+        "name": "iphone",
+        "model": "13",
+        "daily_price": 20.0,
+        "available": false
+    }
+]
