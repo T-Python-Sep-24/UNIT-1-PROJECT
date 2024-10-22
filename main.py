@@ -364,7 +364,7 @@ def main_menu():
     print("2. Meal and Calorie Tracking")  # done
     print("3. Track health states and body mass index")  # done
     print("4. Generate Reports")  # done
-    print("5. Clear Data")  # todo resit program data
+    print("5. Account Sittings") # done
     print(Fore.RED + "[q/Q]. Exit" + Style.RESET_ALL)
     print("=" * 40)
 
@@ -382,19 +382,24 @@ def userAuth():
         print()
         print(Fore.BLUE+"> Please Register for New Account")
         print("~"*39)
-        name = input("Enter Your name: ")
-        email = input("Enter Your Email: ")
 
-        age = int(input("Enter You age: "))
-        gender = input("Enter your gender: ")
-        weight = int(input("Enter your weight: "))
-        height = int(input("Enter your height: "))
+        try:
+            name = input("Enter Your name: ")
+            email = input("Enter Your Email: ")
+
+            age = int(input("Enter You age: "))
+            gender = input("Enter your gender: ")
+            weight = int(input("Enter your weight: "))
+            height = int(input("Enter your height: "))
+        except Exception as e:
+            print("Error occurred !!",e, e.__class__)
 
         user1.set_name(name)
         user1.set_age(age)
         user1.set_gender(gender)
         user1.set_height(height)
         user1.set_weight(weight)
+        user1.set_email(email)
 
         userAccount = {
             'username': name,
@@ -451,8 +456,8 @@ def main():
             reportsTracking()
             input(" >>> Press any Key to continue <<< ")
         elif choice == '5':
-            f1, f2, f3 = workouts.Workout.fileName, nutrition.Meal.fileName, health_states.Health_states.fileName
-            base.clear_files(f1, f2, f3)
+            settings()
+            input(" >>> Press any Key to continue <<< ")
 
         elif choice.lower() == 'q':
             print(Fore.GREEN + "Goodbye!, Exiting the Health and Fitness Tracker... ")
@@ -460,10 +465,59 @@ def main():
         else:
             print("Invalid choice! Please enter a valid choice from the list")
 
+def settings():
+
+    fileName = 'user_data_files/user.json'
+    x = base.load_from_file(fileName)
+    notAuthorized = True
+
+    print(Fore.RED + ">> Account Verification <<" + Style.RESET_ALL)
+    name = input("Please Verify Your username: ")
+    print(Fore.GREEN + "User Authorized" + Style.RESET_ALL)
+    while notAuthorized:
+
+        if name == x['username']:
+
+            print(Fore.CYAN + "=" * 40 + Style.RESET_ALL)
+            print("    FitTrack Account Settings")
+            print("=" * 40 + Style.RESET_ALL)
+            print("Please choose an option from the menu below:")
+            print(Fore.BLUE + "1. Show Your Personal Information")
+            print("2. Update Your Personal Information")
+            print(Fore.RED + "3. Clear All Files Data" )
+            print("[q/Q] Exit Settings" + Style.RESET_ALL)
+            print("=" * 40)
+
+            choice = input("Enter your choice: ")
+
+            if choice == "1":
+                print("------------ Your Data -------------")
+                for field, value in x.items():
+                    print(f"  {field}: {value}")
+                print("------------------------------------")
+                input(">> Press Enter To Continue <<")
+            elif choice == "2":
+                keyToUpdate = input("Please Choose Field To update: [username, age, gender, weight, height, email]: ")
+                newValue = input("Enter the new value: ")
+                x[keyToUpdate] = newValue
+                base.save_to_file(fileName, x)
+                print("Profile data Updated Successfully")
+                input(">> Press Enter To Continue <<")
+            elif choice == "3":
+                f1, f2, f3 = workouts.Workout.fileName, nutrition.Meal.fileName, health_states.Health_states.fileName
+                base.clear_files(f1, f2, f3)
+                print("Data is cleared Successfully")
+                input(">> Press Enter To Continue <<")
+            elif choice.lower() == "q":
+                print("Saving Your Data")
+                break
+            else:
+                print("please Enter a valid choice from the list ")
+
 if __name__ == "__main__":
     try:
         userAuth()
     except KeyboardInterrupt as e:
         print(Fore.LIGHTGREEN_EX + "GoodBye !!")
     except Exception as e:
-        print(f"An Error occurred : {e}")
+        print(f"An Error occurred : {e.__class__}")
