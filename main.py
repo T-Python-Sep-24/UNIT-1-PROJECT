@@ -2,7 +2,6 @@ import datetime
 import json
 
 from colorama import Fore, Style
-
 import base
 import health_states
 import nutrition
@@ -14,10 +13,9 @@ from nutrition import Meal
 from health_states import Health_states
 from reports import Reports
 
-# todo add waiting for api styling
-
-user = User()
+# user = User()
 user1 = user_data.User()
+
 # generate reports
 def reportsMenu():
 
@@ -52,10 +50,10 @@ def reportsTracking():
             input(" >>> Press any Key to continue <<< ")
         elif choice == "4":
 
-            email = user.get_email()
-            isNotValid = user.validate_email(email)
+            email = user1.get_email()
+            isNotValid = user1.validate_email(email)
             while True:
-                if user.validate_email(email):
+                if user1.validate_email(email):
                     reports_instance.send_report_via_email(email)
                     print(f"Reports is sent to {email}")
                     break
@@ -120,11 +118,11 @@ def healthStatesTracking():
                 weight = user1.get_weight()
                 height = user1.get_height()
             else:
-                weight = int(input("Enter new Weight: "))
-                height = int(input("Enter new Height: "))
+                weight = float(input("Enter new Weight: "))
+                height = float(input("Enter new Height: "))
 
             # calc bmi
-            bmi = health_states_instance.calc_bmi(weight, height)
+            bmi = health_states_instance.calc_bmi(float(weight), float(height))
             cat = health_states_instance.bmi_categorization(bmi)
 
             print(f"Your BMI is {bmi} which is categorized as {cat}")
@@ -222,8 +220,7 @@ def nutritionTracking():
 
             isCutomized = input("Do you want a customized Suggestion [y/n] otherwise Random? ")
             if isCutomized.lower() == "y":
-                # Todo Edit customization options (CLI)
-                diet = input("Enter diet type [vegetarian, vegan, keto, paleo] or enter None: ")
+                diet = input("Enter diet type [vegetarian, vegan, keto, paleo] or enter None: ") # Todo Edit customization options (CLI)
                 maxCalories = int(input("Enter maximum calories wanted in the meal: "))
                 numOfSuggestions = int(input("Enter the Number of suggested meals you want: "))
                 meal_type = input("Enter the meal type [main course, side dish, salad, "
@@ -389,10 +386,10 @@ def userAuth():
 
             age = int(input("Enter You age: "))
             gender = input("Enter your gender: ")
-            weight = int(input("Enter your weight: "))
-            height = int(input("Enter your height: "))
+            weight = float(input("Enter your weight in kg (i.e. 60) : "))
+            height = float(input("Enter your height in meters (i.e. 1.72): "))
         except Exception as e:
-            print("Error occurred !!",e, e.__class__)
+            print("Error occurred !!", e, e.__class__)
 
         user1.set_name(name)
         user1.set_age(age)
@@ -422,6 +419,7 @@ def userAuth():
 
             name = input("Enter Your name: ")
             if name == x['username']:
+
                 print(Fore.GREEN + "        welcome Back")
 
                 user1.set_age(x['age'])
@@ -432,6 +430,7 @@ def userAuth():
 
                 main()
                 notAuthorized = False
+
             else:
                 print(Fore.RED + "Wrong username !!")
                 input("Press Enter to Try Again" + Style.RESET_ALL)
@@ -478,28 +477,32 @@ def settings():
 
         if name == x['username']:
 
-            print(Fore.CYAN + "=" * 40 + Style.RESET_ALL)
+            print(Fore.CYAN + "="*40)
             print("    FitTrack Account Settings")
             print("=" * 40 + Style.RESET_ALL)
             print("Please choose an option from the menu below:")
-            print(Fore.BLUE + "1. Show Your Personal Information")
+            print(Fore.CYAN + "1. Show Your Personal Information")
             print("2. Update Your Personal Information")
-            print(Fore.RED + "3. Clear All Files Data" )
+            print(Fore.RED + "3. Clear All Files Data")
             print("[q/Q] Exit Settings" + Style.RESET_ALL)
-            print("=" * 40)
+            print("="*40)
 
             choice = input("Enter your choice: ")
 
             if choice == "1":
-                print("------------ Your Data -------------")
+                print(Fore.CYAN + "------------ Your Data -------------" + Style.RESET_ALL)
                 for field, value in x.items():
-                    print(f"  {field}: {value}")
+                    print(Fore.YELLOW + f"  {field}: {value}" + Style.RESET_ALL)
                 print("------------------------------------")
                 input(">> Press Enter To Continue <<")
             elif choice == "2":
+                for field, value in x.items():
+                    print(Fore.YELLOW + f"  {field}: {value}" + Style.RESET_ALL)
+
                 keyToUpdate = input("Please Choose Field To update: [username, age, gender, weight, height, email]: ")
                 newValue = input("Enter the new value: ")
                 x[keyToUpdate] = newValue
+                x['emailIsValid'] = user1.validate_email(x['email'])
                 base.save_to_file(fileName, x)
                 print("Profile data Updated Successfully")
                 input(">> Press Enter To Continue <<")
@@ -519,5 +522,7 @@ if __name__ == "__main__":
         userAuth()
     except KeyboardInterrupt as e:
         print(Fore.LIGHTGREEN_EX + "GoodBye !!")
+    except ConnectionError as c:
+        print("Please Check Your Internet Connection")
     except Exception as e:
-        print(f"An Error occurred : {e.__class__}")
+        print(f"An Error occurred : {e.with_traceback() }")

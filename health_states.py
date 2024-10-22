@@ -10,12 +10,12 @@ class Health_states():
         self.date = None
         self.health_states = []
         self.fileName = 'user_data_files/health_states.json'
-        self.weight = 0
-        self.height = 0
+        self.weight: float = 0
+        self.height: float = 0
         self.measure_date = ""
-        self.bmi = 0
+        self.bmi: float = 0
 
-    def add_health_states(self, weight, height, date):
+    def add_health_states(self, weight: float, height: float, date: str):
         """
         method adds health states to file
         :param weight:
@@ -39,14 +39,14 @@ class Health_states():
         base.save_to_file(self.fileName, self.health_states)
         print("data saved successfully ")
 
-    def calc_bmi(self, weight, height):
+    def calc_bmi(self, weight: float, height: float) -> float:
         """
         method calculates and return the current bmi of the user
         :param weight:
         :param height:
         :return: bmi
         """
-        bmi = weight / (height ** 2)
+        bmi: float = weight / (height ** 2)
         return bmi
 
     def get_bmi(self):
@@ -54,7 +54,7 @@ class Health_states():
         this method calculates the user bmi taking the height and the wight from the current object
         :return:
         """
-        bmi = self.weight / (self.height ** 2)
+        bmi: float = float(self.weight) / (float(self.height) ** 2)
         self.bmi = bmi
         return bmi
 
