@@ -1,6 +1,6 @@
 # FitTracker
 
-A command-line tool to help users log workouts, track meals, monitor progress, and achieve their health and fitness goals. This project allows users to stay on top of their fitness routines while maintaining an organized and data-driven approach to health tracking.
+A command-line app to help users log workouts, track meals, monitor progress, and achieve their health and fitness goals. This project allows users to stay on top of their fitness routines while maintaining an organized and data-driven approach to health tracking.
 
 ## Features
 
@@ -14,24 +14,21 @@ A command-line tool to help users log workouts, track meals, monitor progress, a
 
 ### 3. Daily/Weekly Health Stats
 - Generate reports on weekly workout totals, calorie intake, and overall fitness progress.
-- Compare current stats with previous weeks to show improvement.
 
 ### 4. Goal Setting
 - Set fitness goals (e.g., lose 5 kg in 3 months, run a 10K race).
-- Track progress towards weight loss, muscle gain, or endurance goals.
-- Alert users when they’re close to reaching a goal or have missed their targets.
 
 ### 5. Track Weight and Body Measurements
-- Log daily/weekly weight, BMI, and other body measurements (e.g., waist, chest, arms).
-- Show progress visually, using text-based graphs or graphs generated with `matplotlib`.
+- Log daily/weekly weight, BMI.
+- Show progress reports, using tables generated with `tabulate`.
 
 
 ### 6. Export Data
-- Export workout, nutrition, and health data to CSV or JSON formats for external analysis or sharing with a trainer or doctor.
+- Export workout, nutrition, and health data to CSV or JSON formats for external analysis or send email reports to user.
 
-### 7. Reports and Graphs
+### 7. Reports
 - Use CLI-based tables or graphs to display trends and stats for workouts, weight changes, and diet tracking.
-- Integrate libraries like `matplotlib` for more advanced visualization.
+
 
 ---
 
@@ -56,11 +53,12 @@ The project is modular and organized to separate functionality, making it scalab
 
 ---
 
-## Extensions
-This project can be extended by integrating external APIs such as:
-- Calories Calculators from excersises and/or meals
-- Nutrition databases (e.g., MyFitnessPal)
-- Mobile interfaces for on-the-go tracking.
+## Extensions And Libraries
+This project is extended by integrating external APIs and Libraries such as:
+- nutritionix: Calories Calculators from exercises and/or meals
+- spoonacular: Nutrition and meals database
+- Command Line Coloring and Animation (e.g., colorama, tabulate, tqdm)
+
 
 ---
 
@@ -77,61 +75,5 @@ This project can be extended by integrating external APIs such as:
 3. Run the Tracker:
    ```bash
    python main.py
-
----
-
-### Key Highlights:
-- The features are clearly outlined with headings, making it easy to understand what each part of the tool does.
-- The code organization section explains the modular structure of the project.
-- Best practices are mentioned to emphasize the good coding standards you're following.
-- Extensions provide ideas on how the project can evolve in the future.
-- Installation instructions make it easy for someone to set up the project on their own machine.
-
-This `README.md` structure follows a standard format and ensures that anyone viewing the project on GitHub or another platform will understand its purpose and how to use it.
-
-cli_health_fitness_tracker/
-│
-├── workouts.py
-│   ├── class Workout
-│   └── functions for logging, updating, and retrieving workouts
-│
-├── nutrition.py
-│   ├── class Meal
-│   └── functions for logging, updating, and retrieving meals
-│
-├── health_stats.py
-│   ├── class HealthStats
-│   └── functions for tracking weight, BMI, and measurements
-│
-│
-├── reports.py
-│   ├── class ReportGenerator
-│   └── functions for generating and displaying reports
-│
-├── main.py
-│   └── Main program to handle user interaction
-│
-├── requirements.txt
-│   └── List of dependencies (e.g., matplotlib)
-│
-└── README.md
-
----
-
-### Explanation of the Structure:
-
-- **`workouts.py`**: This module manages exercise logs, workout tracking, and goals. It includes the `Workout` class along with functions for logging, updating, and retrieving workouts.
-
-- **`nutrition.py`**: This module handles meal logging and calorie/macronutrient tracking. It contains the `Meal` class and related functions.
-
-- **`health_stats.py`**: Responsible for tracking user data such as weight, BMI, and body measurements. It features the `HealthStats` class with relevant functions.
-
-- **`reports.py`**: Generates daily, weekly, and monthly fitness reports and trends. This includes the `ReportGenerator` class.
-
-- **`main.py`**: The entry point of the application that handles user interaction.
-
-- **`requirements.txt`**: Lists the dependencies required for the project, such as `matplotlib`.
-
-- **`README.md`**: This file, providing an overview and documentation for the project.
 
 ---
