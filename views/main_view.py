@@ -4,10 +4,10 @@ class MainView:
     def __init__(self):
         self.main_menu: str = (
             "Pick: \n"
-            "1: to show tree structure of Original_images folder\n"
-            "2: to show tree structure of Result_images folder\n"
+            "1: to show tree structure of Images_Source folder\n"
+            "2: to show tree structure of Images_Destination folder\n"
             "3: to orgnize images by year\n"
-            "4: to ....\n"
+            "4: to orgnize images by month\n"
             "5: to exit"
         )
 

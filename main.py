@@ -25,3 +25,5 @@ while True:
         main_controller.display_destination()
     elif pick == "3":
         orgnizer_controller.orgnize_images_by_year()
+    elif pick == "4":
+        orgnizer_controller.orgnize_images_by_month()
