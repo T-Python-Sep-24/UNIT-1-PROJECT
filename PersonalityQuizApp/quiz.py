@@ -4,6 +4,7 @@ from questions import learning_style_questions
 from results import save_results, load_results
 from famous_people import famous_people
 from Emotions_Tips import emotional_intelligence_advice  
+from Learning_Tips import learning_style_advice  
 
 class PersonalityQuiz:
     def __init__(self):
@@ -66,6 +67,12 @@ class PersonalityQuiz:
             "description": famous_person["description"]
         }
         save_results(user_results)
+    # Load and display previous results
+    previous_results = load_results()
+    if previous_results:
+        print("\nPrevious Results:")
+        for result in previous_results:
+            print(result)
 
 class EmotionalIntelligenceQuiz:
     def __init__(self):
@@ -133,12 +140,18 @@ class EmotionalIntelligenceQuiz:
             "advice": advice_data["advice"],
             "books": advice_data["books"]
         }
-        
+
         save_results(user_results)
+    # Load and display previous results
+    previous_results = load_results()
+    if previous_results:
+        print("\nPrevious Results:")
+        for result in previous_results:
+            print(result)
 
 class LearningStyleQuiz:
     def __init__(self):
-        self.questions = learning_style_questions
+        self.questions = learning_style_questions  # Load your questions
         self.answers = []
 
     def display_question(self, question):
@@ -166,14 +179,14 @@ class LearningStyleQuiz:
         return score
 
     def take_quiz(self):
-       # Main method to take the quiz.
+        # Main method to take the quiz.
         for question in self.questions:
             self.display_question(question)
             answer = self.get_user_answer(question)
             self.answers.append(answer)
 
         score = self.calculate_score()
-        
+
         # Determine learning style based on score
         if score < 5:
             learning_style = "Visual"
@@ -182,8 +195,35 @@ class LearningStyleQuiz:
         else:
             learning_style = "Kinesthetic"
 
-        print(f"Your learning style is: {learning_style}")
+        print(f"\nYour learning style is: {learning_style}")
+
+        # Get advice, resources, and tools based on learning style
+        advice_data = learning_style_advice[learning_style]
+
+        print("\n Advice Based on Your Learning Style:")
+        for item in advice_data["advice"]:
+            print(item)
+
+        print("\n Recommended Resources:")
+        for resource in advice_data["resources"]:
+            print(resource)
+
+        print("\n Recommended Tools:")
+        for tool in advice_data["tools"]:
+            print(tool)
 
         # Save results
-        user_results = {"score": score, "style": learning_style}
+        user_results = {
+            "score": score,
+            "style": learning_style,
+            "advice": advice_data["advice"],
+            "resources": advice_data["resources"],
+            "tools": advice_data["tools"]
+        }
         save_results(user_results)
+    # Load and display previous results
+    previous_results = load_results()
+    if previous_results:
+        print("\nPrevious Results:")
+        for result in previous_results:
+            print(result)

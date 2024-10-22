@@ -1,4 +1,5 @@
 from quiz import PersonalityQuiz, EmotionalIntelligenceQuiz, LearningStyleQuiz
+from results import save_results, load_results  # Importing the save and load functions
 
 def main():
     print("Welcome to the Personal Analyst Program!")
@@ -22,8 +23,9 @@ def main():
             quiz = LearningStyleQuiz()
             quiz.take_quiz()
         elif command == "4":
-            results = load_results()
+            results = load_results()  # Load existing results
             if results:
+                print("\nPrevious Results:")
                 for res in results:
                     print(res)
             else:
@@ -33,8 +35,6 @@ def main():
             break
         else:
             print("Invalid input. Please enter a number between 1 and 5.")
-# Placeholder function to load results
-def load_results():
-    return []
+
 if __name__ == "__main__":
     main()
