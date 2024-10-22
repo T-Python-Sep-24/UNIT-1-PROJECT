@@ -63,3 +63,4 @@ def recommend_activity(score):
         return recommendations['medium']
     else:
         return recommendations['high']
+    
