@@ -1,4 +1,4 @@
-from salf import main 
+from salf import main
 
 main()
 

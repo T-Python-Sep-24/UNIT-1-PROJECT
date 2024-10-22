@@ -1,141 +1,101 @@
-import json
-import os
-from datetime import datetime , date
+from datetime import date
 import time
-from plyer import notification 
+from plyer import notification
+import json
+#change the text to json+ stauts + method check the id ** after that view the menu **  
 
+'''file = "users_borrower.txt"
+dict={}
+with open(file) as fn:
+    for d in fn:
+        key, desc=d.strip().split(None,1)
+        dict[key]=desc.strip()
+otfile=open("users.json","w")
+json.dump(dict,otfile)
+otfile.close()'''
 
-# Def user add
-def add_user():
-    try:
-        with open('users.json', 'r') as f:
-            users= json.load(f)
-    except FileExistsError:
-            users= []
-    exitee = True
-    while exitee:
-        userid= int(input("Enter user ID: "))
-        user_found = False
-        user_doesnot_exit=False
-        for user in users:
-            if user["ID"] == userid and user["status"] == True:
-                    user_found= True
-                    username= user["name"]
-                    useramount=user["aoment"]
-                    statuss= False
-                    user_doesnot_exit=True
-                    break
-            elif user["ID"] == userid and user["status"] == False:
-                    print(" You did not paied! We can't lend you money untill you paied !! ")
-                    user_doesnot_exit = False
-                    break
-            elif user["ID"] != userid:
-                    user_doesnot_exit = True
-        
-        if user_doesnot_exit :
-                for user in users:
-                    if user_found:
-                        today=date.today().strftime("%Y-%m-%d")
-                        pay_date=input("When the user will be pay Date: ")
-                        new_user={
-                                "ID": userid,
-                                "name": username,
-                                "aoment": useramount,
-                                "today": today,
-                                "pay_date":pay_date,
-                                "status":statuss
-                            }
-                        users.append(new_user)
-                        with open('users.json', 'w') as f:
-                                json.dump(users, f, indent=4)
-                                print("Users added")
-                                break
-                    else:
-                        name= input("Enter user name: ")
-                        aoment=int(input("Enter user amount: "))
-                        today=date.today().strftime("%Y-%m-%d")
-                        pay_date=input("When the user will be pay Date: ")
-                        status= False
-                        new_user={
-                                "ID": userid,
-                                "name": name,
-                                "aoment": aoment,
-                                "today": today,
-                                "pay_date":pay_date,
-                                "status":status
-                            }
-                            
-                        users.append(new_user)
-                        with open('users.json', 'w') as f:
-                            json.dump(users, f, indent=4)
-                            print("Users added")
-                            break
+def main():
+    print("==================== Salf Program ===========================")
+    print("Users still borrower today ! ") 
+    check_pay()
+    print (f"Welcome to Salf Program" + "\n" + "Please Choose the below menu" + "\n" + "1. Add user to borrower" + "\n"+ "2. View borrower users" + "\n"+ "3. change users status")
+    number = 9
+    while number > 0:
+        number=int(input("Please choose number "))
+        if (number == 1):
+            salf_users()
+        elif(number == 2):
+            displsy()
+        elif( number == 3):
+            user_status()
+        else:
+            pass
+def check_ID():
+    pass
+def salf_users():
+       while True: 
+        name=input("Enter the name of borrower : ")
+        today= date.today().strftime("%Y-%m-%d")
+        date_str=str(today)
+        pay_day=input("Enter the payday : ")
+        borrower_value=input("Enter the value :")
+        stauts = "Not Pay"
+        file = open('users_borrower.txt', "a", encoding="utf-8")
+        file.write("Name of borrower : "+ name + " | "+ "The date : "+date_str +" | "+"The value : "+ borrower_value + " SAR"+ "| " +"Payday : "+ pay_day +" Stauts : "+ stauts+"\n")
+        file.close()
+        #print("User added succefully")
+        break
+       
+def displsy():
+    file=open('users_borrower.txt')
+    print(file.read())
+    file.close()
 
-        exite=int(input("Enter another user or exite by enter 0: "))
-        if exite == 0:
-            break
-        
+#change status 
+def user_status():
+     with open('users_borrower.txt', "r") as file:
+        value= input("user name to change the status ")
+        lines = ''
+        for line in file:
+            values=line.split()
+            if value == values[4]:
+              lines += line.replace("Not Pay", "paid")
+              print( "The status has been change "  + "\n" + lines )
+            else:
+                lines += line
+        file.close()
+        file_write= open("users_borrower.txt", 'w')
+        file_write.write(lines)
+        file_write.close()
+              
+           
 
-#User add: 
-#add_user()
-#display users    
-def display_users():
-     with open('users.json')as file:
-          data=json.loads(file.read())
-          print(json.dumps(data, indent=4))
-#add count how many borrower
-#display_users()
-
-
-
-#def change stauts ===================
-def change_user_status(user_id):
-     try:
-        with open('users.json', 'r') as f:
-            users= json.load(f)
-     except FileExistsError:
-            users= []
-     user_id_not_found= True
-     user_new = []
-     for user in users: 
-          if user["ID"] == user_id:
-               user["status"] = True
-               user_id_not_found= False
-               name_user=user["name"] 
-               user_new.append(user)
-          else:
-               user_new.append(user)
-
-     with open('users.json', 'w') as f:
-         json.dump(user_new, f, indent=4)
-     print(f"User ID {user_id}'s and Users {name_user}'s status updated to paied ")
-               
-          
-     if user_id_not_found:
-        print(f"User ID {user_id}'s not found")
-        
-#userid= int(input("Enter user ID: "))
-#change_user_status(userid)
-
-
-#def check pay alert ***
+#def check for alert , stauts **
 def check_pay():
-    try:
-        with open('users.json', 'r') as f:
-            users= json.load(f)
-    except FileExistsError:
-            users= []
-
     today= date.today().strftime("%Y-%m-%d")
-    for pay in users:
-              if today >= pay["pay_date"] and pay["status"] != True:
-                   notification.notify(
-                        title = 'ALERT!!!',
-                        message = f'Today {pay["name"]} should be paying',
-                        timeout= 10
-                        )
-                   time.sleep(5)
-                   print(f"Today {pay["name"]} should be paying !")
-              else:
-                   pass
-check_pay()
+    with open('users_borrower.txt','r')as file:
+       for line in file:
+           values=line.split()
+           if today >= values[18]:
+               notification.notify(
+                title = 'ALERT!!!',
+                message = f'Today {values[4]} should be paying',
+                timeout= 10
+                )
+               time.sleep(5)
+               print("Today " + values[4] + " should be paying !")
+           else:
+               pass
+
+
+
+#Check the date is val 
+'''def valdate(input):
+    try:
+        dateobject=datetime.strptime(input,"%d/%m/%Y")
+        return True
+    except ValueError:
+        ValueError
+
+input="09/05/2022"
+print(valdate(input))'''
