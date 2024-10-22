@@ -12,7 +12,7 @@ class Products:
     
     def __auto_generate_id(self):
         while True:
-            id = random.randint(10, 50)
+            id = random.randint(100, 999)
             if id not in self.products_ids:
                 self.products_ids.add(id)
                 self.save_to_file(self.products_ids)
@@ -30,4 +30,5 @@ class Products:
             return set()
 
     def display(self):
-        print(f'Name: {self.name}, Product Id: {self.product_id}, Price: SAR {self.price}, Stock Quantity: {self.quantity}')
+        print(f'{self.name:<25} {self.product_id:<12} SAR {self.price:<10} {self.quantity:<12}')
+        # print(f'Name: {self.name}, Product Id: {self.product_id}, Price: SAR {self.price}, Stock Quantity: {self.quantity}')

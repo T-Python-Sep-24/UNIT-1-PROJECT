@@ -1,14 +1,13 @@
 from ServiceCart import ServiceCart
-# from Customers import Customer
+from Customers import Customer
 import os
-import json
 import pickle
 
 class ServiceOrder:
-    def __init__(self, customer, cart:ServiceCart):
+    def __init__(self, customer: Customer, cart:ServiceCart):
         self.cart = cart
         self.customer = customer
-        self.__previous_services_orders = self.__load_from_json()
+        self.__previous_services_orders = self.__load_from_pickle()
         
     def order_summary(self):
         print(f"Service summary for {self.customer.name}:")
@@ -20,9 +19,27 @@ class ServiceOrder:
         self.__previous_services_orders[self.customer.username][len(self.__previous_services_orders) + 1] = self.cart
         self.__save_to_file(self.__previous_services_orders)
         
+        date = self.cart.cart['date']  
+        self.cart.storge.delete_date(date)
+        
+        print(f"Checkout successful! Your service has been scheduled.")
+        self.cart.display()
+        
     def get_all_services_orders(self):
-        return self.__load_from_json()
+        return self.__load_from_pickle()
            
+        
+    def __save_to_file(self, customers: dict):
+        with open("previous_services_orders", 'wb') as file:
+            pickle.dump(customers, file)
+            
+    def __load_from_pickle(self):
+        if not os.path.exists("previous_services_orders"):
+            return {}  
+        
+        with open("previous_services_orders", 'rb') as file:
+            return pickle.load(file)
+     
     # def __save_to_file(self, previous_services_orders: dict):
     #     with open('previous_services_orders.json', 'w') as file:
     #         json.dump(previous_services_orders, file)
@@ -33,15 +50,3 @@ class ServiceOrder:
     #             return json.load(file)
     #     else:
     #         return {}
-        
-    def __save_to_file(self, customers: dict):
-        with open("previous_services_orders", 'wb') as file:
-            pickle.dump(customers, file)
-            
-    def __load_from_json(self):
-        if not os.path.exists("previous_services_orders"):
-            return {}  
-        
-        with open("previous_services_orders", 'rb') as file:
-            return pickle.load(file)
-     

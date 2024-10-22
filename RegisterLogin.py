@@ -12,11 +12,11 @@ class RegisterLogin:
         if isinstance(customer, Customer):
             if customer.username not in self.customers:
                 self.customers[customer.username] = customer
-                print(f"Customer {customer.name} registered successfully.")
+                print(f"{customer.name} your registered successfully!")
                 self.save_to_file()
                 return True
             else:
-                print("Username already exists.")
+                print("Username already exists!")
                 return False
 
         return False
@@ -45,6 +45,6 @@ class RegisterLogin:
                     return {}
                 return data
             except Exception as e:
-                print(f"Error loading customers data: {e}")
+                print(f"Error loading customers data: {e.__cause__}")
                 return {}
 

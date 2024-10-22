@@ -20,6 +20,9 @@ class ProductsOrder:
         self.__previous_products_orders[self.customer.username][len(self.__previous_products_orders) + 1] = self.cart
         self.__save_to_file(self.__previous_products_orders)
         
+        print(f"Checkout successful! Your products will be arrive to you soon!.")
+        self.cart.display()
+        
     def get_all_products_orders(self):
         return self.__load_from_json()
            
