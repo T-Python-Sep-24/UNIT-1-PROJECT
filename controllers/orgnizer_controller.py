@@ -4,6 +4,7 @@ import shutil
 from views import orgnizer_view as o_v
 from models import orgnizer_model as o_m
 
+
 class OrgnizerController:
     def __init__(self, orgnizer_view: o_v.OrgnizerView, orgnizer_model: o_m.OrgnizerModel):
         self.orgnizer_view = orgnizer_view

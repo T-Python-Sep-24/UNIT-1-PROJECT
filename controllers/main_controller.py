@@ -1,6 +1,7 @@
 from views import main_view as v
 from models import orgnizer_model as m
 
+
 class MainController:
     def __init__(self, main_view: v.MainView):
         self.view = main_view
