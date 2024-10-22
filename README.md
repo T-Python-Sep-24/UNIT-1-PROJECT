@@ -9,15 +9,12 @@
 -List the violations that i have (fine number,type of fine ,date,price,issued by which ministry)  
 -search for a specfic violations   
 -Pay all violations(installment option if the violations is more than 3000 sar)  
--pay for a specfic violations(installment option if the violations is more than 3000 sar)  
--send messages to management to object a violations  
--see response  
+-pay for a specfic violations 
 -Exit  
 ### As an Authortie in a specfic ministry I shoild be able to do the following:
 -Login/Register for manamge  
 -Fine a violation for a Resident
--check the violations for a Resident  
--Objections review from Resident and response  
+-check the violations for a Resident   
 -make a discount to all Resident  
 -make a discount for one of the Resident  
 -Manager log  
@@ -29,14 +26,11 @@
 After logging in as a resident, you can:  
 .List your violations.  
 .Search for a specific violation by its number.  
-.Pay all violations or choose to pay in installments if eligible.  
-.Send messages to management to object a violation.  
-.View responses to your objections.  
+.Pay all violations or choose to pay in installments if eligible.    
 Follow the on-screen instructions to complete each action.  
 ## As for the Management :
 After logging in as a management user, you can:  
 .Fine violations for Residents under your ministry.  
-.Review and respond to Resident objections.  
 .Apply discounts to all or specific Residents.  
 .Check logs of issued fines and actions you've taken.  
 You will only be able to interact with violations that assigned to your ministry  

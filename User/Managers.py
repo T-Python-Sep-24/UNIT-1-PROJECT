@@ -69,6 +69,26 @@ class Manager(Person):
             residents[resident_id].search_violation_by_ministry(self.get_ministry_name())
         else:
             print("there is no resident with this ID!")
+    
+    def discount_for_specfic_resident(self,Resident_id:str,presentage:float):
+        residents:Resident=Data_management.load_file('Residents.pkl')
+        if Resident_id in residents:
+            residents[Resident_id].make_discount(self.get_ministry_name(),presentage) 
+            Data_management.save_file(residents,'Residents.pkl')  
+        else:
+            print("there is no resident with this ID!")
+    
+    def discount_for_all_resident(self,presentage:float):
+        residents:Resident=Data_management.load_file('Residents.pkl')
+        for resident in residents:
+            resident[resident.get_id()].make_discount(self.get_ministry_name(),presentage) 
+            Data_management.save_file(residents,'Residents.pkl')  
+        else:
+            print("there is no resident with this ID!")
+        
+            
+
+        
 
 
         
