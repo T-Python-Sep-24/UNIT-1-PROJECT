@@ -35,3 +35,7 @@ The Blood Bank Management System is an application designed to manage donor info
 
  * Exiting the System (Option 5)
 
+ ### Who can donate?
+ The donor must be from 18-45 years old 
+ The donor must not be suffer from any illness 
+
