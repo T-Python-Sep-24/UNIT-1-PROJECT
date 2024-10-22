@@ -1,4 +1,4 @@
-# CLI Health and Fitness Tracker
+# FitTracker
 
 A command-line tool to help users log workouts, track meals, monitor progress, and achieve their health and fitness goals. This project allows users to stay on top of their fitness routines while maintaining an organized and data-driven approach to health tracking.
 
@@ -10,7 +10,7 @@ A command-line tool to help users log workouts, track meals, monitor progress, a
 
 ### 2. Meal and Calorie Tracking
 - Log daily meals with details such as calories, macronutrients (carbs, protein, fats), and water intake.
-- **Optional**: Suggest healthy meal options based on calorie needs and dietary preferences (e.g., keto, vegan).
+- Suggest healthy meal options based on calorie needs and dietary preferences (e.g., keto, vegan).
 
 ### 3. Daily/Weekly Health Stats
 - Generate reports on weekly workout totals, calorie intake, and overall fitness progress.
@@ -25,14 +25,11 @@ A command-line tool to help users log workouts, track meals, monitor progress, a
 - Log daily/weekly weight, BMI, and other body measurements (e.g., waist, chest, arms).
 - Show progress visually, using text-based graphs or graphs generated with `matplotlib`.
 
-### 6. Reminders
-- Set reminders to drink water, complete workouts, or log meals.
-- Users can customize reminders based on their fitness routine and goals.
 
-### 7. Export Data
+### 6. Export Data
 - Export workout, nutrition, and health data to CSV or JSON formats for external analysis or sharing with a trainer or doctor.
 
-### 8. Reports and Graphs
+### 7. Reports and Graphs
 - Use CLI-based tables or graphs to display trends and stats for workouts, weight changes, and diet tracking.
 - Integrate libraries like `matplotlib` for more advanced visualization.
 
@@ -46,7 +43,6 @@ The project is modular and organized to separate functionality, making it scalab
 - **`workouts.py`**: Manages exercise logs, workout tracking, and exercise goals.
 - **`nutrition.py`**: Handles meal logging and calorie/macronutrient tracking.
 - **`health_stats.py`**: Tracks user data such as weight, BMI, and body measurements.
-- **`reminders.py`**: Manages fitness reminders for workouts, meals, water intake, and more.
 - **`reports.py`**: Generates daily, weekly, and monthly fitness reports and trends.
 
 ---
@@ -62,7 +58,7 @@ The project is modular and organized to separate functionality, making it scalab
 
 ## Extensions
 This project can be extended by integrating external APIs such as:
-- Fitness trackers (e.g., Fitbit, Garmin)
+- Calories Calculators from excersises and/or meals
 - Nutrition databases (e.g., MyFitnessPal)
 - Mobile interfaces for on-the-go tracking.
 
@@ -107,9 +103,6 @@ cli_health_fitness_tracker/
 │   ├── class HealthStats
 │   └── functions for tracking weight, BMI, and measurements
 │
-├── reminders.py
-│   ├── class Reminder
-│   └── functions for managing reminders
 │
 ├── reports.py
 │   ├── class ReportGenerator
@@ -132,8 +125,6 @@ cli_health_fitness_tracker/
 - **`nutrition.py`**: This module handles meal logging and calorie/macronutrient tracking. It contains the `Meal` class and related functions.
 
 - **`health_stats.py`**: Responsible for tracking user data such as weight, BMI, and body measurements. It features the `HealthStats` class with relevant functions.
-
-- **`reminders.py`**: Manages fitness reminders for workouts, meals, and more. This module includes the `Reminder` class.
 
 - **`reports.py`**: Generates daily, weekly, and monthly fitness reports and trends. This includes the `ReportGenerator` class.
 
