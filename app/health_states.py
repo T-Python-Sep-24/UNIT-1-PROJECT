@@ -1,9 +1,9 @@
-from static import base
+from app import base
 
 
 class Health_states():
 
-    fileName = '../user_data_files/health_states.json'
+    fileName = 'user_data_files/health_states.json'
 
     def __init__(self):
         """
@@ -11,7 +11,7 @@ class Health_states():
         """
         self.date = None
         self.health_states = []
-        self.fileName = '../user_data_files/health_states.json'
+        self.fileName = 'user_data_files/health_states.json'
         self.weight: float = 0
         self.height: float = 0
         self.measure_date = ""
@@ -48,6 +48,8 @@ class Health_states():
         :param height:
         :return: bmi
         """
+        height = height / 100
+        print(height)
         bmi: float = weight / (height ** 2)
         return bmi
 
@@ -56,6 +58,8 @@ class Health_states():
         this method calculates the user bmi taking the height and the wight from the current object
         :return:
         """
+        self.height = self.height / 100
+        print(self.height)
         bmi: float = float(self.weight) / (float(self.height) ** 2)
         self.bmi = bmi
         return bmi

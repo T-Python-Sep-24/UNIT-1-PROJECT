@@ -1,5 +1,4 @@
-from static import base
-from model import health_states, nutrition
+from app import base, health_states, nutrition
 import workouts
 from tabulate import tabulate
 import dotenv

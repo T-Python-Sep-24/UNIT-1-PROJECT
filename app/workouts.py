@@ -1,7 +1,7 @@
 import time
 
 from dotenv import load_dotenv
-from static import base
+import base
 import os
 import requests
 from tqdm import tqdm
@@ -12,7 +12,7 @@ load_dotenv()
 
 class Workout:
 
-    fileName = '../user_data_files/workouts.json'
+    fileName = 'user_data_files/workouts.json'
 
     def __init__(self):
         """
@@ -20,7 +20,7 @@ class Workout:
         """
 
         self.workouts = []
-        self.fileName = '../user_data_files/workouts.json'
+        self.fileName = 'user_data_files/workouts.json'
         self.workout_type = ""
         self.workout_duration = ""
         self.calories_burned = 0

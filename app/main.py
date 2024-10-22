@@ -396,11 +396,10 @@ def userAuth():
             age = int(input("Enter You age: "))
             gender = input("Enter your gender: ")
             weight = float(input("Enter your weight in kg (i.e. 60) : "))
-            height_in = float(input("Enter your height in meters (i.e. 1.72): "))
-            if height_in > 20:
-                height = height_in / 100
-        except Exception as e:
-            print("Error occurred !!", e, e.__class__)
+            height = float(input("Enter your height in meters (i.e. 1.72): "))
+
+        except Exception as ex:
+            print("Error occurred !!", ex, ex.__class__)
 
         user1.set_name(name)
         user1.set_age(age)
@@ -479,15 +478,14 @@ def settings():
 
     fileName = 'user_data_files/user.json'
     x = base.load_from_file(fileName)
-    notAuthorized = True
 
-    print(Fore.RED + ">> Account Verification <<" + Style.RESET_ALL)
-    name = input("Please Verify Your username: ")
-    print(Fore.GREEN + "User Authorized" + Style.RESET_ALL)
-    while notAuthorized:
+    while True:
+
+        print(Fore.RED + ">> Account Verification <<" + Style.RESET_ALL)
+        name = input("Please Verify Your username: ")
 
         if name == x['username']:
-
+            print("User Verified Successfully")
             print(Fore.CYAN + "="*40)
             print("    FitTrack Account Settings")
             print("=" * 40 + Style.RESET_ALL)
@@ -527,7 +525,9 @@ def settings():
                 break
             else:
                 print("please Enter a valid choice from the list ")
-
+        else:
+            print("Wrong username, please Try again")
+            break
 if __name__ == "__main__":
     try:
         userAuth()
@@ -536,4 +536,4 @@ if __name__ == "__main__":
     except ConnectionError as c:
         print("Please Check Your Internet Connection")
     except Exception as e:
-        print(f"An Error occurred : {e.with_traceback() }")
+        print(f"An Error occurred : {e.with_traceback()}")
