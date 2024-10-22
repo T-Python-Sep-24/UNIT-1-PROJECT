@@ -1,5 +1,8 @@
 from bakery.order import *
+from bakery.cart import Cart
 import json
+
+#Using rich for customizing output on terminal
 from rich import print
 from rich.table import Table
 from rich import box
@@ -88,17 +91,17 @@ class Person:
         menu: dict = self.__loadFromJSON()
 
         #Creating a table object to display menu
-        menuTable: Table = Table(title = "[bold purple]Stellar Bakery Menu[/]", expand=False, box=box.SIMPLE)
+        menuTable: Table = Table(title = "Stellar Bakery Menu", title_style="italic bold #f0cfff", border_style="#dadada",expand=False, box=box.MINIMAL_DOUBLE_HEAD)
 
         #Adding columns to the table
-        menuTable.add_column("Product Name", style = "bold cyan")
-        menuTable.add_column("Quantity", style = "bold magenta", justify = "center")
-        menuTable.add_column("Price Per Piece", style = "bold green", justify = "center")
+        menuTable.add_column("[bold #fdffc3]Product Name[/]")
+        menuTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
+        menuTable.add_column("[bold #a4d5b5]Price Per Piece[/]", justify = "center")
 
         if menu:
             #Create a row for each product in the menu 
             for prod in menu:
-                menuTable.add_row(f"[bold #f2f4bd]{prod}[/]",f"[bold #f2f4bd]{menu[prod]['qty']}[/]",f"[bold #a4d5b5]{menu[prod]['price']} SR[/]")
+                menuTable.add_row(f"[#feffde]{prod}[/]",f"[#daf5ff]{menu[prod]['qty']}[/]",f"[#ccefd8]{menu[prod]['price']} SR[/]")
             return menuTable
         else: 
             return "Your menu is empty."
@@ -125,7 +128,8 @@ class Customer(Person):
         super().__init__(name, age, gender, phone, password)
         self.__orderHistory: list[Order] = []
         self.__role = "customer"
-
+        self.__cart = Cart()
+    
     def setOrderHistory(self, orderHistory: list[Order]):
         '''
         setter for orderHistory attribute
@@ -143,6 +147,14 @@ class Customer(Person):
         Getter for role attribute
         '''
         return self.__role
+
+    def setCart(self, cart: Cart):
+        '''Setter for cart attribute'''
+        self.__cart = cart
+
+    def getCart(self) -> Cart:
+        '''Getter for cart attribute'''
+        return self.__cart
 
     def getInfo(self) -> str:
         '''
@@ -195,13 +207,13 @@ class Employee(Person):
                 with open("bakeryData/menu.json", "w", encoding="utf-8") as file:
                     #Store the modified menu back to the json file 
                     json.dump(menu, file, indent = 4)
-                return f"Product '{prodName}' was deleted successfully."
+                return Text(f"Product '{prodName}' was deleted successfully.", style="#baf5ce")
             else: 
-                return f"Product '{prodName}' isn't on the menu."
+                return Text(f"Product '{prodName}' isn't on the menu.", style="red")
         else: 
-            return "Your menu is empty."
+            return Text("The menu is empty.", style="italic #fbfbe2")
 
-    def updateProductName(self, prodName: str, newName):
+    def updateProductName(self, prodName: str, newName) -> Text:
         '''
         This method updates a product's name then saves the modified menu to the json file
         '''
@@ -216,13 +228,13 @@ class Employee(Person):
                 with open("bakeryData/menu.json", "w", encoding="utf-8") as file:
                     #Store the modified menu back to the json file 
                     json.dump(menu, file, indent = 4)
-                return f"Name of '{prodName}' was updated successfully."
+                return Text(f"Name of '{prodName}' was updated successfully.", style="#baf5ce")
             else:
-                return f"Product '{prodName}' isn't on the menu."
+                return Text(f"Product '{prodName}' isn't on the menu.", style="red")
         else: 
-            return "Your menu is empty."
+            return Text("Your menu is empty.", style="italic #fbfbe2")
 
-    def updateProductQty(self, prodName: str, qty: int):
+    def updateProductQty(self, prodName: str, qty: int) -> Text:
         '''
         This method updates a product's quantity then saves the modified menu to the json file
         '''
@@ -236,13 +248,13 @@ class Employee(Person):
                 with open("bakeryData/menu.json", "w", encoding="utf-8") as file:
                     #Store the modified menu back to the json file 
                     json.dump(menu, file, indent = 4)
-                return f"Quantity of '{prodName}' was updated successfully."
+                return Text(f"Quantity of '{prodName}' was updated successfully.", style="#baf5ce")
             else:
-                return f"Product '{prodName}' isn't on the menu."
+                return Text(f"Product '{prodName}' isn't on the menu.", style="red")
         else: 
-            return "Your menu is empty."
+            return Text("Your menu is empty.", style="italic #fbfbe2")
         
-    def updateProductPrice(self, prodName: str, price: float):
+    def updateProductPrice(self, prodName: str, price: float) -> Text:
         '''
         This method updates a product's price then saves the modified menu to the json file
         '''
@@ -256,13 +268,13 @@ class Employee(Person):
                 with open("bakeryData/menu.json", "w", encoding="utf-8") as file:
                     #Store the modified menu back to the json file 
                     json.dump(menu, file, indent = 4)
-                return f"Price of '{prodName}' was updated successfully."
+                return Text(f"Price of '{prodName}' was updated successfully.", style="#baf5ce")
             else:
-                return f"Product '{prodName}' isn't on the menu."
+                return Text(f"Product '{prodName}' isn't on the menu.", style="red")
         else: 
-            return "Your menu is empty."
+            return Text("The menu is empty.", style="italic #fbfbe2")
         
-    def updateProduct(self, prodName: str, choice: str) -> str:
+    def updateProduct(self, prodName: str, choice: str) -> Text:
         '''
         This method takes product name and choice as arguments and updates the product based on the choice entered
         If the choice was 1 -> update product name
@@ -270,14 +282,14 @@ class Employee(Person):
         If the choice was 3 -> update product price
         '''
         if choice == '1':
-            newName: str = Prompt.ask("[#f2f4bd]Enter the new name[/]")
+            newName: str = Prompt.ask("[#fbfbe2]Enter the new name[/]")
             return self.updateProductName(prodName, newName)
         elif choice == '2':
-            newQty: int = IntPrompt.ask("[#f2f4bd]Enter the new quantity[/]")
+            newQty: int = IntPrompt.ask("[#fbfbe2]Enter the new quantity[/]")
             return self.updateProductQty(prodName, newQty)
         elif choice == '3':
-            newPrice: float = FloatPrompt.ask("[#f2f4bd]Enter the new price[/]")
+            newPrice: float = FloatPrompt.ask("[#fbfbe2]Enter the new price[/]")
             return self.updateProductPrice(prodName, newPrice)
 
     def checkExpiry(self):
-        '''This method checks if there are any expired objects'''
+        '''This method checks if there are any expired products'''

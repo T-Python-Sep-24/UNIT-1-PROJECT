@@ -1,12 +1,16 @@
 import pickle
 from bakery.person import *
 from bakery.order import *
+from bakery.cart import Cart
 import re
+import time
 
 #Using Rich library to style the output on terminal
 from rich import print
 from rich.prompt import Prompt, IntPrompt, FloatPrompt, Confirm
 from rich.text import Text
+from rich.rule import Rule
+from rich.progress import track
 
 users: list[Person] = []
 
@@ -39,45 +43,43 @@ def updateCustomer(customer: Customer):
         if user.getPhone() == customer.getPhone():
 
             choiceList: str = "Choose what to update:\n1. Name.\n2. Age\n3. Gender.\n4. Phone number.\n5. Password.\n6. Back to main menu.\nYour choice"
-            choice: str = Prompt.ask(Text(choiceList, style="#bdeeff"), choices=['1','2','3','4','5','6'], show_choices=False)
+            choice: str = Prompt.ask(Text(choiceList, style="#fff2f2"), choices=['1','2','3','4','5','6'], show_choices=False)
             if choice == '1':
-                newName: str = Prompt.ask("[#43cfff]New name[/]")
+                newName: str = Prompt.ask("[#ffd7f0]New name[/]")
                 user.setName(newName)
-                print(Text("Name was updated successfully.", style="#49ff88"))
-                Prompt.ask(Text("Press Enter to continue..", style="white italic"))
+                print(Text("Name was updated successfully.", style="#baf5ce"))
 
             elif choice == '2':
-                newAge: int =IntPrompt.ask("[#43cfff]New age[/]")
+                newAge: int =IntPrompt.ask("[#ffd7f0]New age[/]")
                 user.setAge(newAge)
-                print(Text("Age was updated successfully.", style="#49ff88"))
-                Prompt.ask(Text("Press Enter to continue..", style="white italic"))
+                print(Text("Age was updated successfully.", style="#baf5ce"))
 
             elif choice == '3':
                 #Keep asking user to enter a valid gender
-                newGender: str = Prompt.ask("[#43cfff]New gender[/]", choices=['male','Male','female','Female'], show_choices=False)
+                newGender: str = Prompt.ask("[#ffd7f0]New gender[/]", choices=['male','Male','female','Female'], show_choices=False)
                 user.setGender(newGender)
-                print(Text("Gender was updated successfully.", style="#49ff88"))
-                Prompt.ask(Text("Press Enter to continue..", style="white italic"))
+                print(Text("Gender was updated successfully.", style="#baf5ce"))
 
             elif choice == '4':
                 #Keep asking for correct phone number format
                 while True:
-                    newPhone: str = Prompt.ask("[#43cfff]New phone number[/]")
+                    newPhone: str = Prompt.ask("[#ffd7f0]New phone number[/]")
                     if not phoneValid(newPhone):
-                        print(Text("Phone number should be 10 digits starting with (05). Try again..", style="red"))
-                        Prompt.ask(Text("Press Enter to continue..", style="white italic"))
+                        print(Text("Phone number should be 10 digits starting with (05).", style= "red"), end=" ")
+                        Prompt.ask("[#fff2f2]Try again..[/]")
                     else:
                         user.setPhone(newPhone)
-                        print(Text("Phone was updated successfully.", style="#49ff88"))
+                        print(Text("Phone was updated successfully.", style="#baf5ce"))
                         break
+
                 Prompt.ask(Text("Press Enter to continue..", style="white italic"))
 
             elif choice == '5':
                 #Keep asking for correct password format
                 while True:
-                    newPassword: str = input("New password: ")
+                    newPassword: str = Prompt.ask("[#ffd7f0]New password[/]")
                     if not passwordValid(newPassword):
-                        print("[red bold]Password too weak[/], [#f5cda4]your password should satisfy the following:[/]")
+                        print("[red bold]Password too weak[/], [#fff2f2]your password should satisfy the following:[/]")
                         print(Text("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)\n", style = "#fff2f2"), end =" ")
                         Prompt.ask("[#fff2f2]Try again[/]")
                     else:
@@ -110,7 +112,6 @@ def checkUserLogin(phone: str, password: str) -> Person:
     loadUsers()
     for user in users:
         if user.getPhone() == phone and user.getPassword() == password:
-            print(Text(f"Welcome back {user.getName()}", style="red"))
             return user
         elif user.getPhone() == phone and user.getPassword() != password: 
             print(Text(f"Incorrect password for phone number {phone}", style="red"))
@@ -130,152 +131,194 @@ def checkUserRegister(phone: str, password: str) -> bool:
      
 def employeeMenu(employee: Employee):
     '''This function displays a menu of available actions to the employee'''
-    print("-" * 30)
-    print(Text(f"Welcome back {employee.getName()}..", style = "italic bold #aca2f5"))
-    print(Text("What would you like to do?", style = "bold #d6d0ff"))
 
-    #Display a list of options to the employee
-    choicesList: str = "1. Add a product.\n2. Remove a product.\n3. Update a product.\n4. View the menu.\n5. Exit.\nYour choice"
-    choice = Prompt.ask(Text(choicesList, style = "#d6d0ff"), choices=['1','2','3','4','5'], show_choices=False)
-    if choice == '1':
-        print(Text("------------------Adding Product------------------", style="bold #f5cda4"))
-        prodName: str = Prompt.ask("[#fbff9b]Product name[/]")
-        qty: int = IntPrompt.ask("[#fbff9b]Quantity: ")
-        price: float = FloatPrompt.ask("[#fbff9b]Price: ")
+    #Keep showing the list of choices until the user enters 5
+    while True:
+        print(Rule(Text(f"Welcome, {employee.getName()}.. What would you like to do?", style="bold italic #e2deff"), characters="-  ", style="bold #aca2f5"))
+        #Display a list of options to the employee
+        choicesList: str = "1. Add a product.\n2. Remove a product.\n3. Update a product.\n4. View the menu.\n5. Exit.\nYour choice"
+        choice = Prompt.ask(Text(choicesList, style = "#e7e4ff"), choices=['1','2','3','4','5'], show_choices=False)
+        
+        #Add product to the menu of available products
+        if choice == '1':
+            print(Rule(Text("Add Product", style="bold #fdffc3"), characters="- ", style="bold #fdffb0"))
+            prodName: str = Prompt.ask("[bold #fbfbe2]Product name[/]")
+            qty: int = IntPrompt.ask("[bold #fbfbe2]Quantity: ")
+            price: float = FloatPrompt.ask("[bold #fbfbe2]Price: ")
 
-        employee.addProduct(prodName, qty, price)
-        print(Text(f"{prodName} was added successfully.", style="#baf5ce"))
+            employee.addProduct(prodName, qty, price)
+            print(Text(f"{prodName} was added successfully.", style="#baf5ce"))
+
+        #Remove product from the menu of available products
+        elif choice == '2':
+            print(Rule(Text("Remove Product", style="bold #fdffc3"), characters="- ", style="bold #fdffb0"))
+            prodName: str = Prompt.ask("[bold #feffde]Product name[/]")
+            removeMsg: str = employee.removeProduct(prodName)
+            print(removeMsg)
+                
+        #Update product on the menu of available products
+        elif choice == '3':
+            print(Rule(Text("Update Product", style="bold #fdffc3"), characters="- ", style="bold #fdffb0"))
+            prodName: str = Prompt.ask("[bold #feffde]Product name[/]")
+            choicesList = "1. Update product name.\n2. Update product quantity\n3. Update product price.\n4. Back to main menu.\nYour choice"
+            updateChoice: str = Prompt.ask(Text(choicesList, style = "#fbfbe2"), choices=['1','2','3','4'], show_choices=False)
+            updateMsg: str = employee.updateProduct(prodName, updateChoice)
+            print(updateMsg)
+        
+        #Display menu of available products
+        elif choice == '4':
+            menu: Table = employee.listAllProducts()
+            print(menu)
+        
+        #Exit program
+        elif choice == '5':
+            for i in track(range(10), description="Exiting program.."):
+                time.sleep(0.05)  # Simulate work being done
+            break
+
         Prompt.ask(Text("Press Enter to continue..", style="white italic"))
-
-    elif choice == '2':
-        print(Text("------------------Removing Product------------------", style="bold #f5cda4"))
-        prodName: str = Prompt.ask("[#fbff9b]Product name[/]")
-        removeMsg: str = employee.removeProduct(prodName)
-        print(Text(removeMsg, style="#feffde"))
-        Prompt.ask(Text("Press Enter to continue..", style="white italic"))
-            
-    elif choice == '3':
-        print("------------------Updating a Product------------------")
-        prodName: str = Prompt.ask("[#fbff9b]Product name[/]")
-        choicesList = "1. Update product name.\n2. Update product quantity\n3. Update product price.\n4. Back to main menu."
-        updateChoice: str = Prompt.ask(Text(choicesList, style = "#fbff9b"), choices=['1','2','3','4'], show_choices=False)
-        updateMsg: str = employee.updateProduct(prodName, updateChoice)
-        print(Text(updateMsg, style="#feffde"))
-        Prompt.ask(Text("Press Enter to continue..", style="white italic"))
-
-    elif choice == '4':
-        menu: str = employee.listAllProducts()
-        print(menu)
-        Prompt.ask(Text("Press Enter to continue..", style="white italic"))
-
-    elif choice == '5':
-        #Add progress bar here 
-        print("Exiting program..")
 
 def customerMenu(customer: Customer):
-    '''
-    This function displays a menu of available actions for the customer
-    '''
-    cart: Cart = Cart()
-    print("-" * 30)
-    print(Text(f"Welcome back {customer.getName()}..", style="italic bold #aca2f5"))
-    print(Text("What would you like to do?", style = "bold #d6d0ff"))
-    #Prompt customer for a choice and only accept one of the specified choices
-    choicesList: str = "1. View bakery menu.\n2. View cart.\n3. Make New order.\n4. View my profile.\n5. Exit."    
-    choice = Prompt.ask(Text(choicesList, style="#d6d0ff"), choices=['1','2','3','4','5'], show_choices=False)
-    if choice == '1':
-        menu: str = customer.listAllProducts()
-        print(menu)
-        input("")
+    '''This function displays a menu of available actions for the customer'''
 
-    elif choice == '2':
-        print(Text("------------------Your Cart------------------", style="bold #f5cda4"))
-        cartInfo: str = cart.viewCart()
-        #Display cart contents if they exist
-        print(Text(cartInfo, style="#f5cda4"))
-        
-        #Display cart options to the user
-        choicesList = "1. Add to cart.\n2. Remove from cart.\n3. Clear cart.\n4. Proceed to checkout.\n5. Back to previous menu.\nYour choice"
-        cartChoice: str = Prompt.ask(Text(choicesList, style="#f5cda4"), choices=['1','2','3','4','5'], show_choices=False)
-        if cartChoice == '1':
+    cart: Cart = Cart()    
+    #Keep showing the list of choices until the user enters 5
+    while True:
+        print(Rule(Text(f"Welcome, {customer.getName()}.. What would you like to do?", style="italic bold #e2deff"),characters="-  ", style="bold #aca2f5"))
+        #Prompt customer for a choice and only accept one of the specified choices
+        choicesList: str = "1. View bakery menu.\n2. View cart.\n3. Make New order.\n4. View my profile.\n5. Exit.\nYour choice"    
+        choice = Prompt.ask(Text(choicesList, style="#e7e4ff"), choices=['1','2','3','4','5'], show_choices=False)
+        #Display menu
+        if choice == '1':
+            menu: str = customer.listAllProducts()
+            print(menu)
+
+        #Show cart
+        elif choice == '2':
+            print(Rule(Text("Your Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))
+            #Keep displaying cart options to the customer until they enter 5
             while True:
-                print(customer.listAllProducts())
-                print(Text("Enter the name and quantity of the product you want.", style="bold #f5cda4"))
-                prodName: str = Prompt.ask("[#fbff9b]Product name[/]")
-                #Only accepts integers from the user
-                prodQty: int = IntPrompt.ask("[#fbff9b]Quantity[/]")
-                cart.addItem(prodName, prodQty)
-                print(Text(f"{prodName} was successfully added to your cart.", style="#baf5ce"))
-                addMore: str = Confirm.ask(Text("Add more products?", style="bold #fbff9b"))
-                if addMore.lower() == 'y':
-                    continue
-                elif addMore.lower() == 'n':
+                cartInfo = cart.viewCart()
+                #Display cart contents if they exist
+                print(cartInfo)
+                choicesList = "1. Add to cart.\n2. Remove from cart.\n3. Update product quantity.\n4. Clear cart.\n5. Proceed to checkout.\n6. Back to previous menu.\nYour choice"
+                cartChoice: str = Prompt.ask(Text(choicesList, style="#fbfbe2"), choices=['1','2','3','4','5','6'], show_choices=False)
+                
+                #Add procust to cart
+                if cartChoice == '1':
+                    print(Rule(Text("Add to Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))
+                    while True:
+                        print(customer.listAllProducts())
+                        print(Text("Enter the name and quantity of the product you want.", style="bold #fdffc3"))
+                        prodName: str = Prompt.ask("[#fbfbe2]Product name[/]")
+                        #Only accepts integers from the customer
+                        prodQty: int = IntPrompt.ask("[#fbfbe2]Quantity[/]")
+                        #Add the new product to the cart
+                        cart.addToCart(prodName, prodQty)
+                        print(Text(f"{prodName} was successfully added to your cart.", style="#baf5ce"))
+                        
+                        #Keep asking customer if they want to add more items to their cart until they enter n
+                        addMore: str = Confirm.ask(Text("Add more products?", style="bold #feffde"))
+                        if addMore:
+                            continue
+                        elif not addMore:
+                            break
+
+                #Remove product from cart            
+                elif cartChoice == '2':
+                    print(Rule(Text("Remove from Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))
+                    prodName: str = Prompt.ask(Text("Enter the name of the product you want to remove", style="bold #fbfbe2"))
+                    isRemoved: bool = cart.removeFromCart(prodName)
+                    if isRemoved:
+                        print(Text(f"{prodName} has been successfully removed from cart.", style="#baf5ce"))
+                    else: 
+                        print(Text(f"{prodName} is not in your cart.", style="red"))
+                
+                #Update cart contents
+                elif cartChoice == '3':
+                    print(Rule(Text("Update Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))
+                    prodName: str = Prompt.ask(Text("Enter the name of the product you want to update", style="bold #fbfbe2"))
+                    #Only accepts integers from the customer
+                    newQty: int = IntPrompt.ask(Text("New quantity", style="bold #fbfbe2"))
+                    isUpdated: bool = cart.updateCart(prodName, newQty)
+                    if isUpdated:
+                        print(Text(f"{prodName}'s quantity has been successfully updated.", style="#baf5ce"))
+                    else:
+                        print(Text(f"{prodName} is not in your cart.", style="red"))
+                
+                #Clear cart
+                elif cartChoice == '4':
+                    isCleared: bool = cart.clearCart()
+                    if isCleared:
+                        print(Text("Your cart has been cleared.", style="#baf5ce"))
+                    else:
+                        print(Text("Your cart is already empty.", style="red"))
+                    break
+                
+                #Checkout 
+                elif cartChoice == '5':
+                    print(Rule(Text("Checkout", style="bold #feffde"), characters="- ", style="bold #fdffb0"))
+
+                #Back to previous menu
+                elif cartChoice == '6':
                     break
 
-        elif cartChoice == '2':
-                prodName: str = Prompt.ask(Text("Enter the name of the product you want to remove", style="bold #f5cda4"))
-                cart.removeItem(prodName)
+                Prompt.ask(Text("Press Enter to continue..", style="white italic"))
         
-        elif cartChoice == '3':
-                cart.clearCart()
-                print(Text("Cart has been cleared.", style="#baf5ce"))
-                
-        elif cartChoice == '4':
-            pass
-        elif cartChoice == '5':
-            pass
+        #Create a new order       
+        elif choice == '3':
+            print(Rule(Text("Make New Order", style="bold #feffde"), characters="-", style="bold #fdffc3"))
 
+            #To make a new order contents of the cart will be cleared
+            cart.clearCart()
+            #Display menu to the user
+            print(customer.listAllProducts())
+            print(Text("Enter the name and quantity of the product you want.", style="bold #fdffc3"))
+            prodName: str = Prompt.ask("[#feffde]Product name[/]")
+            #Only accepts integers from the user
+            prodQty: int = IntPrompt.ask("[#feffde]Quantity[/]")
+            cart.addToCart(prodName, prodQty)
+            print(Text(f"{prodName} was successfully added to your cart.", style="#baf5ce"))
+
+        #View and Update profile 
+        elif choice == '4':
+            print(Rule(Text("My Profile", style="bold #ffd7f0"), characters="-", style="bold #ffbfcb"))
+            print(Text(customer.getInfo(), style="#ffd7f0"))
+
+            updateProfile: str = Confirm.ask(Text("Would you like to update your profile?", style="bold #fff2f2"))
+            if updateProfile:
+                print(Rule(Text("Update Profile", style="bold #ffd7f0"), characters="-", style="bold #ffbfcb"))
+                customer = updateCustomer(customer)
+            elif not updateProfile:
+                pass
+        
+        #Exit program
+        elif choice == '5':
+            for i in track(range(10), description="Exiting program.."):
+                time.sleep(0.05)  # Simulate work being done
+            break
+        
         Prompt.ask(Text("Press Enter to continue..", style="white italic"))
-            
-    elif choice == '3':
-        print(Text("------------------Make New Order------------------", style="bold #f5cda4"))
-        #To make a new order contents of the cart will be cleared
-        cart.clearCart()
-        #Display menu to the user
-        print(customer.listAllProducts())
-        print(Text("Enter the name and quantity of the product you want.", style="bold #f5cda4"))
-        prodName: str = Prompt.ask("[#fbff9b]Product name[/]")
-        #Only accepts integers from the user
-        prodQty: int = IntPrompt.ask("[#fbff9b]Quantity[/]")
-        cart.addItem(prodName, prodQty)
-        print(Text(f"{prodName} was successfully added to your cart.", style="#baf5ce"))
-
-        Prompt.ask(Text("Press Enter to continue..", style="white italic"))
-
-    elif choice == '4':
-        print(Text("------------------My Profile------------------", style="bold #ffbfcb"))
-        print(Text(customer.getInfo(), style="#ffd7f0"))
-
-        profileChoice: str = Confirm.ask(Text("Would you like to update your profile?", style="bold #fff2f2"), choices=['yes', 'no'])
-        if profileChoice.lower() == 'yes':
-            print(Text("------------------Update Profile------------------", style="bold #ffbfcb"))
-            customer = updateCustomer(customer)
-        elif profileChoice.lower() == 'no':
-            pass
-
-        Prompt.ask(Text("Press Enter to continue..", style="white italic"))
-
-    elif choice == '5':
-        #Add progress bar here
-        print("Exiting program..")
 
 #Main program
 def main():
     '''
     Function that contains all main operations
     '''
-    print(Text("------- Welcome to Stellar Bakery -------", style="bold #aca2f5"))
+    print(Rule(Text("Welcome to Stellar Bakery", style="bold italic #f0cfff"), characters="-", style="bold #e09eff"))
     
-    choice = Prompt.ask("[#bdeeff]1. Login.\n2. Register.\nYour choice[/]", choices=['1','2'], show_choices=False)
+    choice = Prompt.ask("[#f5e6fc]1. Login.\n2. Register.\nYour choice[/]", choices=['1','2'], show_choices=False)
+    #Login
     if choice == '1':
         while True:
-            print(Text("----------------- Login -----------------", style="bold #2baedb"))
-            phone: str = Prompt.ask("[#bdeeff]Enter your phone number[/]")
-            password: str = Prompt.ask("[#bdeeff]Enter your password[/]")
+            print(Rule(Text("Login", style="bold #bdeeff"), characters="-", style="bold #5dd6ff"))
+            phone: str = Prompt.ask("[#daf5ff]Enter your phone number[/]")
+            password: str = Prompt.ask("[#daf5ff]Enter your password[/]")
             
             #Check if phone number is valid
             if not phoneValid(phone):
-                print(Text("Phone number should be 10 digits starting with (05). Try again..", style= "red"))
+                print(Text("Phone number should be 10 digits starting with (05).", style= "red"), end=" ")
+                Prompt.ask("[#fff2f2]Try again..[/]")
                 continue
 
             #Check if the user exists in the system, returns None if the user don't
@@ -288,21 +331,21 @@ def main():
                 elif user.getRole() == "customer":
                     customerMenu(user)
                     break
-
+    #Register
     elif choice == '2':
         while True:
-            print(Text("-------------- Register --------------", style="bold #2baedb"))
-            name: str = Prompt.ask("[#bdeeff]Enter your name[/]")
+            print(Rule(Text("Register", style="bold #bdeeff"), characters="-", style="bold #5dd6ff"))
+            name: str = Prompt.ask("[#daf5ff]Enter your name[/]")
             #Only accepts integers from the user
-            age: int = IntPrompt.ask("[#bdeeff]Enter your age[/]")
+            age: int = IntPrompt.ask("[#daf5ff]Enter your age[/]")
             #Keep asking user to enter a valid gender
-            gender: str = Prompt.ask("[#bdeeff]Enter your gender[/]", choices=['male','Male','female','Female'])
-            phone: str = Prompt.ask("[#bdeeff]Enter your phone number[/]")
-            password: str = Prompt.ask("[#bdeeff]Enter your password[/]")
+            gender: str = Prompt.ask("[#daf5ff]Enter your gender[/]", choices=['male','Male','female','Female'], show_choices=False)
+            phone: str = Prompt.ask("[#daf5ff]Enter your phone number[/]")
+            password: str = Prompt.ask("[#daf5ff]Enter your password[/]")
 
             #Validate phone and password formats
             if not phoneValid(phone):
-                print(Text("Phone number should be 10 digits starting with (05).", style= "red"))
+                print(Text("Phone number should be 10 digits starting with (05).", style= "red"), end=" ")
                 Prompt.ask("[#fff2f2]Try again..[/]")
                 continue
             if not passwordValid(password):
@@ -317,7 +360,7 @@ def main():
                 customer: Customer = Customer(name, age, gender, phone, password)
                 #Store the created customer account in a pickle file with the rest of the users
                 saveUsers(customer)
-                print(Text("You have successfully registered, continue to login.", style="#49ff88"))
+                print(Text("You have successfully registered, continue to login.", style="#baf5ce"))
             Prompt.ask(Text("Press Enter to continue..", style="white italic"))
             break
 
