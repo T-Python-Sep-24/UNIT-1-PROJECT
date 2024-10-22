@@ -1,8 +1,11 @@
 import time
 import json
-from art import *
 from colorama import Fore
+from emojis import emojis
 from spellchecker import SpellChecker
+from rich.console import Console
+
+console = Console()
 
 class Story:
 
@@ -16,10 +19,10 @@ class Story:
             with open("story.json", "r") as file:
                 self.stories = json.load(file)
         except FileNotFoundError:
-            print("No stories found. Please create some stories first.")
+            console.print("No stories found. Please create some stories first.",style="#C62E2E")
             self.stories = {}
         except json.JSONDecodeError:
-            print("Error reading the story file. Please check the file format.")
+            console.print("Error reading the story file. Please check the file format.",style="#C62E2E")
             self.stories = {}
 
     def load_questions(self):
@@ -27,22 +30,25 @@ class Story:
             with open("question.json", "r") as file:
                 self.questions = json.load(file)
         except FileNotFoundError:
-            print("No questions found. Please create some questions first.")
+            console.print("No questions found. Please create some questions first.",style="#C62E2E")
             self.questions = {}
         except json.JSONDecodeError:
-            print("Error reading the question file. Please check the file format.")
+            console.print("Error reading the question file. Please check the file format.",style="#C62E2E")
             self.questions = {}
 
     def display_menu(self):
-        print(text2art("Welcome to the Reading and Writing Challenge! \n", font='straight'))
-        print(text2art('''
+        print("\033[H\033[J")
+        console.print("Welcome to the Reading and Writing Challenge! \n",style="#C8A1E0")
+        console.print('''
            1. The Hare and the Tortoise
            2. The Elephant and the Ants
            3. The Lion and the Mouse
            4. Write your own story 
            5. Display all kids stories
            6. Exit
-        ''', font='straight'))
+        ''',style="#B4D6CD")
+         
+
 
     def write_to_file(self, content):
         with open('story.txt', 'a') as file:
@@ -52,27 +58,29 @@ class Story:
         words = text.split()
         corrected_text = []
         corrections = []
+        
         for word in words:
-            corrected_word = self.spell_checker.candidates(word)
-            
-            if corrected_word:  # Check if candidates is not empty
-                correct_word = corrected_word.pop()  # Get one of the suggestions
-                corrected_text.append(correct_word)
-                corrections.append((word, correct_word))
-            else:
-                corrected_text.append(word)  # If no correction found, keep the original word
-                
-        return ' '.join(corrected_text), corrections
+            if self.spell_checker.unknown([word]):  
+                correct_word_candidates = self.spell_checker.candidates(word)
+                if correct_word_candidates:  
+                    best_suggestion = max(correct_word_candidates, key=lambda w: self.spell_checker.word_frequency[w])  
+                    corrected_text.append(best_suggestion)
+                    corrections.append((word, best_suggestion))
+                else:
+                    corrected_text.append(word)  
+                corrected_text.append(word)  
 
+        return ' '.join(corrected_text), corrections
 
     def read_story(self, title, content):
         start_time = time.time()
+        print("\033[H\033[J") 
         print(content)
-        input("Press 'Enter' when you finish reading...")  
+        input(Fore.WHITE+"Press 'Enter' when you finish reading..."+Fore.RESET)  
         
         end_time = time.time()
         time_taken = (end_time - start_time) / 60
-        print(f"{Fore.GREEN}You took {time_taken:.2f} minutes to read '{title}'.{Fore.RESET}")
+        console.print(f"You took {time_taken:.2f} minutes to read '{title}'.",style="#FFF1DB")
 
     def ask_questions(self, story_number):
         start_time = time.time()
@@ -84,38 +92,44 @@ class Story:
 
             attempts = 0
             while attempts < 2: 
-                user_answer = input("Choose the correct option number: ")
-                if int(user_answer) - 1 < len(q["options"]):
+                user_answer = input("Choose the correct option number: ").strip()
+                
+                if not user_answer:  # Check if input is empty
+                    console.print("Invalid input. Please try again.", style="#C62E2E")
+                    continue  # Prompt again without incrementing attempts
+
+                elif user_answer.isdigit() and int(user_answer) - 1 < len(q["options"]):
                     selected_answer = q["options"][int(user_answer) - 1].lower()
                     if selected_answer == q["answer"].lower():
-                        print(Fore.GREEN + "Correct!" + Fore.RESET)
+                        console.print("Correct!",emojis.encode(":tada:"), style="#88C273")
                         break
                     else:
-                        print(Fore.RED + "Wrong! Try again." + Fore.RESET)
+                        console.print("Oops! Try again.",emojis.encode(":thinking_face:"), style="#C62E2E")
                         attempts += 1
                 else:
-                    print(Fore.RED + "Invalid option. Try again." + Fore.RESET)
+                    console.print("Invalid option. Try again.", style="#C62E2E")
 
             if attempts == 2:
-                print(Fore.RED + f"The correct answer is: {q['answer']}" + Fore.RESET)
+                console.print(f"The correct answer is: {q['answer']}", style="#88C273")
 
         end_time = time.time()
         time_taken = (end_time - start_time) / 60  
-        print(f"{Fore.GREEN}You took {time_taken:.2f} minutes to answer the questions.{Fore.RESET}")
+        console.print(f"You took {time_taken:.2f} minutes to answer the questions.", style="#FFF1DB")
+       
 
     def display_loaded_stories(self):
-        print(Fore.YELLOW + "Loaded Stories from JSON:" + Fore.RESET)
+        console.print("Loaded Stories from JSON:" , style= "#FF8C9E")
         for key, (title, content) in self.stories.items():
-            print(f"{Fore.CYAN}Title: {title}{Fore.RESET}")
+            console.print(f"Title: {title}",style= "#B4D6CD")
             print(content)
             print("-" * 40)
 
 
     def read_write(self):
-        self.display_menu()
-        choose = input("Choose number 1 - 5: ")
-
         while True:
+            self.display_menu()
+            choose = input("Choose number 1 - 6: ")
+
             if choose in self.stories:
                 title, story_content = self.stories[choose]
                 self.read_story(title, story_content)
@@ -123,29 +137,43 @@ class Story:
                 print("\033[H\033[J")  
                 self.ask_questions(choose)
 
+                console.print("Returning to the main menu...", style="#88C273")
+                input("Press 'Enter' to continue...")
+                print("\033[H\033[J")
+
             elif choose == '4':
+                print("\033[H\033[J")
+
                 story_title = input("Write your story title then press enter: ")
                 your_story = input("Write your story then press enter: ")
                 corrected_story, corrections = self.check_spelling(your_story)  
                 self.write_to_file(f"{story_title} : \n{corrected_story} . \n ")
                 
-                print(f"\nYour story titled '{story_title}': \n{corrected_story}\n")  
+                print(f"\nYour story titled '{story_title}': \n{your_story}\n") 
+                
                 if corrections:  
-                    print("Corrections made:")
+                    console.print("Corrections made:", style="#88C273")
                     for original, corrected in corrections:
                         print(f"'{original}' -> '{corrected}'")  
-
+                    console.print("Great job! Keep writing and expressing your creativity! ",emojis.encode(":sparkles:"),style="#E2BFD9")
+                    input(Fore.WHITE+"Press 'Enter' when you finish reading..."+Fore.RESET)
+                     
+                   
             elif choose == '5':
-                with open('story.txt','r') as file:
+                
+                with open('story.txt', 'r') as file:
                     for s in file:
                         print(s.strip())
+                input(Fore.WHITE+"Press 'Enter' when you finish reading..."+Fore.RESET)
 
             elif choose == '6':
-                print("Exiting the program.")
+                console.print("Exiting the program.", style="#C8A1E0")
+                print("\033[H\033[J") 
                 break
 
             else:
-                print("Invalid choice. Please select again.")
+                console.print("Invalid choice. Please select again.", style="#C62E2E")
 
-            self.display_menu()
-            choose = input("Choose number 1 - 6: ")
+
+            
+            
