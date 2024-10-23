@@ -1,16 +1,47 @@
 {
     "teachers": [
         {
-            "teacher_id": 4676,
-            "name": "abdullah",
-            "specialization": "python"
+            "teacher_id": 2633,
+            "name": "Abdullah Saleh",
+            "specialization": "Python"
+        },
+        {
+            "teacher_id": 6725,
+            "name": "Mohammed Hamad",
+            "specialization": "JavaScript"
         }
     ],
-    "students": [],
+    "students": [
+        {
+            "student_id": 8983,
+            "name": "Fahad"
+        },
+        {
+            "student_id": 8734,
+            "name": "Khaled"
+        }
+    ],
     "courses": [
         {
-            "course_id": 6471,
-            "name": "josn"
+            "course_id": 1033,
+            "name": "javaScript",
+            "teachers": [
+                6725
+            ],
+            "students": [
+                8734,
+                8983
+            ]
+        },
+        {
+            "course_id": 6604,
+            "name": "Web Development",
+            "students": [
+                8983
+            ],
+            "teachers": [
+                2633
+            ]
         }
     ]
 }

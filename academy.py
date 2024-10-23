@@ -90,9 +90,9 @@ class Academy:
                 course['teachers'] = []
             course['teachers'].append(teacher_id)
             self.save()
-            print(f"Teacher with ID {teacher_id} has been assigned to course ID {course_id}.")
+            print(Fore.GREEN + f"Teacher {teacher['name']} with ID {teacher_id} has been assigned to course {course['name']} ID {course_id}.")
         else:
-            print("Teacher or Course not found!")
+            print(Fore.RED + "Teacher or Course not found!")
 
 
     def list_courses_with_students_and_teacher(self):
@@ -167,19 +167,6 @@ class Academy:
         else:
             print("Course not found!")
 
-    def update_course(self, old_course_id: int, new_name: str):
-        '''Updates the name of an existing course.'''
-        
-        course = next((c for c in self.data['courses'] if c['course_id'] == old_course_id), None)
-        
-        if not course:
-            print(Fore.RED + ' ' * 10 + f"Course with ID {old_course_id} not found!")
-            return
-
-        course['name'] = new_name
-        self.save()
-        print(f"Course ID {old_course_id} has been updated to '{new_name}'.")
-
     def get_statistics(self):
         '''Prints the total number of teachers, students, and courses.'''
         
@@ -204,31 +191,31 @@ class Academy:
         if person_type.lower() == 'student':
             student = next((s for s in self.data['students'] if s['student_id'] == person_id), None)
             if not student:
-                print("Student not found!")
+                print(Fore.RED + "Student not found!")
                 return
             #> If the student is registered in the course, delete him.
             if 'students' in course and person_id in course['students']:
                 course['students'].remove(person_id)
                 self.save()
-                print(f"Student with ID {person_id} has been removed from course ID {course_id}.")
+                print(Fore.GREEN + f"Student with ID {person_id} has been removed from course ID {course_id}.")
             else:
-                print(f"Student with ID {person_id} is not registered in course ID {course_id}.")
+                print(Fore.RED + f"Student with ID {person_id} is not registered in course ID {course_id}.")
         ## If the person to be deleted is a teacher
         elif person_type.lower() == 'teacher':
             teacher = next((t for t in self.data['teachers'] if t['teacher_id'] == person_id), None)
             if not teacher:
-                print("Teacher not found!")
+                print(Fore.RED + "Teacher not found!")
                 return
             ##> If the teacher is registered in the course, delete him.
             if 'teachers' in course and person_id in course['teachers']:
                 course['teachers'].remove(person_id)
                 self.save()
-                print(f"Teacher with ID {person_id} has been removed from course ID {course_id}.")
+                print(Fore.GREEN + f"Teacher with ID {person_id} has been removed from course ID {course_id}.")
             else:
-                print(f"Teacher with ID {person_id} is not registered in course ID {course_id}.")
+                print(Fore.RED + f"Teacher with ID {person_id} is not registered in course ID {course_id}.")
 
         else:
-            print("Invalid person type! Use 'student' or 'teacher'.")
+            print(Fore.RED + "Invalid person type! Use 'student' or 'teacher'.")
 
 
     def save(self):
