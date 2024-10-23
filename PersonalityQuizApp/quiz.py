@@ -67,12 +67,7 @@ class PersonalityQuiz:
             "description": famous_person["description"]
         }
         save_results(user_results)
-    # Load and display previous results
-    previous_results = load_results()
-    if previous_results:
-        print("\nPrevious Results:")
-        for result in previous_results:
-            print(result)
+
 
 class EmotionalIntelligenceQuiz:
     def __init__(self):
@@ -142,12 +137,7 @@ class EmotionalIntelligenceQuiz:
         }
 
         save_results(user_results)
-    # Load and display previous results
-    previous_results = load_results()
-    if previous_results:
-        print("\nPrevious Results:")
-        for result in previous_results:
-            print(result)
+ 
 
 class LearningStyleQuiz:
     def __init__(self):
@@ -221,9 +211,3 @@ class LearningStyleQuiz:
             "tools": advice_data["tools"]
         }
         save_results(user_results)
-    # Load and display previous results
-    previous_results = load_results()
-    if previous_results:
-        print("\nPrevious Results:")
-        for result in previous_results:
-            print(result)

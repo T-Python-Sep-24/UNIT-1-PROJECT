@@ -1,7 +1,12 @@
-[{"score": 14, "type": "Extrovert"},
+[
+{"score": 14, "type": "Extrovert"},
 {"score": 0, "type": "Extrovert"},
 {"score": 12, "level": "High Emotional Intelligence"},
 {"score": 5, "type": "Ambivert"},
 {"score": 13, "type": "Extrovert"},
 {"score": 9, "type": "Ambivert", "famous_person": "Albert Einstein", "description": "Theoretical physicist known for his contributions to science, balancing social interaction with deep thinking."},
-{"score": 16, "level": "High Emotional Intelligence", "advice": ["1. **Leverage Your Skills**: Consider mentoring others to share your insights.", "2. **Continuous Growth**: Explore advanced emotional intelligence workshops or training.", "3. **Stay Grounded**: Practice self-care to maintain your emotional balance."], "books": ["*Dare to Lead* by Bren\u00e9 Brown."]}]
+{"score": 16, "level": "High Emotional Intelligence", "advice": ["1. **Leverage Your Skills**: Consider mentoring others to share your insights.", "2. **Continuous Growth**: Explore advanced emotional intelligence workshops or training.", "3. **Stay Grounded**: Practice self-care to maintain your emotional balance."], "books": ["*Dare to Lead* by Bren\u00e9 Brown."]},
+{"score": 3, "style": "Visual", "advice": ["1. Use diagrams and flowcharts to organize information.", "2. Incorporate color coding in your notes.", "3. Watch videos related to your study topics."], "resources": ["Books: The Visual Display of Quantitative Information by Edward Tufte", "Websites: Khan Academy, YouTube educational channels"], "tools": ["Canva: For creating engaging visuals.", "Lucidchart: For making diagrams and flowcharts.", "MindMeister: For mind mapping."]},
+{"score": 5, "style": "Auditory", "advice": ["1. Record lectures and listen to them again.", "2. Join study groups to discuss topics aloud.", "3. Use music or sounds to help memorize information."], "resources": ["Books: The Art of Learning by Josh Waitzkin", "Podcasts: TED Talks Daily, The EdSurge Podcast"], "tools": ["Audacity: For recording and editing audio.", "Podcast Addict: To discover and listen to educational podcasts.", "Anki: For creating audio flashcards."]},
+{"score": 6, "style": "Auditory", "advice": ["1. Record lectures and listen to them again.", "2. Join study groups to discuss topics aloud.", "3. Use music or sounds to help memorize information."], "resources": ["Books: The Art of Learning by Josh Waitzkin", "Podcasts: TED Talks Daily, The EdSurge Podcast"], "tools": ["Audacity: For recording and editing audio.", "Podcast Addict: To discover and listen to educational podcasts.", "Anki: For creating audio flashcards."]}
+]

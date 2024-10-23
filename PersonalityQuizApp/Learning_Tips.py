@@ -1,5 +1,3 @@
-# Learning_Tips.py
-
 learning_style_advice = {
     "Visual": {
         "advice": [

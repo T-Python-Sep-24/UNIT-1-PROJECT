@@ -1,40 +1,34 @@
 from quiz import PersonalityQuiz, EmotionalIntelligenceQuiz, LearningStyleQuiz
-from results import save_results, load_results  # Importing the save and load functions
+from colorama import init, Fore, Style
+
+# Initialize Colorama
+init()
 
 def main():
-    print("Welcome to the Personal Analyst Program!")
+    print(Fore.CYAN + "Welcome to the Personal Analyst Program!" + Style.RESET_ALL)
     while True:
-        print("\nPlease choose an option:")
-        print("1. Take Personality Quiz")
-        print("2. Take Emotional Intelligence Test")
-        print("3. Take Learning Style Assessment")
-        print("4. View Results")
-        print("5. Exit")
+        print("\n" + Fore.YELLOW + "Please choose an option:" + Style.RESET_ALL)
+        print(Fore.GREEN + "1. Take Personality Quiz" + Style.RESET_ALL)
+        print(Fore.GREEN + "2. Take Emotional Intelligence Test" + Style.RESET_ALL)
+        print(Fore.GREEN + "3. Take Learning Style Assessment" + Style.RESET_ALL)
+        print(Fore.RED + "4. Exit" + Style.RESET_ALL)
 
-        command = input("Enter a number (1-5): ").strip()
+        command = input(Fore.WHITE + "Enter a number (1-4): " + Style.RESET_ALL).strip()
 
         if command == "1":
-            quiz = PersonalityQuiz()
-            quiz.take_quiz()
+            # Call the Personality Quiz function
+            pass
         elif command == "2":
-            quiz = EmotionalIntelligenceQuiz()
-            quiz.take_quiz()
+            # Call the Emotional Intelligence Test function
+            pass
         elif command == "3":
-            quiz = LearningStyleQuiz()
-            quiz.take_quiz()
+            # Call the Learning Style Assessment function
+            pass
         elif command == "4":
-            results = load_results()  # Load existing results
-            if results:
-                print("\nPrevious Results:")
-                for res in results:
-                    print(res)
-            else:
-                print("No previous results found.")
-        elif command == "5":
-            print("Thank you for using the Personal Analyst Program. Goodbye!")
+            print(Fore.MAGENTA + "Thank you for using the Personal Analyst Program. Goodbye!" + Style.RESET_ALL)
             break
         else:
-            print("Invalid input. Please enter a number between 1 and 5.")
+            print(Fore.RED + "Invalid input. Please enter a number between 1 and 4." + Style.RESET_ALL)
 
 if __name__ == "__main__":
     main()
