@@ -164,9 +164,10 @@ def checkUserLogin(phone: str, password: str) -> Person:
             return user
         elif user.getPhone() == phone and user.getPassword() != password: 
             print(Text(f"Incorrect password for phone number {phone}", style="red"))
-            return user
+            return None
     if not found:
         print(Text("There is no account with that phone number.", style= "red"))
+        return None
           
 def checkUserRegister(phone: str, password: str) -> bool:
     '''This function checks if a user with the passed phone number exists. It returns True if they do and False if not'''
