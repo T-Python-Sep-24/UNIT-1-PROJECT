@@ -110,13 +110,17 @@ while True:
 
 if exit:  
     storge = Storge()
-    print(colored("Here are the list of your scheduled services:", 'yellow', attrs=['bold']))
-    storge.display_upcoming_services()
     
-    if customer.previous_products_orders:
+    storge.display_upcoming_services(customer.username)
+    
+    if customer.username not in storge.previous_products_orders:
+                storge.previous_products_orders[customer.username] = []
+                storge.save_to_file(storge.previous_products_orders)
+    elif storge.previous_products_orders[customer.username]:
         print(colored("\nYou may want to see these PRODUCTs:", 'yellow', attrs=['bold']))
-        for product in customer.previous_products_orders:
-            product.display()
+        for cart in storge.previous_products_orders[customer.username]:
+            for key, dict in cart.items():
+                print(f'{dict['product'].name}')
             
     while True:
         print(colored("\nHere are the list of our services:", 'blue', attrs=['bold']))
@@ -128,7 +132,7 @@ if exit:
         
         try:    
             service_choice = int(input(colored("Choose the Number of Service that you Want: To Exit Write ('0'). ", 'green', attrs=['bold'])))
-        except TypeError:
+        except Exception:
             print(colored("Invalid Input. Try Again Please!", 'red', attrs=['bold']))
             continue
         if service_choice == 1:
@@ -150,11 +154,20 @@ if exit:
                         continue
                     if customer.product_cart.add_to_cart(product, quantity):
                         break
-                
-                if input(colored('\nDo you want to ADD more Products?. ("y" for Yes and "n" for No): ', 'green', attrs=['bold'])).lower() == 'n':
-                    if customer.checkout_products_cart():
-                        print(pyfiglet.figlet_format("Thanks for your purchase!", font='standard'))
+                checkedout = False  
+                while True:
+                    try:
+                        if input(colored('\nDo you want to ADD more Products?. ("y" for Yes and "n" for No): ', 'green', attrs=['bold'])).lower() == 'n':
+                            if customer.checkout_products_cart():
+                                print(pyfiglet.figlet_format("Thanks for your purchase!", font='standard'))
+                                checkedout =True
+                                break
                         break
+                    except Exception:
+                        print(colored("Invalid Input. Please Choose Available Product Number!", 'red', attrs=['bold']))
+                if checkedout:
+                    break
+                        
                     
         elif service_choice == 2:
             while True:

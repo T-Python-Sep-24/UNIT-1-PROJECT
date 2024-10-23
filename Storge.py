@@ -17,34 +17,37 @@ class Storge:
         self.__RegularMaintenance = self.__load_RegularMaintenance_data()
         
         self.__dates_and_times = self.__load_dates_and_times()
-            
-    def load_upcoming_services(self):
-        if not os.path.exists("upcoming_services.pkl"):
-            return []  
-
-        with open("upcoming_services.pkl", 'rb') as file:
+        
+        self.upcoming_services_dict = self.__load_upcoming_services_dict()
+        
+        self.previous_products_orders = self.__load_products_orders()
+     
+    def __load_products_orders(self):
+        if not os.path.exists("previous_products_orders"):
+            return {}  
+        
+        with open("previous_products_orders", 'rb') as file:
+            return pickle.load(file)
+    def save_to_file(self, customers: dict):
+        with open("previous_products_orders", 'wb') as file:
+            pickle.dump(customers, file)
+               
+    def __load_upcoming_services_dict(self):
+        if not os.path.exists("upcoming_services_dict.pkl"):
+            return {}
+        
+        with open("upcoming_services_dict.pkl", 'rb') as file:
             return pickle.load(file)
     
-    def display_upcoming_services(self):
-        current_datetime = datetime.now()
-        upcoming_services = self.load_upcoming_services()
-
-        filtered_services = []
-        for service in upcoming_services:
-            service_datetime_str = f"{service['date'].strftime('%m/%d/%Y')} {service['time']}"  
-            service_datetime = datetime.strptime(service_datetime_str, '%m/%d/%Y %H:%M:%S')  
-
-            if service_datetime > current_datetime:
-                filtered_services.append(service)
-
-        if not filtered_services:
-            return
-
-        print(colored("\nUpcoming services:", 'green', attrs=['bold']))
-        for service in filtered_services:
-            print(f'Service name: {service["service"].name}, Date: {service["date"].strftime("%m/%d/%Y")}, Time: {service["time"]}')
-            print(f'Service description: {service["service"].description}')
-        print()
+    def display_upcoming_services(self, username):
+        upcoming_services = self.__load_upcoming_services_dict()
+        if username in upcoming_services:
+            print(colored("\nHere are the list of your scheduled services:", 'yellow', attrs=['bold']))
+            for service in upcoming_services[username]:
+                print(f'Service name: {service["service"].name}, Date: {service["date"].strftime("%m/%d/%Y")}, Time: {service["time"]}')
+                print(f'Service description: {service["service"].description}')
+        else:
+            print(colored(f"No upcoming services for {username}.", 'red', attrs=['bold']))
     
     # DATEs and TIMEs PART>>
     def __load_times(self):
@@ -173,7 +176,8 @@ class Storge:
         print(f"{'Product Name':<25} {'Price':<10} {'Quantity':<12}")
         print("-" * 70)  
 
-        for product in self.__products:
+        for id, product in enumerate(self.__products, start=1):
+            print(f'{id}. ', end='')
             product.display()  
     
         print()

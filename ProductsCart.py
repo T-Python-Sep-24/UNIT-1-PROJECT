@@ -21,13 +21,15 @@ class ProductsCart:
         
     def display(self):
         if not self.cart:
+            print("Your cart is empty.")
             return False
         else:
-            i=1
+            print(f"{'No.':<5} {'Product Name':<25} {'Price':<10} {'Quantity':<10}")
+            print("-" * 70)
+            i = 1
             for key, value in self.cart.items():
-                print(f'{i}. Name: {value['product'].name}, Price: {value['product'].price}, Quantity: {value['quantity']}')
-                i+=1
-                
+                print(f"{i:<5} {value['product'].name:<25} {value['product'].price:<10.2f} {value['quantity']:<10}")
+                i += 1
             return True
     
     def delete_from_cart(self, product:Products, unWantedQuantity:int, all=False):
@@ -49,3 +51,5 @@ class ProductsCart:
             totalCost += value['product'].price * value['quantity']
             
         return totalCost
+    
+    
