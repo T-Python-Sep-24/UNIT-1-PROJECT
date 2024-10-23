@@ -13,9 +13,10 @@ class Manager:
             print("2. Create Project")
             print("3. Update Project")
             print("4. Delete Project")
-            print("5. Exit")
+            print("5. Search Project by Name")
+            print("6. Exit")
 
-            choice = input("Enter your choice (1-5): ")
+            choice = input("Enter your choice (1-6): ")
 
             if choice == "1":
                 self.view_all_projects()
@@ -26,10 +27,12 @@ class Manager:
             elif choice == "4":
                 self.delete_project()
             elif choice == "5":
+                self.search_project_by_name()
+            elif choice == "6":
                 print("Exiting Manager Dashboard.")
                 break
             else:
-                print("Invalid option. Please enter a number between 1 and 5.")
+                print("Invalid option. Please enter a number between 1 and 6.")
 
     def create_project(self):
         try:
@@ -50,6 +53,22 @@ class Manager:
                 print("Invalid date format. Please use YYYY-MM-DD.")
         except Exception as e:
             print(f"An error occurred while creating the project: {e}")
+
+    def search_project_by_name(self):
+        project_name = input("Enter the project name to search: ").strip()
+        found_projects = [project for project in self.projects if project_name.lower() in project.name.lower()]
+
+        if found_projects:
+            print("\n--- Search Results ---")
+            for idx, project in enumerate(found_projects, start=1):
+                print(f"\nProject {idx}:")
+                print(f"  Name: {project.name}")
+                print(f"  Description: {project.description}")
+                print(f"  Start Date: {project.start_date}")
+                print(f"  End Date: {project.end_date}")
+                print(f"  Team Members: {', '.join(project.team_members)}")
+        else:
+            print(f"No projects found with the name '{project_name}'.")
 
     def view_all_projects(self):
         if not self.projects:
@@ -109,23 +128,6 @@ class Manager:
             print("Invalid input. Please enter a valid number.")
         except Exception as e:
             print(f"An error occurred while updating the project: {e}")
-
-    def view_team_tasks(self):
-        if not self.projects:
-            print("No projects available to view team tasks.")
-            return
-
-        print("\n--- View Team Tasks ---")
-        for idx, project in enumerate(self.projects, start=1):
-            print(f"\nProject {idx}: {project.name}")
-            if hasattr(project, 'tasks') and project.tasks:
-                for task_idx, task in enumerate(project.tasks, start=1):
-                    print(f"  Task {task_idx}: {task}")
-            else:
-                print("  No tasks available for this project.")
-
-    def search_team_tasks(self):
-        print("Searching team tasks... (Not implemented)")
 
     def delete_project(self):
         if not self.projects:

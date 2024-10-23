@@ -33,6 +33,9 @@ Overview: Trio Tool is an interactive Command-Line Interface (CLI) project manag
 
 - **Project Management**: Managers can perform CRUD operations (Create, Read, Update, Delete) for projects with detailed project information, including name, description, start date, end date, and team members.
 
+- **Search**: Search functionalities to quickly locate projects.
+
+
 
 
 ## User Stories
