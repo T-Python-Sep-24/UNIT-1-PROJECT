@@ -25,7 +25,7 @@ while current_user is None:
 
         if cont == 'a' and current_user.role == "Product Owner":
             task_des = input("Enter your task: ")
-            task_type = input("Task type (hold, ready, in progress, done): ").strip().lower()
+            task_type = input("Task type (hold, ready, in progress, done): ")
             assigned_role = input("Assigned team role: ")
             assigned_to = team_members.get(assigned_role)
 
@@ -35,7 +35,7 @@ while current_user is None:
                 assigned_to.assign_task_to_role(new_task)
                 print(f"Task '{task_des}' assigned to {assigned_to.role}.")
             else:
-                print("Team role not found.")
+                print("Team role not found")
 
         elif cont == 'v':
             tasks = Task.load_tasks()
@@ -51,8 +51,6 @@ while current_user is None:
                         table.add_row(str(task.task_id), task.task_des, task.task_type,
                                       f"{task.assigned_to.role} (ID: {task.assigned_to.emID})")
                 Console().print(table)
-            else:
-                Console().print("[bold red]No tasks found.[/bold red]")
 
         elif cont == 'u':
             update_task_status()
