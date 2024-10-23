@@ -2,7 +2,6 @@ from ProductsCart import ProductsCart
 from ProductsOrder import ProductsOrder
 import os
 import pickle
-import json
 from ServiceCart import ServiceCart
 from ServiceOrder import ServiceOrder
 
@@ -21,17 +20,21 @@ class Customer:
     def get_password(self):
         return self.__password
     
-    def checkout_products_cart(self):    
-        products_order = ProductsOrder(self, self.product_cart)
-        products_order.order_summary()
-        
-        checkout = input('\nDo you want to checkout to payment? ("y" for Yes and "n" for No) ')
-        if checkout.lower() == 'y':
-            products_order.checkout_cart()
-            self.product_cart = ProductsCart()
-            return True
-        
-        return False
+    def checkout_products_cart(self):  
+        try:  
+            products_order = ProductsOrder(self, self.product_cart)
+            products_order.order_summary()
+            
+            checkout = input('\nDo you want to checkout to payment? ("y" for Yes and "n" for No) ')
+            if checkout.lower() == 'y':
+                products_order.checkout_cart()
+                self.product_cart = ProductsCart()
+                return True
+            
+            return False
+        except Exception:
+            print(Exception.__cause__)
+            return False
         
     def checkout_service_cart(self, storge):    
         service_order = ServiceOrder(self, self.service_cart)
@@ -59,17 +62,3 @@ class Customer:
         
         with open("previous_services_orders", 'rb') as file:
             return pickle.load(file)
-    
-    # def __load_products_orders(self):
-    #     if os.path.exists('previous_products_orders.json'):
-    #         with open('previous_products_orders.json', 'r') as file:
-    #             return json.load(file)
-    #     else:
-    #         return {}
-        
-    # def __load_services_orders(self):
-    #     if os.path.exists('previous_services_orders.json'):
-    #         with open('previous_services_orders.json', 'r') as file:
-    #             return json.load(file)
-    #     else:
-    #         return {}

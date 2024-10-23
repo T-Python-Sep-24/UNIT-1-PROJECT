@@ -31,8 +31,8 @@ class Storge:
 
         filtered_services = []
         for service in upcoming_services:
-            service_datetime_str = f"{service['date'][0].strftime('%m/%d/%Y')} {service['time']}"  # Correctly format date
-            service_datetime = datetime.strptime(service_datetime_str, '%m/%d/%Y %H:%M:%S')  # Adjust format if needed
+            service_datetime_str = f"{service['date'].strftime('%m/%d/%Y')} {service['time']}"  
+            service_datetime = datetime.strptime(service_datetime_str, '%m/%d/%Y %H:%M:%S')  
 
             if service_datetime > current_datetime:
                 filtered_services.append(service)
@@ -42,14 +42,11 @@ class Storge:
 
         print(colored("\nUpcoming services:", 'green', attrs=['bold']))
         for service in filtered_services:
-            print(f'Service name: {service["service"].name}, Date: {service["date"][0].strftime("%m/%d/%Y")}, Time: {service["time"]}')
+            print(f'Service name: {service["service"].name}, Date: {service["date"].strftime("%m/%d/%Y")}, Time: {service["time"]}')
             print(f'Service description: {service["service"].description}')
         print()
     
     # DATEs and TIMEs PART>>
-    def __extract_date(self, row):
-        return row['Dates'], []
-    
     def __load_times(self):
         times_data = pd.read_excel('availableTimes.xlsx')
         return times_data['Times'].tolist()
@@ -57,7 +54,7 @@ class Storge:
     def __load_dates_and_times(self):
         dates_data = pd.read_excel('availableDates.xlsx')
 
-        dates_list = dates_data.apply(self.__extract_date, axis=1).tolist()
+        dates_list = pd.to_datetime(dates_data['Dates'], format='%m-%d-%Y', errors='coerce').tolist()
 
         times_list = self.__load_times()    
         
@@ -94,9 +91,9 @@ class Storge:
         if self.__dates_and_times:
             print("\nAvailable Dates")
             for id, entry in enumerate(self.__dates_and_times, start=1):
-                date_obj = entry['date'][0]  
+                date_obj = entry['date']  
                 
-                date_str = date_obj.strftime('%m/%d/%Y') 
+                date_str = date_obj.strftime('%m-%d-%Y')  
                 print(f'{id}. {date_str}', end='  ')  
                 
                 if id % 4 == 0:  
@@ -109,7 +106,7 @@ class Storge:
     
     def display_times(self, index, date):
         date_entry = self.__dates_and_times[index]
-        date_obj = date_entry['date'][0]
+        date_obj = date_entry['date']
         
         available_times = date_entry['times']
         
@@ -142,11 +139,11 @@ class Storge:
         for i, entry in enumerate(self.__dates_and_times):
             if entry['date'] == date:
                 del self.__dates_and_times[i]  
-                self.__update_dates_excel()  
-                print(f"Date {date[0].strftime('%m/%d/%Y')} has been successfully deleted.")
+                # self.__update_dates_excel()  
+                print(f"Date {date.strftime('%m/%d/%Y')} has been successfully deleted.")
                 return True
 
-        print(f"Date {date[0].strftime('%m/%d/%Y')} not found.")
+        print(f"Date {date.strftime('%m/%d/%Y')} not found.")
         return False
 
     def __update_dates_excel(self):
@@ -172,9 +169,14 @@ class Storge:
         self.__products.append(product)
 
     def display_products(self):
-        for id, product in enumerate(self.__products, start=1):
-            print(f'{id:<1}', end='')
-            product.display()
+        # print("\nAvailable Products:")
+        print(f"{'Product Name':<25} {'Price':<10} {'Quantity':<12}")
+        print("-" * 70)  
+
+        for product in self.__products:
+            product.display()  
+    
+        print()
             
     def get_product(self, product_number:int):
         return self.__products[product_number-1]
@@ -195,10 +197,14 @@ class Storge:
         self.__services.append(service)
 
     def display_services(self):
+        print(f"{'ID':<5} {'Service Name':<30} {'Service ID':<15} {'Price':<10} {'Description':<40}")
+        print("-" * 100)  
+
         for id, service in enumerate(self.__services, start=1):
-            print(f'{id}. ', end='')
-            print(f'Name: {service.name}, Service Id: {service.service_id}, Price: After performing all necessary repairs')
-            print(f'Service Description: {service.description}\n')
+            price_info = "Later" 
+            print(f"{id:<5} {service.name:<30} {service.service_id:<15} {price_info:<10} {service.description:<40}")
+
+        print()  
     
     def get_service(self, service_number:int):
         return self.__services[service_number - 1]
@@ -216,10 +222,13 @@ class Storge:
         self.__On_Site_Maintenance.append(service)
 
     def display_On_Site_Maintenance(self):
-        print("Available services:")
+        print(f"{'ID':<5} {'Service Name':<30} {'Price':<10} {'Description':<10}")
+        print("-" * 70) 
+
         for id, service in enumerate(self.__On_Site_Maintenance, start=1):
-            print(f'{id:<5}', end='')
-            service.display()
+            print(f"{id:<5} {service.name:<30} {service.price:<10.2f} {service.description:<10}")
+
+        print()
     
     def get_On_Site_Maintenance(self, service_number:int):
         return self.__On_Site_Maintenance[service_number - 1]
@@ -237,10 +246,13 @@ class Storge:
         self.__RegularMaintenance.append(service)
 
     def display_RegularMaintenances(self):
-        print("Available services:")
+        print(f"{'ID':<5} {'Service Name':<30} {'Price':<10} {'Description':<10}")
+        print("-" * 70) 
+
         for id, service in enumerate(self.__RegularMaintenance, start=1):
-            print(f'{id:<5}', end='')
-            service.display()
+            print(f"{id:<5} {service.name:<30} {service.price:<10.2f} {service.description:<10}")
+
+        print()
     
     def get_RegularMaintenance(self, service_number:int):
         return self.__RegularMaintenance[service_number - 1]

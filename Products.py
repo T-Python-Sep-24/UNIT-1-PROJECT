@@ -33,5 +33,6 @@ class Products:
             return {}
 
     def display(self):
-        print(f'{'':<5}{self.name:<25}{self.product_id:<12}SAR {self.price:<10}{self.quantity:<12}')
+        print(f"{self.name:<25} SAR {self.price:<10.2f} {self.quantity:<12}")
+        # print(f'{'':<5}{self.name:<25}{self.product_id:<12}SAR {self.price:<10}{self.quantity:<12}')
         # print(f'Name: {self.name}, Product Id: {self.product_id}, Price: SAR {self.price}, Stock Quantity: {self.quantity}')

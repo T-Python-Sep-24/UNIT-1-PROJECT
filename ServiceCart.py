@@ -30,11 +30,11 @@ class ServiceCart:
             return False
         else:
             service = self.cart['service']
-            print(f'Service: Name: {service.name}, Price: SAR {service.price}, Will be on Date: {self.cart["date"][0].strftime("%m-%d-%Y")}, At {self.cart["time"]}\n')
+            print(f'Service: Name: {service.name}, Price: SAR {service.price}, Will be on Date: {self.cart["date"].strftime("%m-%d-%Y")}, At {self.cart["time"]}\n')
             print(f'Service Description: {service.description}\n')
             return True
         
-    def delete_cart(self, service:Services):
+    def delete_cart(self):
         self.cart = {}
     
     def change_date(self, service:Services, date):
