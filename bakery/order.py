@@ -64,21 +64,22 @@ class Order:
     def orderInfo(self) -> Table:
         '''This method returns the details of the order'''
         #Create table of ordered products in an order
-        productsTable: Table = Table(title="Order Details:",title_style="bold #aceaff" ,title_justify="left", box=box.SIMPLE, show_footer=True, border_style="#daf5ff")
+        productsTable: Table = Table(title="Order Details:",title_style="bold #aceaff" ,title_justify="left", box=box.SIMPLE, border_style="#daf5ff")
         
         #Adding columns to the table 
         productsTable.add_column("[bold #fdffc3]Product Name[/]")
-        productsTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center", footer=f"Ordered on: {datetime.strftime(self.__date, '%Y-%m-%d %H:%M:%S')}", footer_style="#aceaff")
+        productsTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
         productsTable.add_column("[bold #a4d5b5]Price[/]", justify = "center")
         
         #Adding rows for each product in the ordered products
         for prod in self.__orderedProducts:
             totalPerProduct: float = prod.getQty() * prod.getPrice()
             productsTable.add_row(f"[#fdffc3]{prod.getName()}[/]", f"[#bdeeff]{prod.getQty()}[/]", f"[#a4d5b5]{totalPerProduct}[/]")
-        
         if self.isDelivered():
             productsTable.add_row(f"[#aceaff]Delivered to:[/]", f"[#daf5ff]{self.getDeliveryAddress()}[/]")
         else:
-            productsTable.add_row(None, f"[#aceaff]Ordered for pickup[/]", None)
+            productsTable.add_row(f"[#aceaff]Ordered for pickup[/]", None, None)
+
+        productsTable.add_row(f"[#aceaff]Ordered on:[/]", f"[#daf5ff]{datetime.strftime(self.__date, '%Y-%m-%d %H:%M:%S')}[/]")
         
         return productsTable

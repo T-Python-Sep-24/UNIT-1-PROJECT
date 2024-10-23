@@ -363,7 +363,7 @@ def customerMenu(customer: Customer):
                     if deliver:
                         deliverTo: str = customer.getDeliveryAddress()
                         #Show the current delivery address and ask customer if they want to deliver to a different address
-                        print(Text.assemble("[bold #fdffc3]Order will be deliverd to:[/]", f"[italic #fbfbe2],{deliverTo}[/]"))
+                        print(f"[bold #fdffc3]Order will be deliverd to:[/] [italic #fbfbe2],{deliverTo}[/]")
                         changeAddress: bool = Confirm.ask(Text("Do you want to change the delivery address?", style="#fdffc3"))
                         #If the customer wants to change the address, prompt them for the new address
                         if changeAddress:

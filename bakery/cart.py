@@ -109,7 +109,7 @@ class Cart:
             cartTable.add_row(None, None, f"Total price: {self.calculateTotal()} SR", style="white")
             return cartTable
         else:
-            return Text("Your cart is empty", style="#fdffc3")
+            return Text("Your cart is empty..", style="italic #fdffc3")
 
     def clearCart(self) -> bool:
         '''This method clears all products from the cart and returns the products to the menu of available products'''

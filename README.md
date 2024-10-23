@@ -24,7 +24,7 @@
 - Get a list of out of stock products
 
 #### Usage:
- - Login using your phone number and id.
+ - Login using your phone number and password.
  - Register if you don't have an account.
  - Choose an option from the list of available options
  - Make sure to enter correct data as required.
