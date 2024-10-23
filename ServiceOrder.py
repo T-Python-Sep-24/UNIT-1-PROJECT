@@ -24,10 +24,6 @@ class ServiceOrder:
         }
         self.add_service_to_dict(self.customer.username, upcoming_service)
         
-        self.previous_services_orders[self.customer.username] = {}
-        self.previous_services_orders[self.customer.username][len(self.previous_services_orders) + 1] = self.cart
-        self.__save_to_file(self.previous_services_orders)
-        
         date = self.cart.cart['date']
         storge.delete_date(date)
 
