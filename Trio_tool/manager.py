@@ -54,14 +54,79 @@ class Manager:
         except Exception as e:
             print(f"An error occurred while creating the project: {e}")
 
+    def update_project(self):
+        if not self.projects:
+            print("No projects available to update.")
+            return
+
+        print("\n--- Update Project ---")
+        # Display all projects to the user
+        for idx, project in enumerate(self.projects, start=1):
+            print(f"{idx}. {project.name} (Start: {project.start_date}, End: {project.end_date})")
+
+        try:
+            project_index = int(input("Enter the number of the project you want to update: ")) - 1
+            if project_index < 0 or project_index >= len(self.projects):
+                print("Invalid project number.")
+                return
+
+            project = self.projects[project_index]
+
+            # Update project details
+            print("\nEnter new details for the project. Leave blank to keep the current value.")
+            new_name = input(f"Current Name: {project.name}\nNew Name: ").strip()
+            new_description = input(f"Current Description: {project.description}\nNew Description: ").strip()
+            new_start_date = input(f"Current Start Date: {project.start_date}\nNew Start Date (YYYY-MM-DD): ").strip()
+            new_end_date = input(f"Current End Date: {project.end_date}\nNew End Date (YYYY-MM-DD): ").strip()
+            new_team_members = input(f"Current Team Members: {', '.join(project.team_members)}\nNew Team Members (comma-separated): ").strip()
+
+            # Update only if new values are provided
+            if new_name:
+                project.name = new_name
+            if new_description:
+                project.description = new_description
+            if new_start_date and Project.is_valid_date(new_start_date):
+                project.start_date = new_start_date
+            if new_end_date and Project.is_valid_date(new_end_date):
+                project.end_date = new_end_date
+            if new_team_members:
+                project.team_members = [member.strip() for member in new_team_members.split(",")]
+
+            print(f"Project '{project.name}' updated successfully!\n")
+
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+        except Exception as e:
+            print(f"An error occurred while updating the project: {e}")
+
     def view_team_tasks(self):
         print("Displaying team tasks... (Not implemented)")
 
     def search_team_tasks(self):
         print("Searching team tasks... (Not implemented)")
 
-    def update_project(self):
-        print("Updating project... (Not implemented)")
-
     def delete_project(self):
-        print("Deleting project... (Not implemented)")
+        if not self.projects:
+            print("No projects available to delete.")
+            return
+
+        print("\n--- Delete Project ---")
+        # Display all projects to the user
+        for idx, project in enumerate(self.projects, start=1):
+            print(f"{idx}. {project.name} (Start: {project.start_date}, End: {project.end_date})")
+
+        try:
+            project_index = int(input("Enter the number of the project you want to delete: ")) - 1
+            if project_index < 0 or project_index >= len(self.projects):
+                print("Invalid project number.")
+                return
+
+            deleted_project = self.projects.pop(project_index)
+            print(f"Project '{deleted_project.name}' deleted successfully!\n")
+
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+        except Exception as e:
+            print(f"An error occurred while deleting the project: {e}")
