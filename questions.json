@@ -6,7 +6,7 @@
 {
     "question":"How many months have 28 days?",
     "choices":["1","12","6"],
-    "right":"12 (All months have at least 28 days)"
+    "right":"12"
 },
 {
     "question":"What can travel around the world while staying in a corner?",

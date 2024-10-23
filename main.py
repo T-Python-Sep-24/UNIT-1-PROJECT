@@ -1,30 +1,40 @@
 from Player import Player
 from Member import Member
 import os
+import colorama
+import art
+
+def clear_screen():
+    # Clear the terminal screen for Windows or Unix/Linux/Mac
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 while True:
-    os.system('cls')
-    print("\n🎮🌟 Welcome to Games Galaxy! 🌟🎮")
-    print('''Are you new player?
-1- YES
-2- NO
-0- Exit ''')
-    player_state=input("Your Choice: ")
-    print("-"*50)
-    os.system('cls')#diff systems
+    clear_screen()#diff systems
+    title=art.text2art("Galaxy Games", space=2)
+    print(colorama.Fore.MAGENTA+ title)
+    print(colorama.Fore.WHITE+"Welcome to Galaxy Games ! 🎮")
+    print("Are you a new player?")
+    print(colorama.Fore.BLUE + "1- YES")
+    print(colorama.Fore.BLUE + "2- NO")
+    print(colorama.Fore.RED + "0- Exit")
+    player_state = input(colorama.Fore.WHITE + "Your Choice: ")
+
+ 
 
     if player_state == "1":
-        print("Join our community and enjoy more features! ✨")
-        print('''
-1- Sign up now 
-2- Go directly to the games''')
-        player_choice=input("Your Choice: ")
-        print()
+        clear_screen()
+        print(colorama.Fore.WHITE +"Join our community and enjoy more features! ✨")
+        print(colorama.Fore.BLUE +'1- Sign up now')
+        print(colorama.Fore.BLUE +"2- Go directly to the games")
+        player_choice=input(colorama.Fore.WHITE +"Your Choice: ")
 
-        if player_choice=="1":
-            print("Fill the form please.")
-            player_name=input("Please enter your name:")
+
+        if player_choice=="1":     
+            print(colorama.Back.WHITE+colorama.Fore.BLACK+"SIGN UP"+colorama.Back.RESET,"\n")
+            print(colorama.Fore.WHITE +"Fill the form please.")
+            player_name=input(colorama.Fore.BLUE +"Please enter your name:"+colorama.Fore.RESET)
             player_name=player_name.lower()
-            player_password=input("Enter your password (6 digits):")
+            player_password=input(colorama.Fore.BLUE +"Enter your password (6 digits):"+colorama.Fore.RESET)
             
             #check password number
             if  player_password.isdigit() and len(player_password)==6:
@@ -34,26 +44,33 @@ while True:
                 is_valid_name=new_member.record_new_member(new_member.get_member_name())
                 if is_valid_name:
                     #show list of his home page (member)
-                    print(f"\nWe’re excited to have you join us, {new_member.get_member_name().capitalize()}! Let’s get started!\n")
+                    print(colorama.Fore.WHITE +f"We’re excited to have you join us, {new_member.get_member_name().capitalize()}! Let’s get started!\n")
                     new_member.home_page_member()
             else:
-                print("Invalid password format.\nPlease enter password as 6 digits\n--------------------") 
-                input('Press Enter to continue >>>\n')  
+                print(colorama.Fore.RED +"Invalid password format.\nPlease enter password as 6 digits\n--------------------") 
+                input(colorama.Fore.WHITE +'Press Enter to continue >>>\n')  
                  
         elif player_choice=="2":
+
             visitor=Player("visitor")
+            dummy_member=Member("member","dummy member","000000")
             #show list of his home page (public)
-            visitor.home_page_public()
+
+            visitor.home_page_public(dummy_member)
             pass
 
         else:
-                 print("Invalid choice. Please try again.")
+
+                 print(colorama.Fore.RED+"Invalid choice. Please try again.")
+                 input(colorama.Fore.WHITE +'Press Enter to continue >>>\n')
         
     elif player_state == "2":
-        print("We are happy to see you again ;)")
-        player_name=input("Please enter your name:")
+        clear_screen()
+        print(colorama.Back.WHITE+colorama.Fore.BLACK+"SIGN IN"+colorama.Back.RESET,"\n")
+        print(colorama.Fore.WHITE +"We are happy to see you again ;)")
+        player_name=input(colorama.Fore.BLUE +"Please enter your name:"+colorama.Fore.RESET)
         player_name=player_name.lower()
-        player_password=input("Enter your password (6 digits):")
+        player_password=input(colorama.Fore.BLUE+"Enter your password (6 digits):"+colorama.Fore.RESET)
         #check password number
         if  player_password.isdigit() and len(player_password)==6:
                 #create new member instance
@@ -62,18 +79,20 @@ while True:
                 is_valid_member=old_member.sign_in_member(old_member.get_member_name())
                 if is_valid_member:
                     #show list of his home page (member)
-                    print(f"\nWe’re excited to have you join us, {old_member.get_member_name().capitalize()}! Let’s get started!\n")
                     old_member.home_page_member() 
         else:
-            print("Invalid ID format.\nPlease enter password as 6 digits\n--------------------") 
-            input('Press Enter to continue >>>\n')  
+ 
+            print(colorama.Fore.RED+"Invalid ID format.\nPlease enter password as 6 digits\n--------------------") 
+            input(colorama.Fore.WHITE +'Press Enter to continue >>>\n')  
          
 
     elif player_state=="0":
-            print("Thank you")
-            print("See you later...")
+            clear_screen()
+            thanks=art.text2art("Thank you",font='cybermedum')
+            print(colorama.Fore.MAGENTA+thanks)
             break
     else:
-            print("Invalid choice. Please try again.")
-            input('Press Enter to continue >>>\n')
+ 
+            print(colorama.Fore.RED+"Invalid choice. Please try again.")
+            input(colorama.Fore.WHITE +'Press Enter to continue >>>\n')
 

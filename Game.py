@@ -3,6 +3,10 @@ import random
 import json
 import time
 import keyboard
+import colorama
+import subprocess
+import os
+
 class Game:
     def __init__(self,name:str,game_disc:str,game_style:str='computer') -> None:
         self.__name=name
@@ -47,17 +51,14 @@ class Game:
     def set_game_adds(self, game_adds: str):
         self.__game_adds = game_adds
 
-
+    #files
     def __save_to_file(self, filename: str):
         try:
             if filename =='games.pkl':
                 with open(filename,'wb') as file:
-                    pickle.dump(self.__games_list,file)
-            '''if filename =='players.pkl':
-                with open(filename,'wb') as file:
-                    pickle.dump(self.__players,file) '''       
+                    pickle.dump(self.__games_list,file)     
         except Exception as e:
-            print(f"Error saving data to file: {e}")        
+            print(colorama.Fore.RED+f"Error saving data to file: {e}")        
 
     def __load_from_file(self, filename: str):
         try:
@@ -69,6 +70,7 @@ class Game:
                     return pickle.load(file) 
         except (FileNotFoundError, EOFError):
             return []    
+        
     def add_game_to_list(self):       
         game={
             "name":self.get_game_name(),
@@ -77,14 +79,27 @@ class Game:
         self.__games_list.append(game)
         self.__save_to_file('games.pkl')
 
+    def display_trending_game(self)-> str:
+        games_list= self.__games_list
+        
+        best_repitition=[]
+        games_list.sort(key=lambda x: x["repetition"],reverse=True)
+        for r in range(0,min(3, len(games_list))):  
+            best_repitition.append(games_list[r])
+        return colorama.Fore.RESET+f"Trending Games 🔥: {colorama.Fore.YELLOW+best_repitition[0]["name"]}, \
+{best_repitition[1]["name"]}, \
+{best_repitition[2]["name"]+colorama.Fore.RESET}"
+        
+        
+
     def intro_game(self):
-        print("\n" + "=" * 50)
-        print(f"🎮 Welcome to the {self.get_game_name()} Game! 🎮")
+        print(colorama.Fore.WHITE+"\n" + "=" * 50+colorama.Fore.RESET)
+        print(colorama.Fore.BLUE+f"🎮 Welcome to the {self.get_game_name()} Game! 🎮"+colorama.Fore.RESET)
         print("=" * 50)
-        print("\nHere's how to play:")
-        print(self.get_game_disc())
-        input('\nPress Enter to start 🌟\n')
-        print("\n" + "=" * 50)
+        print(colorama.Fore.BLUE+"\nHere's how to play:")
+        print(colorama.Fore.WHITE+self.get_game_disc())
+        input(colorama.Fore.YELLOW+'\nPress Enter to start 🌟\n')
+        print(colorama.Fore.WHITE+"\n" + "=" * 50)
     
     def __increase_game_repetition(self):
         search_game=list(filter(lambda game:game['name'] == self.get_game_name() ,self.__games_list))
@@ -113,26 +128,26 @@ class Game:
                 player_move=input("Enter your move: ")
                 computer_move=(self.__computer_rock_paper_scissors()).lower()
                 if player_move.lower() == computer_move :
-                    print("It's a draw! ⚖️ ")
-                    print("Press Enter to try again 🔥\n") 
+                    print(colorama.Fore.YELLOW+"It's a draw! ⚖️ ")
+                    print(colorama.Fore.BLUE+"Press Enter to try again 🔥\n"+colorama.Fore.RESET) 
                 elif (player_move.lower() == "rock" and computer_move == "scissors") or \
                     (player_move.lower() == "scissors" and computer_move == "paper") or \
                     (player_move.lower() == "paper" and computer_move== "rock"):
                     print("Computer move was: ",computer_move)
-                    print("You are the winner 🏆")##color it green($$$)
+                    print(colorama.Fore.GREEN+"You are the winner 🏆")##color it green($$$)
                     game_result=True
-                    input('\nPress Enter to go back 🔚')
+                    input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
                     break
                 elif (computer_move == "rock" and player_move.lower() == "scissors") or \
                     (computer_move == "scissors" and player_move.lower() == "paper") or \
                     (computer_move == "paper" and player_move.lower() == "rock"):
                     print("Computer move was: ",computer_move)
-                    print("You lost 💔")##color it red($$$)
-                    input('\nPress Enter to go back 🔚')
+                    print(colorama.Fore.RED+"You lost 💔"+colorama.Fore.RESET)##color it red($$$)
+                    input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
                     break
                 else:
-                    print("Invalid choice.\nPlease enter 'Rock','Paper' or 'Scissors'")
-                    input('Press Enter to continue >>>\n')
+                    print(colorama.Fore.RED+"Invalid choice.\nPlease enter 'Rock','Paper' or 'Scissors'")
+                    input(colorama.Fore.WHITE+'Press Enter to continue >>>\n') 
         #Multi-mode
         else:
              while True:
@@ -140,25 +155,25 @@ class Game:
                 player1_move=input("Player 1, enter your choice: ")
                 player2_move=input("Player 2, enter your choice: ")
                 if player1_move.lower() == player2_move.lower():
-                    print("It's a draw! ⚖️ ")
-                    print("Press Enter to try again 🔥\n") 
+                    print(colorama.Fore.YELLOW+"It's a draw! ⚖️ ")
+                    print(colorama.Fore.BLUE+"Press Enter to try again 🔥\n") 
                 elif (player1_move.lower() == "rock" and player2_move.lower() == "scissors") or \
                     (player1_move.lower() == "scissors" and player2_move.lower() == "paper") or \
                     (player1_move.lower() == "paper" and player2_move.lower() == "rock"):
-                    print("Player 1 wins!🏆") ##color it green($$$)
+                    print(colorama.Fore.GREEN+"Player 1 wins!🏆") ##color it green($$$)
                     game_result=True
-                    input('\nPress Enter to go back 🔚')
+                    input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
                     break
                 elif (player2_move.lower() == "rock" and player1_move.lower() == "scissors") or \
                     (player2_move.lower() == "scissors" and player1_move.lower() == "paper") or \
                     (player2_move.lower() == "paper" and player1_move.lower() == "rock"):
-                    print("Player 2 wins!🏆")##color it green($$$)
+                    print(colorama.Fore.GREEN+"Player 2 wins!🏆")##color it green($$$)
                     game_result=True
-                    input('\nPress Enter to go back 🔚')
+                    input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
                     break
                 else:
-                    print("Invalid choice.\nPlease enter 'Rock','Paper' or 'Scissors'")
-                    input('Press Enter to continue >>>\n')            
+                    print(colorama.Fore.RED+"Invalid choice.\nPlease enter 'Rock','Paper' or 'Scissors'")
+                    input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')            
 
        
         return game_result       
@@ -219,18 +234,18 @@ class Game:
             try:
                 move = int(move)
                 if move < 1 or move > 9:
-                    print("Invalid input. Please enter a number between 1 and 9.")
-                    input('Press Enter to continue >>>\n')
+                    print(colorama.Fore.RED+"Invalid input. Please enter a number between 1 and 9.")
+                    input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
                     continue
                 row, col = divmod(move - 1, 3)
                 if self.board[row][col] != " ":
-                    print("Cell already taken, try again.")
-                    input('Press Enter to continue >>>\n')
+                    print(colorama.Fore.RED+"Cell already taken, try again.")
+                    input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
                     continue
                 return row, col
             except ValueError:
-                print("Invalid input. Please enter a number between 1 and 9.")
-                input('Press Enter to continue >>>\n')
+                print(colorama.Fore.RED+"Invalid input. Please enter a number between 1 and 9.")
+                input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
 
     def computer_move(self):
         empty_cells = [(i, j) for i in range(3) for j in range(3) if self.board[i][j] == " "]
@@ -243,14 +258,14 @@ class Game:
 
         while True:
             print("Choose the game mode:")
-            print("1- Computer Mode")
-            print("2- Multi-Players Mode")
+            print(colorama.Fore.BLUE+"1- Computer Mode")
+            print("2- Multi-Players Mode"+colorama.Fore.RESET)
             mode = input("Your Choice: ")
             if mode in ["1", "2"]:
                 break
             else:
-                print("Invalid choice. Please try again.")
-                input('Press Enter to continue >>>\n')
+                print(colorama.Fore.RED+"Invalid choice. Please try again.")
+                input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
         self.print_numbered_board()
         while True:
             self.print_board()
@@ -265,17 +280,19 @@ class Game:
 
             if self.check_winner():
                 self.print_board()
-                print(f"Player {self.current_player} wins! 🎉")
-                input('\nPress Enter to go back 🔚')
+                print(colorama.Fore.GREEN+f"Player {self.current_player} wins! 🎉")
+                input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
                 if self.current_player=="O" and mode=="1":
+                    print(colorama.Fore.RED+"You lost 💔"+colorama.Fore.RESET)
                     return False
                 else:
                     return True
 
             if self.is_board_full():
                 self.print_board()
-                print("It's a draw! 🤝")
-                input('\nPress Enter to go back 🔚')
+                print(colorama.Fore.YELLOW+"It's a draw! 🤝")
+                input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
+
                 return False
 
             # Switch players
@@ -294,50 +311,48 @@ class Game:
             elif self.location == "treasure":
                 self.treasure()
             elif self.location == "End":
-                return False
-            else:
-                print("Invalid location.")
-      
+                return False  
         return True        
 
     def village(self):
-        print("\nYou are in a small village. The villagers speak of a hidden treasure.")
+        print(colorama.Fore.YELLOW+"\nYou are in a small village. The villagers speak of a hidden treasure."+colorama.Fore.RESET)
         choice = input("Do you want to go to the Enchanted Forest to find the treasure? (yes/no) ").strip().lower()
         if choice == "yes":
             self.location = "forest"
         else:
-            print("You grew old and weak over the years 👵. Despite your many attempts,\n \
+            print(colorama.Fore.YELLOW+"You grew old and weak over the years 👵. Despite your many attempts,\n \
 you were unable to find the treasure you had always dreamed of. In the end,\n\
 you passed away without realizing your dream. 😔")
-            input('\nPress Enter to go back 🔚')
+            input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
             self.location = "End"
 
     def forest(self):
-        print("\nYou enter the Enchanted Forest. It's dark and full of strange noises.")
+        print(colorama.Fore.YELLOW+"\nYou enter the Enchanted Forest. It's dark and full of strange noises."+colorama.Fore.RESET)
         choice = input("Do you want to explore deeper into the forest? (yes/no) ").strip().lower()
         if choice == "yes":
             self.location = "treasure"
         else:
-            print("You lost your courage halfway and returned to your village feeling \n\
+            print(colorama.Fore.YELLOW+"You lost your courage halfway and returned to your village feeling \n\
 disappointed. 🏡 After a while, you discovered that another adventurer \n\
 had found the treasure. Thus, you lost your dream of finding it.🚫")
-            input('\nPress Enter to go back 🔚')
+            input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
             self.location = "End"
 
     def treasure(self):
-        print("\nYou find the Eldoria Oak tree! The treasure is buried beneath its roots!")
+        print(colorama.Fore.YELLOW+"\nYou find the Eldoria Oak tree! The treasure is buried beneath its roots!"+colorama.Fore.RESET)
         choice = input("Do you want to dig for the treasure? (yes/no) ").strip().lower()
         if choice == "yes":
             self.treasure_found = True
-            print("Congratulations! You've found the treasure of Eldoria! 🎉")
-            input('\nPress Enter to go back 🔚')
+            print(colorama.Fore.GREEN+"Congratulations! You've found the treasure of Eldoria! 🎉")
+            input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
         else:
-            print("You decide not to dig and leave the treasure buried. 🚫")
-            input('\nPress Enter to go back 🔚')
+            print(colorama.Fore.YELLOW+"You decide not to dig and leave the treasure buried. 🚫")
+            input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
             self.location = "End"
 
     '''Rhythm game'''
     def rhythm_game(self):
+        self.__increase_game_repetition()
         start_time = time.time()
         while time.time() - start_time < self.game_duration:
             key = random.choice(['a', 's', 'd', 'f'])
@@ -352,22 +367,22 @@ had found the treasure. Thus, you lost your dream of finding it.🚫")
                 print(f"Oops! You missed '{key}'! 💔")
             time.sleep(0.5) 
         if (self.rythemscore>4):
-            print(f"Great! Your score is: {self.rythemscore} 🎮")
-            input('\nPress Enter to go back 🔚')
+            print(colorama.Fore.GREEN+f"Great! Your score is: {self.rythemscore} 🎮")
+            input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
             return True
         else:
-            print(f"Game Over! Your score is: {self.rythemscore} 🎮")
-            input('\nPress Enter to go back 🔚')
+            print(colorama.Fore.RED+f"Game Over! Your score is: {self.rythemscore} 🎮")
+            input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
             return False   
         
     '''Crazy game'''
     def crazy_game(self):
+        self.__increase_game_repetition()
         ques_list=self.__load_from_file("questions.json")
-        print(ques_list)
         ques_choosen=random.choice(ques_list)
         while True:
-            print(f'''Question:\n{ques_choosen["question"]}\n1- 
-    {ques_choosen["choices"][0]}\n2- {ques_choosen["choices"][1]}\n3- {ques_choosen["choices"][2]}''')
+            print(f'''Question:\n{ques_choosen["question"]}\n1- {ques_choosen["choices"][0]}
+2- {ques_choosen["choices"][1]}\n3- {ques_choosen["choices"][2]}''')
             identifier=input("Your Choice:")
             player_answer=""
             if identifier=="1":
@@ -377,15 +392,16 @@ had found the treasure. Thus, you lost your dream of finding it.🚫")
             elif identifier=="3":
                 player_answer=ques_choosen["choices"][2]
             else:
-                print("invalid")
+                print(colorama.Fore.RED+"Invalid choice. Please try again.")
+                input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
             if(player_answer==ques_choosen["right"]):
-                print("Congratulations! 🎉 You answered correctly! ✅")
-                input('\nPress Enter to go back 🔚')
+                print(colorama.Fore.GREEN+"Congratulations! 🎉 You answered correctly! ✅")
+                input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
                 return True
             else:
-                print(f'''Unfortunately, that's an incorrect answer. ❌\n
+                print(colorama.Fore.RED+f'''Unfortunately, that's an incorrect answer. ❌\n
 Correct Answer: {ques_choosen["right"]}''')
-                input('\nPress Enter to go back 🔚')
+                input(colorama.Fore.BLUE+'\nPress Enter to go back 🔚'+colorama.Fore.RESET)
                 return False  
 
 
@@ -393,16 +409,22 @@ Correct Answer: {ques_choosen["right"]}''')
     def pacman_game(self):
         
         try:
-            from freegames import pacman
+            self.__increase_game_repetition()
+            script_path = os.path.join(os.path.dirname(__file__), 'run_pacman.py')
+            result=subprocess.run(['python', script_path],capture_output=True, text=True)
+            print(result.stdout)
+            print(result.stderr)
+            input("wewewe")
         except Exception as e:
             print(e)
         finally:
             return True
 
-    '''Simon Says game'''
+    '''Memory game'''
     def memory_game(self):
         try:
-            from freegames import memory
+            self.__increase_game_repetition()
+            subprocess.run(['freegames', 'play', 'memory'])
         except Exception as e:
             print(e)
         finally:

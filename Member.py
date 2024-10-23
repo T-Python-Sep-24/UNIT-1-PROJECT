@@ -1,6 +1,12 @@
 from Player import Player
 import pickle
 import os
+import colorama
+#clear function
+def clear_screen():
+    # Clear the terminal screen for Windows or Unix/Linux/Mac
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 class Member(Player):
     def __init__(self,style: str,name:str,password:str) -> None:
         super().__init__(style)
@@ -14,8 +20,8 @@ class Member(Player):
     def record_new_member(self,name):
         #check names
         if self.is_name_taken(name):
-            print("The name is taken. Choose another name.")
-            input('Press Enter to continue >>>\n')
+            print(colorama.Fore.RED+"The name is taken. Choose another name.")
+            input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
             return False
         if not self.is_name_taken(name):
             self.add_member()
@@ -29,8 +35,8 @@ class Member(Player):
             if item['name']==name and item['password']==self.get_member_password():
                 member_found=True
                 return member_found
-        print("Your are not a member. Check from your name or password")
-        input('Press Enter to continue >>>\n')
+        print(colorama.Fore.RED+"Your are not a member. Check from your name or password")
+        input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
         return member_found
     # Setter & Getter    
     def set_member_name(self,name):
@@ -57,7 +63,7 @@ class Member(Player):
             with open(filename,'wb') as file:
                 pickle.dump(self.__memberData,file)
         except Exception as e:
-            print(f"Error saving data to file: {e}")        
+            print(colorama.Fore.RED+f"Error saving data to file: {e}")        
 
     def __load_from_file(self, filename: str):
         try:
@@ -83,67 +89,57 @@ class Member(Player):
         while True:
                 os.system('cls')
                  # Welcoming the user by its name
-                print(f"Hi {self.get_member_name().capitalize()}, Welcome to Our Galaxy 🌌")
-                print(self.get_player_type())
-                print("Home page (member)")
+                print(f"Hi {colorama.Fore.MAGENTA+self.get_member_name().capitalize()+colorama.Fore.RESET}, Welcome to Our Galaxy 🌌\n")
+                print(colorama.Back.WHITE+colorama.Fore.BLACK+"HOME PAGE"+colorama.Back.RESET,"\n")
+
                 
                 #show his score
                 self.display_member_score()
-                print("1- Games")
-                print("2- Community")
-                #print("3- Achievements and badges (money)")
-                #print("4- My purchases")
-                print("5- Update my information")#Done
-                print("6- Delete my membership")#Done
-                print("0- Exit")#Done
+                print(colorama.Fore.BLUE+"1- Games")
+                print(colorama.Fore.BLUE+"2- Community")
+                print(colorama.Fore.BLUE+"3- Update my information")
+                print(colorama.Fore.BLUE+"4- Delete my membership")
+                print(colorama.Fore.RED+"0- Exit")
                 
                 global player_choice2
-                player_choice2=input("Your Choice: ")
-                print()
+                player_choice2=input(colorama.Fore.WHITE+"Your Choice: ")
                 if player_choice2=="1":
                     #show games list
                     self.games_list()
-                    os.system('cls')
+                    clear_screen()
                 elif player_choice2=="2":
                     #display the community (can write)
                     self.write_chat_community()
-                    pass
+                    clear_screen()
                 elif player_choice2=="3":
-                    #display Achievements and badges (money)
-                    pass 
-                elif player_choice2=="4":
-                    #display the purchases (hints&adds)
-                    pass
-                elif player_choice2=="5":
                     #update info
-                    os.system('cls')
+                    clear_screen()
                     self.update_info(member_name)
 
-                elif player_choice2=="6":
+                elif player_choice2=="4":
                     #delete info
-                    os.system('cls')
+                    clear_screen()
                     member_state=self.delete_member()
                     if  member_state:
                         break    
                 elif player_choice2=="0":
                     break        
                 else:
-                    print("Invalid choice. Please try again.")
+                    print(colorama.Fore.RED+"Invalid choice. Please try again.")
+                    input(colorama.Fore.WHITE+'Press Enter to continue >>>\n') 
     
     def update_info(self,name:str):
         
         print("What you want to update?")
-        print("1- Name\n2- Password")
-        updated_info=input("Your Choice:")
+        print(colorama.Fore.BLUE+"1- Name\n2- Password")
+        updated_info=input(colorama.Fore.WHITE+"Your Choice:")
         if updated_info=="1":
             member_list= self.__load_from_file('members.pkl')
             print(f"Current Name: {self.get_member_name().capitalize()}")
-            new_name=input("Please enter your new name:")
+            new_name=input(colorama.Fore.BLUE+"Please enter your new name:")
             if self.is_name_taken(new_name):
-                print(name)
-                print(self.is_name_taken(new_name))
-                print("The name is taken. Choose another name.")
-                input('Press Enter to continue >>>\n')
+                print(colorama.Fore.RED+"The name is taken. Choose another name.")
+                input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
                 return
             self.set_member_name(new_name)
             for item in member_list:
@@ -154,14 +150,14 @@ class Member(Player):
                     break
             self.__memberData = member_list   
             self.__save_to_file('members.pkl')    
-            print("Awesome! Your name's been updated! 🎉")
-            print(f"Updated Name: {self.get_member_name().capitalize()}")
-            input('Press Enter to continue >>>\n')
+            print(colorama.Fore.GREEN+"Awesome! Your name's been updated! 🎉",colorama.Fore.RESET)
+            print(colorama.Fore.BLUE+f"Updated Name: {self.get_member_name().capitalize()}")
+            input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
         elif updated_info=="2": 
             member_list= self.__load_from_file('members.pkl')
             #check pass
             print(f"Current Password: {self.get_member_password()}")
-            new_pass=input("Enter your new password (6 digits):")
+            new_pass=input(colorama.Fore.BLUE+"Enter your new password (6 digits):")
             if  new_pass.isdigit() and len(new_pass)==6:   
             
                 self.set_member_password(new_pass)
@@ -172,12 +168,12 @@ class Member(Player):
                         break
                 self.__memberData = member_list    
                 self.__save_to_file('members.pkl')
-                print("Awesome! Your passwrod's been updated! 🎉")
-                print(f"Updated Name: {self.get_member_password()}")
-                input('Press Enter to continue >>>')
+                print(colorama.Fore.GREEN+"Awesome! Your passwrod's been updated! 🎉")
+                print(colorama.Fore.BLUE+f"Updated Name: {self.get_member_password()}")
+                input(colorama.Fore.WHITE+'Press Enter to continue >>>')
             else:
-                print("Invalid password format.\nPlease enter password as 6 digits\n--------------------")
-                input('Press Enter to continue >>>')   
+                print(colorama.Fore.RED+"Invalid password format.\nPlease enter password as 6 digits\n--------------------")
+                input(colorama.Fore.WHITE+'Press Enter to continue >>>')   
     
    
     def add_member(self):
@@ -193,8 +189,8 @@ class Member(Player):
     def delete_member(self):
         member_state=False
         print("Are you sure you want to delete your membership?")
-        print("1- Yes\n2- No")
-        player_choice=input("Your Choice: ")
+        print(colorama.Fore.BLUE+"1- Yes\n2- No")
+        player_choice=input(colorama.Fore.WHITE+"Your Choice: ")
         if player_choice=="1":
             member_list= self.__load_from_file('members.pkl')
             member_to_remove = self.get_member_name() 
@@ -206,25 +202,38 @@ class Member(Player):
 
             self.__memberData = member_list[:]
             self.__save_to_file('members.pkl')
-            print("Membership deleted successfully")
+            print(colorama.Fore.GREEN+"Membership deleted successfully")
             member_state=True
             return member_state
         elif player_choice=="2":
-            print("We are happy to continue with us...")
-            input('Press Enter to continue >>>')
+            print(colorama.Fore.BLUE+"We are happy to continue with us...")
+            input(colorama.Fore.WHITE+'Press Enter to continue >>>')
             return member_state
         else:
-            print("Invalid choice. Please try again.")
-            input('Press Enter to continue >>>')
+            print(colorama.Fore.RED+"Invalid choice. Please try again.")
+            input(colorama.Fore.WHITE+'Press Enter to continue >>>')
             return member_state
     
     def display_member_score(self):
         member_list= self.__load_from_file('members.pkl')
         for item in member_list:
                 if item['name'] == self.get_member_name():  
-                    print(f"Your Score: ({item['score']})")
+                    print(colorama.Fore.WHITE+f"Your Score: ({colorama.Fore.WHITE+str(item['score'])})")
                     break 
-        pass    
+
+    def display_best_players(self):
+       try:
+            best_scores=[]
+            members=self.__memberData
+            members.sort(key=lambda x: x["score"],reverse=True)
+            for r in range(0,min(3, len(members))):  
+                best_scores.append(members[r])    
+            return colorama.Fore.RESET+f"Best Players  🌟: {colorama.Fore.YELLOW+(best_scores[0]["name"]).capitalize()} : {best_scores[0]["score"]}, \
+    {(best_scores[1]["name"]).capitalize()}: {best_scores[1]["score"]}, \
+    {(best_scores[2]["name"]).capitalize()} : {str(best_scores[2]["score"])+colorama.Fore.RESET}"
+       except IndexError :
+           print(colorama.Fore.RED +"There is no enough players")
+           input(colorama.Fore.WHITE+'Press Enter to continue >>>')
     
     
 
