@@ -183,8 +183,8 @@ def employeeMenu(employee: Employee):
     while True:
         print(Rule(Text(f"Welcome, {employee.getName()}.. What would you like to do?", style="bold italic #e2deff"), characters="-  ", style="bold #aca2f5"))
         #Display a list of options to the employee
-        choicesList: str = "1. Add a product.\n2. Remove a product.\n3. Update a product.\n4. View the menu.\n5. View expired products.\n6. View out of stock products.\n7. Exit.\nYour choice"
-        choice = Prompt.ask(Text(choicesList, style = "#e7e4ff"), choices=['1','2','3','4','5'], show_choices=False)
+        choicesList: str = "1. Add a product.\n2. Remove a product.\n3. Update a product.\n4. View the menu.\n5. View expired and expires today products.\n6. View out of stock products.\n7. Exit.\nYour choice"
+        choice = Prompt.ask(Text(choicesList, style = "#e7e4ff"), choices=['1','2','3','4','5','6','7'], show_choices=False)
         
         #Add product to the menu of available products
         if choice == '1':
@@ -227,7 +227,7 @@ def employeeMenu(employee: Employee):
             menu: Table = employee.listAllProducts()
             print(menu)
         
-        #Display menu of expired products
+        #Display menu of expired and expires today products
         elif choice == '5':
             print(Rule(characters="-  ", style="bold #fdffb0"))
             expMenu: Table = employee.checkExpired()

@@ -7,6 +7,7 @@ from rich import print
 from rich.table import Table
 from rich import box
 from rich.prompt import Prompt, IntPrompt, FloatPrompt
+from rich.console import Group
 
 class Person:
 
@@ -83,28 +84,6 @@ class Person:
         Getter for role attribute
         '''
         return self.__role
-    
-    def listAllProducts(self) -> Table:
-        '''
-        This method retrieves the list of all products from json file and returns a Table object containing the menu
-        '''
-        menu: dict = self.loadFromJSON()
-
-        #Creating a table object to display menu
-        menuTable: Table = Table(title = "Stellar Bakery Menu", title_style="italic bold #f0cfff", border_style="#dadada",expand=False, box=box.MINIMAL_DOUBLE_HEAD)
-
-        #Adding columns to the table
-        menuTable.add_column("[bold #fdffc3]Product Name[/]")
-        menuTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
-        menuTable.add_column("[bold #a4d5b5]Price Per Piece[/]", justify = "center")
-
-        if menu:
-            #Create a row for each product in the menu 
-            for prod in menu:
-                menuTable.add_row(f"[#feffde]{prod}[/]",f"[#daf5ff]{menu[prod]['qty']}[/]",f"[#ccefd8]{menu[prod]['price']} SR[/]")
-            return menuTable
-        else: 
-            return "Your menu is empty."
         
     def loadFromJSON(self) -> dict: 
         '''
@@ -184,6 +163,31 @@ class Customer(Person):
             infoTable.add_row(f"[bold #aceaff]Order History:[/] [italic #daf5ff]You have no previous orders..[/]")
         return infoTable
 
+    def listAllProducts(self) -> Table:
+        '''
+        This method retrieves the list of all products from json file and returns a Table object containing the menu
+        '''
+        menu: dict = super().loadFromJSON()
+
+        #Creating a table object to display menu
+        menuTable: Table = Table(title = "Stellar Bakery Menu", title_style="italic bold #f0cfff", border_style="#dadada",expand=False, box=box.MINIMAL_DOUBLE_HEAD)
+
+        #Adding columns to the table
+        menuTable.add_column("[bold #fdffc3]Product Name[/]")
+        menuTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
+        menuTable.add_column("[bold #a4d5b5]Price Per Piece[/]", justify = "center")
+
+        if menu:
+            #Create a row for each product in the menu 
+            for prod in menu:
+                #Don't display out of stock products
+                if menu[prod]['qty'] == 0:
+                    continue
+                menuTable.add_row(f"[#feffde]{prod}[/]",f"[#daf5ff]{menu[prod]['qty']}[/]",f"[#ccefd8]{menu[prod]['price']} SR[/]")
+            return menuTable
+        else: 
+            return Text("The menu is empty.", style="italic #fbfbe2")
+
 class Employee(Person):
 
     def __init__(self, name: str, age: int, gender: str, phone: str, password: str):
@@ -201,7 +205,7 @@ class Employee(Person):
         This method adds a product to a json file containing all products
         '''
         #Use the method below to get the menu from the json file
-        menu: dict = Person.loadFromJSON()
+        menu: dict = super().loadFromJSON()
 
         menu[prodName]= {
             'qty': qty,
@@ -216,7 +220,7 @@ class Employee(Person):
         '''
         This method removes a product from the menu then saves the modified menu to the json file
         '''
-        menu: dict = Person.loadFromJSON()
+        menu: dict = super().loadFromJSON()
         
         if menu:
             #Check if the product is on the menu
@@ -235,7 +239,7 @@ class Employee(Person):
         '''
         This method updates a product's name then saves the modified menu to the json file
         '''
-        menu: dict = Person.loadFromJSON()
+        menu: dict = super().loadFromJSON()
         
         if menu:
             #Check that the product is on the menu
@@ -256,7 +260,7 @@ class Employee(Person):
         '''
         This method updates a product's quantity then saves the modified menu to the json file
         '''
-        menu: dict = Person.loadFromJSON()
+        menu: dict = super().loadFromJSON()
         
         if menu:
             #Check that the product is on the menu
@@ -276,7 +280,7 @@ class Employee(Person):
         '''
         This method updates a product's price then saves the modified menu to the json file
         '''
-        menu: dict = Person.loadFromJSON()
+        menu: dict = super().loadFromJSON()
         
         if menu:
             #Check that the product is on the menu
@@ -309,14 +313,13 @@ class Employee(Person):
             newPrice: float = FloatPrompt.ask("[#fbfbe2]Enter the new price[/]")
             return self.updateProductPrice(prodName, newPrice)
 
-    #Overriding the method from parent class to modify its contents
     def listAllProducts(self) -> Table:
         '''
         This method retrieves the list of all products from json file and returns a Table object containing the menu
         '''
 
         #Retrieving menu from the json file
-        menu: dict = Person.loadFromJSON(self)
+        menu: dict = super().loadFromJSON()
 
         #Creating a table object to display menu
         menuTable: Table = Table(title = "Stellar Bakery Menu", title_style="italic bold #f0cfff", border_style="#dadada",expand=False, box=box.MINIMAL_DOUBLE_HEAD)
@@ -335,23 +338,34 @@ class Employee(Person):
         else: 
             return Text("The menu is empty.", style="italic #fbfbe2")
 
-    def checkExpired(self) -> Table:
+    def checkExpired(self) -> Group:
         '''This method returns a Table containing all expired items'''
 
         #Retrieving menu from the json file
-        menu: dict = Person.loadFromJSON(self)
+        menu: dict = super().loadFromJSON()
 
-        #Create table of expired products on the menu
+        #Create separate tables for already expired products and products that expire today
         expiredTable: Table = Table(title="Expired Products:",title_style="bold #ffd7f0" ,title_justify="left", box=box.SIMPLE, show_footer=True, border_style="#daf5ff")
-        
-        #Adding columns to the table 
+        expiresTodayTable: Table = Table(title="Expires Today Products:",title_style="bold #ffd7f0" ,title_justify="left", box=box.SIMPLE, show_footer=True, border_style="#daf5ff")
+
+        #Create a Group object that groups both tables in one object
+        finalResult: Group = Group(expiredTable, expiresTodayTable)
+
+        #Adding columns both tables
         expiredTable.add_column("[bold #fdffc3]Product Name[/]")
         expiredTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
         expiredTable.add_column("[bold #a4d5b5]Price[/]", justify = "center")
         expiredTable.add_column("[bold #ffd7f0]Expiry Date[/]", justify = "center")
+
+        expiresTodayTable.add_column("[bold #fdffc3]Product Name[/]")
+        expiresTodayTable.add_column("[bold #bdeeff]Quantity[/]", justify = "center")
+        expiresTodayTable.add_column("[bold #a4d5b5]Price[/]", justify = "center")
+        expiresTodayTable.add_column("[bold #ffd7f0]Expiry Date[/]", justify = "center")
         
-        #This flag is to check if the loop ended with no expired products found
+        #This flag is to check if the loop ended with no expired products or to expire today products found 
         hasExpired: bool = False
+        expiresToday: bool = False
+
         if menu:
             #Loops over products in the menu and checks expiry date
             for prodName in menu:
@@ -363,9 +377,16 @@ class Employee(Person):
                 if expDate < todaysDate:
                     expiredTable.add_row(f"[#feffde]{prodName}[/]",f"[#daf5ff]{menu[prodName]['qty']}[/]",f"[#ccefd8]{menu[prodName]['price']} SR[/]", f"[#ffd7f0]{menu[prodName]['exp date']}")
                     hasExpired = True
+                elif expDate == todaysDate:
+                    expiresTodayTable.add_row(f"[#feffde]{prodName}[/]",f"[#daf5ff]{menu[prodName]['qty']}[/]",f"[#ccefd8]{menu[prodName]['price']} SR[/]", f"[#ffd7f0]{menu[prodName]['exp date']}")
+                    expiresToday = True
+                   
             if hasExpired == False:
                 expiredTable.add_row(None, "There are no expired products..", None, style="italic #fbfbe2")
-            return expiredTable
+            if expiresToday == False:
+                expiresTodayTable.add_row(None, "There are no products that expire today..", None, style="italic #fbfbe2")
+            
+            return finalResult
         else:      
             return Text("The menu is empty.", style="italic #fbfbe2")
         
@@ -373,7 +394,7 @@ class Employee(Person):
         '''This method returns a Table containing all out of stock items'''
 
         #Retrieving menu from the json file
-        menu: dict = Person.loadFromJSON(self)
+        menu: dict = super().loadFromJSON()
 
         #Create table of out of stock products on the menu
         oofTable: Table = Table(title="Out of Stock Products:",title_style="bold #ffd7f0" ,title_justify="left", box=box.SIMPLE, show_footer=True, border_style="#daf5ff")
