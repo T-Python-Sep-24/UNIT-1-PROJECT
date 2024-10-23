@@ -68,7 +68,7 @@ class Employee:
             elif choice == "4":
                 self.delete_task()
             elif choice == "5":
-                self.search_task_by_name()
+                self.search_task()
             elif choice == "6":
                 print("Exiting Employee Dashboard.")
                 break

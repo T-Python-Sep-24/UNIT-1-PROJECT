@@ -27,7 +27,7 @@ class Manager:
             elif choice == "4":
                 self.delete_project()
             elif choice == "5":
-                self.search_project_by_name()
+                self.search_project()
             elif choice == "6":
                 print("Exiting Manager Dashboard.")
                 break
