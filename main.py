@@ -223,7 +223,8 @@ def employeeMenu(employee: Employee):
             choicesList = "1. Update product name.\n2. Update product quantity\n3. Update product price.\n4. Back to main menu.\nYour choice"
             updateChoice: str = Prompt.ask(Text(choicesList, style = "#fbfbe2"), choices=['1','2','3','4'], show_choices=False)
             updateMsg: str = employee.updateProduct(prodName, updateChoice)
-            print(updateMsg)
+            if updateChoice != '4':
+                print(updateMsg)
         
         #Display menu of available products
         elif choice == '4':
