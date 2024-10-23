@@ -27,8 +27,10 @@ class FaceRecognizerController():
                 while True:
                     try:
                         pick: int = input("Enter: ")
+                        if pick.lower() == "q":
+                            return
                         # check if enterd number can be used as list index
-                        if int(pick) <= len(images_src_files):
+                        elif int(pick) <= len(images_src_files):
                             break
                     except:
                         pass
@@ -50,18 +52,5 @@ class FaceRecognizerController():
                     img_path = have_many_faces[1]
 
                     self.face_rec_model.copy_mathced_images(dest_folder_name, img_path)
+                    
                     return
-
-
-                    # create the folder
-
-                    # known_image = ...
-                    # known_encoding = ....(known_image)[0]
-
-                    # for img in images_src:
-                        # unknown_image = ....
-                        # unknown_encoding = ....(unkown_image)[0]
-
-                        # result = compare(known_encoding, unknown_encoding)
-                        # if result[0]:
-                            # copy image to dest/folder_name

@@ -1,3 +1,5 @@
+import colorama
+
 from views import main_view as m_v
 
 
@@ -7,12 +9,15 @@ class FaceRecognizerView(m_v.MainView):
         super().__init__()
 
     def display_face_rec_menu(self, image_files: list):
-        print("\nPick an image contains only one face:")
+        print(self.border_m)
+        print("Pick an image contains only one face or enter q to exit:")
         for index, img in enumerate(image_files, 1):
             print(f"{index}: {img}")
-        print()
+        print(self.border_m)
 
     def display_wrong_image(self):
         print("\n")
-        print(f"---- The image you picked doesn't fit the critera ----")
+        print(colorama.Fore.RED + self.border_f)
+        print(f"------- Failed: the image doesn't fit the critera ------")
+        print(self.border_f + colorama.Fore.RESET)
         input("")

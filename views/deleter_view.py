@@ -1,3 +1,5 @@
+import colorama
+
 from views import main_view as m_v
 
 
@@ -16,9 +18,19 @@ class DeleterView(m_v.MainView):
         print(self.delete_menu)
 
     def display_folder_is_empty(self):
-        print("\n---- The folder is empty ----")
+        print(colorama.Fore.RED + self.border_f)
+        print("----------------- The folder is empty ------------------")
+        print(self.border_f + colorama.Fore.RESET)
         input("")
 
-    def display_image_folder_cleared(self, folder_name):
-        print(f"\n++++ The {folder_name} contents were deleted successfully ++++")
+    def display_image_dest_cleared(self):
+        print(colorama.Fore.GREEN + self.border_s)
+        print(f"+++ Images_Destination contents deleted successfully +++")
+        print(self.border_s + colorama.Fore.RESET)
+        input("")
+
+    def display_image_src_cleared(self):
+        print(colorama.Fore.GREEN + self.border_s)
+        print(f"+++++ Images_Source contents deleted successfully ++++++")
+        print(self.border_s + colorama.Fore.RESET)
         input("")

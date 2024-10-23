@@ -37,7 +37,12 @@ class FaceRecognizerModel(m_m.MainModel):
             unknown_img_path = os.path.join("Images_Source", img)
 
             unknown_image = face_recognition.load_image_file(unknown_img_path)
-            unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
+            try:
+                unknown_encoding = face_recognition.face_encodings(unknown_image)[0]
+            except IndexError:
+                # there is no face so skip to the next iteration
+                continue
+
             result = face_recognition.compare_faces([known_encoding], unknown_encoding)
 
             # copy the matched faces to the destination folder
