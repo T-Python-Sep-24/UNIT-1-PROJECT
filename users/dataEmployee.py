@@ -1,52 +1,70 @@
-# from datetime import datetime
 from users.identfyPerson import Person
 import json 
 
 class Employee(Person):
-    def __init__(self, name, id, email, phonenum ,position ) -> None:
-        super().__init__(name, id, email, phonenum)
+    def __init__(self, mainlist, name, employee_id, email, phone, position) -> None:
+        super().__init__(name, employee_id, email, phone)
         self.position = position
-        self.keepData = {}     
-    ###
+        self.mainlist = mainlist 
+
     def add_data(self):
         user_id = input("Enter employee ID to add data for: ")
-        if user_id not in self.keepData:
-            self.keepData[user_id] = {
+        employee_dict = self.mainlist[1]
+
+        if user_id not in employee_dict:
+            employee_dict[user_id] = {
                 "name": self.name,
-                "number": self.phonenum,
+                "phone": self.phone,
                 "email": self.email,
-                "position":self.position
+                "position": self.position
             }
-            return "Done adding data"
+            return "Done adding employee data"
         else:
             return f"Employee with ID {user_id} already exists."
-       ## 
+    
     def remove_data(self):
-        user_id = input("Enter employee ID to remove data for: ")
-        if user_id in self.keepData:
-            del self.keepData[user_id]
-            return f"All data for {user_id} has been deleted"
+        user_id = input("Enter employee ID to remove: ")
+        employee_dict = self.mainlist[1]
+        if user_id in employee_dict:
+            del employee_dict[user_id]
+            self.save_data(show_message=False)  # Don't show the save message
+            return f"Employee with ID {user_id} has been removed."
         else:
-            return f"Employee with ID {user_id} not found in the data."
-
+             return f"Employee with ID {user_id} not found."
+        
     def search_data(self):
         user_id = input("Enter employee ID to search: ")
-        if user_id in self.keepData:
-            return f"Employee {self.keepData[user_id]['name']} is at work organization."
+        employee_dict = self.mainlist[1]
+        if user_id in employee_dict:
+            employee_info = employee_dict[user_id]
+            return f"Employee found: Name: {employee_info['name']}, Email: {employee_info['email']}, Phone: {employee_info['phone']}, Position: {employee_info['position']}"
         else:
-            return f"Employee with ID {user_id} is not at work organization."
+            return f"Employee with ID {user_id} not found."
+    
+    def display_data(self):
+        employee_dict = self.mainlist[1]
+        if employee_dict:
+            user_id = input("Enter employee ID to display data for: ")
+            if user_id in employee_dict:
+                employee_info = employee_dict[user_id]
+                print(f"ID: {user_id}, Name: {employee_info['name']}, Email: {employee_info['email']}, Phone: {employee_info['phone']}, Position: {employee_info['position']}")
+            else:
+                 print(f"No employee found with ID {user_id}.")
+        else:
+            print("No employee data found.")
 
-    def save_data(self):
-        with open("information.josn" , "+a" , encoding="UTF-8") as fileData:
-            json_data = json.dumps(self.keepData, indent=3)
-            fileData.write(json_data + "\n") 
+    def save_data(self,show_message=True):
+        with open("information.json", "w", encoding="UTF-8") as file:
+            json.dump(self.mainlist, file, indent=4)
+        if show_message:
+            print("Employee data has been saved to 'information.json'.")
 
     def load_data(self):
-        with open("information.json", "r", encoding="UTF-8") as fileData:
-            loaded_data = json.load(fileData)
-        return loaded_data
+        try:
+            with open("information.json","r", encoding="UTF-8") as file:
+                self.mainlist = json.load(file)
+            print("Data loaded successfully.")
+        except FileNotFoundError:
+            print("No existing data found.")
 
-    def display_data(self, loaded_data):
-        for counter, counterData in enumerate(loaded_data, start=1):
-            print(f"{counter}: {counterData}")    
     

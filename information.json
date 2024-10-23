@@ -1,0 +1,51 @@
+[
+    "employee",
+    {
+        "1": {
+            "name": "kha",
+            "phone": "05492",
+            "email": "kha@.com",
+            "position": "manager"
+        },
+        "2": {
+            "name": "ah",
+            "phone": "054449",
+            "email": "ah@.com",
+            "position": "gm"
+        },
+        "3": {
+            "name": "asd",
+            "phone": "05123",
+            "email": "asd@.com",
+            "position": "service customer "
+        }
+    },
+    "traveler",
+    {
+        "11023": {
+            "name": "qerty",
+            "phone": "051212",
+            "email": "qwerty@.com",
+            "birth_date": "1995-05-21"
+        },
+        "11024": {
+            "name": "qazx",
+            "phone": "0500090",
+            "email": "qazx@.com",
+            "birth_date": "2002-2-2"
+        }
+    },
+    "flight management",
+    {
+        "SA-123": {
+            "origin": "riy",
+            "destination": "Dammam",
+            "date": "2024-10-23"
+        },
+        "NY-274": {
+            "origin": "Abha",
+            "destination": "Riyadh",
+            "date": "2024-10-23"
+        }
+    }
+]

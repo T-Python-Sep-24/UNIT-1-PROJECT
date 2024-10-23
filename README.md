@@ -1,41 +1,39 @@
 # UNIT-1-PROJECT
 
+Tuwaiq Airport Management System
+Overview
+The Tuwaiq Airport Management System is a Python-based application designed to manage employees, travelers, and flights efficiently. The system allows users to manage employee records, handle traveler reservations, and organize flight schedules with permissions tailored to different roles, such as managers and employees.
+
+Features
+Employee Management:
+Add, remove, search, and display employee data.
+Employees can have attributes such as name, ID, email, phone number, and position.
+Employee data is saved and loaded from the information.json file.
+Permissions are handled to ensure only managers can modify certain flight data.
+
+Traveler Management:
+Add, remove, search, and display traveler data.
+Travelers can make reservations, cancel them, and search for flights.
+The system ensures smooth handling of traveler data, which is saved in information.json.
 
 
-## Based on what you’ve learned until now , create a project of your choosing (impress us with your imagination) . This project must at least satisfy the following minimum requirements :
-
-- Must be interactive on CLI.
-- Use your coding skills in Python accurately.
-- Organize Your Code into modules & (or packages)
-- Use Best practices.
-
-## Example Project :  An online Grocery Store :
-
-#### Overview : An online store that sells fruits to customers. This online store has 2 main users. The customer and the manager of the store . Each one of them should be able to do the following tasks for the store to function properly . 
-
-#### As a customer I should be able to do the following :
-- Browse  Products . 
-- View the product info (summary, specs, price, quantity , etc.)
-- Search for Products.
-- Get recommendations for my next purchase based on my purchase history.
-- Add Products to the shopping cart .
-- Remove a product from the shopping cart.
-- List the products in my shopping cart. 
-- Continue to checkout . 
-- Fill in my address for delivery.
-- Get receipt of my purchases.
-- Check delivery status . 
+Traveler Management:
+Add, remove, search, and display traveler data.
+Travelers can make reservations and search for flights.
+The system ensures smooth handling of traveler data, which is saved in information.json.
 
 
+Folder Structure:
+main.py: The main entry point for the application. This script handles the system's navigation, allowing users to manage employees, travelers, and flights.
 
-#### Usage :
- Explain to the user how to use your project . 
- for example:
- - type in search product_name to search for a product.
- - type in list_products to show all the products in the grocery.
- - type in show product_name to get information about this product.
- - type in buy product_name to buy the product . 
- - and so on...
+users/:
+dataEmployee.py: Handles all employee-related operations like adding, removing, searching, and displaying employee records.
+dataCustomerOrTraveler.py: Manages traveler data, including reservations and flight interactions.
+identfyPerson.py: Base class for both employees and travelers, providing shared attributes such as name, ID, and email.
 
-
-### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
+flightServices/:
+flights.py: Manages traveler interactions with flights, including flight reservation.
+flightsM.py: Manages flight data for the system, such as adding, removing, and searching flights.
+Technologies
+Python: The project is built using Python, making use of Python's object-oriented programming (OOP) features.
+JSON: For data storage and retrieval using the information.json file to persist information about employees, travelers, and flights.
