@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Hotel F ",
+        "location": "Riyadh",
+        "rating": 4.0,
+        "price_per_room": 250.0,
+        "room_availability": 2
+    },
+    {
+        "name": "Hotel A",
+        "location": "Riyadh",
+        "rating": 4.5,
+        "price_per_room": 350.0,
+        "room_availability": 7
+    },
+    {
+        "name": "Hotel B",
+        "location": "Makkah",
+        "rating": 4.0,
+        "price_per_room": 200.0,
+        "room_availability": 8
+    }
+]
