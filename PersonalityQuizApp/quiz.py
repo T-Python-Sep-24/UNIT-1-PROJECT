@@ -202,7 +202,7 @@ class LearningStyleQuiz:
         # Get advice, resources, and tools based on learning style
         advice_data = learning_style_advice[learning_style]
 
-              # Print advice
+              
         print(Fore.MAGENTA + "\nAdvice Based on Your Learning Style:" + Style.RESET_ALL)
         print(Fore.MAGENTA + "-" * 50 + Style.RESET_ALL)  # Separator line
         for item in advice_data["advice"]:

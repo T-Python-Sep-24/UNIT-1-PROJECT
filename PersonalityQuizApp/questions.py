@@ -1,8 +1,4 @@
 #  lists and dictionaries to store questions and user responses.
-from colorama import init, Fore, Style
-
-# Initialize Colorama
-init()
 questions = [
     {
         "question": "You enjoy social gatherings.",

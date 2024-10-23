@@ -1,6 +1,5 @@
 from quiz import PersonalityQuiz, EmotionalIntelligenceQuiz, LearningStyleQuiz
 from colorama import init, Fore, Style
-
 # Initialize Colorama
 init()
 def print_welcome():
