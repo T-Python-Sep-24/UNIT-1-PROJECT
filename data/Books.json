@@ -5,18 +5,21 @@
         "author": "mohammed",
         "year": 1925,
         "description": "A novel about .....",
-        "likes": 10,
+        "likes": 12,
         "comments": [
             "wow",
             "wow",
             "wooow",
             "amazing",
+            "good",
+            "good",
             "good"
         ],
         "ratings": [
             4.0,
             4.5,
-            3.5
+            3.5,
+            4.5
         ]
     },
     {
@@ -24,7 +27,7 @@
         "title": "Book",
         "author": "mohammed",
         "year": 2001,
-        "description": "22",
+        "description": "A book about",
         "likes": 0,
         "comments": []
     }

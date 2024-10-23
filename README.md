@@ -7,7 +7,6 @@ Abjad is an interactive Command Line Interface (CLI) application that allows use
 As a **Viewer**, I should be able to:
 - Browse books available in the library.
 - View detailed information about each book (title, author, description, likes, comments, ratings, Average Rating).
-- Search for specific books by the book ID.
 - Like my favorite books.
 - Leave comments on the books.
 - Rate the books on a scale from 1 to 5.

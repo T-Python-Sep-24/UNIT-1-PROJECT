@@ -32,15 +32,15 @@ def book_details(book_id):
     book_id = int(book_id)
     for book in books:
         if book['id'] == book_id:
-            console.print(f"Title: {book['title']}", style="bold yellow")
-            console.print(f"Author: {book['author']} ({book['year']})", style="bold blue")
-            console.print(f"Description: {book['description']}" , style="bold green")
+            console.print(f"Title: {book['title']}", style="bold magenta")
+            console.print(f"Author: {book['author']} ({book['year']})", style="bold cyan")
+            console.print(f"Description: {book['description']}" , style="bold cyan")
             console.print(f"Likes: {book['likes']}", style="bold cyan")
-            console.print(f"Comments: {book['comments']}", style="bold magenta")
+            console.print(f"Comments: {book['comments']}", style="bold cyan")
             console.print(f"Ratings: {book['ratings']}",  style="bold cyan")
             if book['ratings']:
                 average_rating = sum(book['ratings']) / len(book['ratings'])
-                console.print(f"Average Rating: {average_rating:.1f}", style="bold magenta")
+                console.print(f"Average Rating: {average_rating:.1f}", style="bold cyan")
             else:
                 console.print("Average Rating: No ratings yet.", style="red")
             break
