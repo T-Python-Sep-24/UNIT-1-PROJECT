@@ -1,6 +1,5 @@
 from Car_files.car import Car, CarStorage
 import pandas as pd
-import matplotlib.pyplot as plt
 from datetime import datetime
 
 class Manager:
