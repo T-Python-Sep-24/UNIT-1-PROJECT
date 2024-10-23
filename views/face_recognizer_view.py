@@ -7,6 +7,8 @@ from views import main_view as m_v
 class FaceRecognizerView(m_v.MainView):
     def __init__(self):
         super().__init__()
+        self.success: str = "++++++++ Your images were orgnized successfully ++++++++"
+
 
     def display_face_rec_menu(self, image_files: list):
         print(self.border_m)
@@ -21,3 +23,10 @@ class FaceRecognizerView(m_v.MainView):
         print(f"------- Failed: the image doesn't fit the critera ------")
         print(self.border_f + colorama.Fore.RESET)
         input("")
+
+    def display_orgniz_msg(self, orgnized_status: bool):
+        if orgnized_status == True:
+            print(colorama.Fore.GREEN + self.border_s)
+            print(self.success)
+            print(self.border_s + colorama.Fore.RESET)
+            input("")

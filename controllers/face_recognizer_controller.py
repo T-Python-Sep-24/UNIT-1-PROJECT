@@ -52,5 +52,7 @@ class FaceRecognizerController():
                     img_path = have_many_faces[1]
 
                     self.face_rec_model.copy_mathced_images(dest_folder_name, img_path)
+
+                    self.face_rec_view.display_orgniz_msg(True)
                     
                     return
