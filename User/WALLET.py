@@ -1,4 +1,5 @@
 import random
+from colorama import Fore
 class Wallet:
     
     def __init__(self,account_balance:float=0) -> None:
@@ -19,7 +20,7 @@ class Wallet:
         if amount>0:
             new_balance =balance+amount
             self.__set_balance(new_balance)
-            print(f"Balance now : {self.get_balance()}")
+            print(f"{Fore.LIGHTBLUE_EX} {amount} added to balance{Fore.RESET} ")
         else:
             raise ValueError("the amount must be a float value and not negative")  
 
@@ -27,5 +28,5 @@ class Wallet:
         balance=self.get_balance()
         new_balance= balance-amount
         self.__set_balance(new_balance)
-        print(f"Balance now : {self.get_balance()}")
+        print(f"Balance now : {self.get_balance():.2f}")
     
