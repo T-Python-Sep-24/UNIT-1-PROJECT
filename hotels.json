@@ -1,23 +1,50 @@
 [
     {
-        "name": "Hotel F ",
-        "location": "Riyadh",
-        "rating": 4.0,
-        "price_per_room": 250.0,
-        "room_availability": 2
-    },
-    {
         "name": "Hotel A",
-        "location": "Riyadh",
+        "location": "New York",
         "rating": 4.5,
-        "price_per_room": 350.0,
-        "room_availability": 7
+        "price_per_room": 150,
+        "room_availability": 9,
+        "room_type": "single"
     },
     {
         "name": "Hotel B",
-        "location": "Makkah",
+        "location": "Los Angeles",
         "rating": 4.0,
-        "price_per_room": 200.0,
-        "room_availability": 8
+        "price_per_room": 200,
+        "room_availability": 5,
+        "room_type": "double"
+    },
+    {
+        "name": "Hotel C",
+        "location": "Chicago",
+        "rating": 3.5,
+        "price_per_room": 100,
+        "room_availability": 8,
+        "room_type": "single"
+    },
+    {
+        "name": "Hotel D",
+        "location": "New York",
+        "rating": 4.2,
+        "price_per_room": 180,
+        "room_availability": 6,
+        "room_type": "double"
+    },
+    {
+        "name": "Hotel E",
+        "location": "Los Angeles",
+        "rating": 4.3,
+        "price_per_room": 220,
+        "room_availability": 4,
+        "room_type": "single"
+    },
+    {
+        "name": "Hotel F",
+        "location": "Riyadh",
+        "rating": 4.0,
+        "price_per_room": 150.0,
+        "room_availability": 4,
+        "room_type": "double"
     }
 ]

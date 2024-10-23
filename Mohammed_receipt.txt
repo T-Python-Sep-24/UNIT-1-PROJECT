@@ -1,0 +1,6 @@
+Receipt for Mohammed
+Address: riyadh
+Booked Hotels:
+- Hotel F at Riyadh from 2024-11-11 to 2024-12-12: $4650.0 total
+Total Cost: $4650.0
+Thank you for your booking!

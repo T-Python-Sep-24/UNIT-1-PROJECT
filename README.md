@@ -1,18 +1,18 @@
 # Hotel Management System
 
 ## Overview
-The Hotel Management System is a Python application designed to facilitate the management of hotel bookings. It allows managers to add, edit, and manage hotel listings while providing customers with a user-friendly interface to search, book, and manage their hotel reservations. The system utilizes JSON for data persistence, ensuring that hotel information is saved and loaded effectively.
+The Hotel Management System is a Python application designed to facilitate the management of hotel bookings. It enables managers to add, edit, and manage hotel listings while providing customers with a user-friendly interface to search, book, and manage their hotel reservations. The system utilizes JSON for data persistence, ensuring that hotel information is saved and loaded effectively.
 
 ## User Stories
 1. **As a Manager**, I want to:
-   - Add new hotels with details such as name, location, rating, price per room, and availability.
-   - Edit existing hotel details.
+   - Add new hotels with details such as name, location, rating, price per room, availability, and room type.
+   - Edit existing hotel details, including updating ratings, prices, availability, and room types.
    - View a list of all available hotels.
 
 2. **As a Customer**, I want to:
    - View all available hotels.
    - Search for hotels by name or location.
-   - Book a hotel if rooms are available.
+   - Book a hotel if rooms are available, specifying the room type and booking date.
    - Remove a booking if I no longer need it.
    - View my booking history and checkout to receive a receipt.
 
@@ -36,6 +36,7 @@ The Hotel Management System is a Python application designed to facilitate the m
    - Hotel data is saved in a `hotels.json` file. The application will load this file upon startup and save changes after each operation.
 
 4. **User Authentication**:
-   - The manager's credentials are set to a predefined username and password (`manager` / `password123`). 
+   - The manager's credentials are set to a predefined username and password (`manager` / `password123`).
 
-Feel free to modify or expand this README to include any additional details specific to your project!
+5. **Booking Dates**:
+   - When booking a hotel, you will need to specify the desired booking date. The format required is `YYYY-MM-DD`.
