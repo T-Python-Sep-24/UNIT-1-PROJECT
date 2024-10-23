@@ -6,11 +6,15 @@
 
 #### As a Resident I should be able to do the following :
 -Login/Register for Residents   
--List the violations that i have (fine number,type of fine ,date,price,issued by which ministry)  
--search for a specfic violations   
--Pay all violations(installment option if the violations is more than 3000 sar)  
--pay for a specfic violations 
--Exit  
+-List the violations that i have (fine id,type of fine ,date,price,issued by which ministry,status)  
+-search for a specfic violations  
+-Add to wallet    
+-check wallet  
+-Pay all violations(installment option if the violations is more than 3000 sar)    
+-pay for a specfic violations  
+-pay installment violation  
+-Display installment details    
+-Exit    
 ### As an Authortie in a specfic ministry I shoild be able to do the following:
 -Login/Register for manamge  
 -Fine a violation for a Resident
@@ -26,7 +30,9 @@
 After logging in as a resident, you can:  
 .List your violations.  
 .Search for a specific violation by its number.  
-.Pay all violations or choose to pay in installments if eligible.    
+.Pay all violations or choose to pay in installments if eligible.  
+.pay for a specfic violation  
+.Track installment plan    
 Follow the on-screen instructions to complete each action.  
 ## As for the Management :
 After logging in as a management user, you can:  
