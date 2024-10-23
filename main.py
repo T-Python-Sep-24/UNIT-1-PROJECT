@@ -57,7 +57,7 @@ while current_user is None:
 
         elif cont == 'e':
             print("Goodbye!")
-            break
+            input('Press ENTER to exit.')
 
         else:
             print("Please try again.")
