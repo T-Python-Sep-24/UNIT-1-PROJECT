@@ -35,9 +35,7 @@ class DataGenerators:
         # Generate a number of client profiles
         for _ in range(number):
             client = {
-                "name": random.choice(
-                    ["Minister in Education", "Minister in Culture", "Minister in Hajj and Umrah", "Minister of Health",
-                     "Minister in Finance"]),
+                "name": random.choice(["Ministery of Education", "Ministery of Culture", "Ministery of Hajj and Umrah", "Ministery of Health","Ministery of Finance", "Aramco", "STC", "Saudi Airlines", "Sabic", "Almarai"]),
                 "contact_number": self.fake_data.phone_number(),
                 "email": self.fake_data.email(),
                 "address": self.fake_data.address(),
@@ -53,7 +51,7 @@ class DataGenerators:
         # Generate a number of product profiles
         for _ in range(number):
             product = {
-                "name": random.choice(["Rebranding", "Online Ads", "Marketing Operations", "Product Development"]),
+                "name": random.choice(["Logo Design", "Google Ads", "CRM Software", "Product Prototypes", "Market Analysis Reports", "Brand Guidelines", "Facebook Ads", "Email Campaign Tools", "Wireframes", "User Testing Tools"]),
                 "id": self.fake_data.uuid4(),
                 "price": round(random.uniform(30000, 700000), 2)
             }
@@ -62,25 +60,34 @@ class DataGenerators:
         print("----------------------------------------")
 
     def generate_transactions(self, number, data_manager):
-        """this method take 2 prameters number : the number of Transactions to generate
-                  data_manager to pass and append to the list in data manager
-               """
-        # Check for employees and clients before generating transactions
+        """
+        This method generates a number of transaction records and appends them to the sales list in data_manager.
+        Each transaction includes the client, product, price, and employee involved in the transaction.
+        """
+        # Ensure there are employees, clients, and products available before generating transactions
         if not data_manager.employees:
             print("No employees available to generate transactions.")
             return
         if not data_manager.clients:
             print("No clients available to generate transactions.")
             return
+        if not data_manager.products:
+            print("No products available to generate transactions.")
+            return
 
         for _ in range(number):
+            product = random.choice(data_manager.products)  # Select a random product from the product list
+            price = round(random.uniform(30000, 700000))  # Assign a random price for each transaction
+
             transaction = {
                 "transaction_id": self.fake_data.uuid4(),
                 "date": self.fake_data.date_between(start_date='-1y', end_date='today'),
                 "employee": random.choice([emp['name'] for emp in data_manager.employees]),
                 "client": random.choice([client['name'] for client in data_manager.clients]),
+                "product": product["name"],
+                "price": price,
             }
             data_manager.sales.append(transaction)
+
         print(f"Generated {number} transaction records.")
         print("----------------------------------------")
-

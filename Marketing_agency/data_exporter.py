@@ -34,4 +34,3 @@ class DataExporter:
         # Export to CSV
         df.to_csv(filename, index=False)
         print(f"{data_type.capitalize()} data exported to {filename}.")
-

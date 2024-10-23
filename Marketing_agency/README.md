@@ -1,31 +1,30 @@
-# Data Management ( marketing agency ) PROJECT
+# Data Management & Forecasting System
 
 
-#### Overview :  . 
+#### Overview : The Data Management & Forecasting Project provides a comprehensive solution for managing and forecasting sales data. This application allows users to generate, view, and manage data related to employees, clients, products, and sales transactions. Additionally, it includes functionalities for data exporting and sales forecasting to help businesses make informed decisions.
+ . 
 
 #### As a customer I should be able to do the following :
-- Browse  Products . 
-- View the product info (summary, specs, price, quantity , etc.)
-- Search for Products.
-- Get recommendations for my next purchase based on my purchase history.
-- Add Products to the shopping cart .
-- Remove a product from the shopping cart.
-- List the products in my shopping cart. 
-- Continue to checkout . 
-- Fill in my address for delivery.
-- Get receipt of my purchases.
-- Check delivery status . 
+As a customer, I should be able to do the following:
+- Generate Data.
+- View Data.
+- Update records by ID.
+- Delete records by ID.
+- Export data in CSV files.
+- Predict my future sales.
+- Search for records by ID.
+
 
 
 
 #### Usage :
- Explain to the user how to use your project . 
- for example:
- - type in search product_name to search for a product.
- - type in list_products to show all the products in the grocery.
- - type in show product_name to get information about this product.
- - type in buy product_name to buy the product . 
- - and so on...
+ To interact with the Data Management System, follow these instructions:
+
+1. **Authentication**: Enter your username and password to log in.
+2. **Main Menu Options**:
+   - **Generate & Export Data**: Choose to generate employees, clients, products, and transactions. You can also export data to CSV files.
+   - **View & Manage Data**: View existing employees, clients, products, or sales. After viewing, you can choose to update or delete a specific record by its ID.
+   - **Run Sales Forecasting**: Analyze sales data to predict future trends.
+   - **Exit**: Exit the system.
 
 
-### For your project. Edit this README.md file to include your own project name,  overview, user stories, and usage. 
