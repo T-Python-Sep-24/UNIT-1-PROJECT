@@ -44,7 +44,11 @@ Overview: Trio Tool is an interactive Command-Line Interface (CLI) project manag
 
 ## User Stories
 
-3- As a Manager, I want to create, update, and delete a project, so I can organize and manage team activities effectively.
+1- As a Manager, I want to create, update, and delete a project, so I can organize and manage team activities effectively.
+
+2- As a Manager, I want to search for my projects by name, so I can quickly access and organize my work.
+
+3- As a Team Member, I want to search for my tasks by name, so I can quickly access and organize my work.
 
 4- As a Team Member, I want to create, update, and delete tasks, so I can manage my daily responsibilities effectively.
 
