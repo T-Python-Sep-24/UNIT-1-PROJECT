@@ -1,12 +1,1 @@
-[
-    {"cname": "ford", "year": 2023, "price": 200.0, "available": true},
-    {"cname": "sonata", "year": 2022, "price": 150.0, "available": true},
-    {"cname": "mercedes", "year": 2024, "price": 500.0, "available": true},
-    {"cname": "caprice", "year": 2022, "price": 100.0, "available": true},
-    {"cname": "honda", "year": 2020, "price": 180.0, "available": true},
-    {"cname": "toyota", "year": 2021, "price": 220.0, "available": true},
-    {"cname": "chevrolet", "year": 2023, "price": 230.0, "available": true},
-    {"cname": "bmw", "year": 2022, "price": 300.0, "available": true},
-    {"cname": "nissan", "year": 2021, "price": 170.0, "available": true},
-    {"cname": "subaru", "year": 2022, "price": 190.0, "available": true}
-]
+[{"cname": "ford", "year": 2023, "price": 200.0, "available": true}, {"cname": "sonata", "year": 2022, "price": 150.0, "available": true}, {"cname": "mercedes", "year": 2024, "price": 500.0, "available": true}, {"cname": "caprice", "year": 2022, "price": 100.0, "available": true}, {"cname": "honda", "year": 2020, "price": 180.0, "available": true}, {"cname": "toyota", "year": 2021, "price": 220.0, "available": true}, {"cname": "chevrolet", "year": 2023, "price": 230.0, "available": true}, {"cname": "bmw", "year": 2022, "price": 300.0, "available": true}, {"cname": "nissan", "year": 2021, "price": 170.0, "available": true}, {"cname": "subaru", "year": 2022, "price": 190.0, "available": true}, {"cname": "ford", "year": 2023, "price": 180.0, "available": true}]

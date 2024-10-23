@@ -87,4 +87,37 @@ class Manager:
             print("No rented cars.")
     
 
+    
+
+    def rental_stats(self):
+        rental_data = []
+
+        # Collect rental history data for analysis
+        for customer in self.customers:
+            for record in customer.get_rental_history():  # Call the method to get rental history
+                if record['action'] == 'rented':
+                    rental_data.append({
+                        'car_name': record['car_name'],
+                        'date': datetime.strptime(record['date'], "%Y-%m-%d %H:%M:%S")
+                    })
+        
+        # Convert the list of rental data into a DataFrame
+        df = pd.DataFrame(rental_data)
+
+        if df.empty:
+            print("No rental history available.")
+            return
+
+        # Calculate the most rented car
+        most_rented_car = df['car_name'].value_counts().idxmax()
+        most_rented_count = df['car_name'].value_counts().max()
+
+        # Calculate average renting days
+        df['next_date'] = df['date'].shift(-1)  # Shift dates to find the next rental
+        df['rental_days'] = (df['next_date'] - df['date']).dt.days
+        average_renting_days = df['rental_days'].mean()
+
+        print(f"Most rented car: {most_rented_car} (Rented {most_rented_count} times)")
+        print(f"Average renting days: {average_renting_days:.2f} days")
+
 

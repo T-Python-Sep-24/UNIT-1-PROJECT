@@ -1,3 +1,30 @@
+# car rental program
+
+
+# This car rental program allows users to manage car rentals, track rental history, and access rental statistics. As a manager, you can add or remove cars, list all available cars, and monitor customer rental activities. Customers can register, rent cars, and return them while their rental history is maintained for future reference. To get started: managers log in with their credentials, and customers can create an account by providing their name and ID. From the menus, users can navigate through options to rent or return cars, search for specific vehicles, and view available inventory. The system also saves data to JSON files, ensuring information persists across sessions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # UNIT-1-PROJECT
 
 
