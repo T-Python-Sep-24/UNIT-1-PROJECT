@@ -8,23 +8,25 @@ class RegisterLogin:
         if not isinstance(self.customers, dict):
             self.customers = {}
         
-    def register_customer(self, customer: Customer):
+    def register_customer(self, name, username, password):
+        customer = Customer(name, username, password)
         if isinstance(customer, Customer):
             if customer.username not in self.customers:
                 self.customers[customer.username] = customer
-                print(f"{customer.name} your registered successfully!")
+                print(f"\n{customer.name} your registered successfully!")
                 self.save_to_file()
                 return True
             else:
-                print("Username already exists!")
+                print("\nUsername already exists!. Try another one please. Or login if you already registered")
                 return False
-
+        print('Your data has some mistake!')
         return False
         
     def login_customer(self, username: str, password: str):
         if username in self.customers:
             if password == self.customers[username].get_password():
                 return self.customers[username]
+        print('The Username is not exists!. Try another one please. Or register if you haven\'t')
         return None
     
     def get_customer(self, username: str):

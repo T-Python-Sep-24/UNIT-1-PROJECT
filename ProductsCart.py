@@ -16,7 +16,7 @@ class ProductsCart:
                     self.cart[product.product_id]['quantity'] += quantity
                     product.quantity -= quantity
                     return True
-                
+        print('The quantity you want to ADD is bigger than the actual quantity in the stock')  
         return False
         
     def display(self):

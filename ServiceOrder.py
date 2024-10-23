@@ -1,34 +1,42 @@
 from ServiceCart import ServiceCart
-from Customers import Customer
+from Storge import Storge
 import os
 import pickle
+from datetime import datetime
+import json
 
 class ServiceOrder:
-    def __init__(self, customer: Customer, cart:ServiceCart):
+    def __init__(self, customer, cart:ServiceCart):
         self.cart = cart
         self.customer = customer
         self.__previous_services_orders = self.__load_from_pickle()
         
     def order_summary(self):
-        print(f"Service summary for {self.customer.name}:")
+        print(f"\nService summary for {self.customer.name}:")
         self.cart.display()
-        print(f"\nCost: SAR {self.cart.total_cost()}")
+        print(f"Cost: SAR {self.cart.total_cost()}")
     
-    def checkout_cart(self):   
-        self.__previous_services_orders[self.customer.username] = {} 
+    def checkout_cart(self, storge: Storge):
+        self.__previous_services_orders[self.customer.username] = {}
         self.__previous_services_orders[self.customer.username][len(self.__previous_services_orders) + 1] = self.cart
         self.__save_to_file(self.__previous_services_orders)
+
+        self.save_upcoming_service(storge)
         
-        date = self.cart.cart['date']  
-        self.cart.storge.delete_date(date)
-        
+        date = self.cart.cart['date']
+        storge.delete_date(date)
+
         print(f"Checkout successful! Your service has been scheduled.")
         self.cart.display()
-        
-    def get_all_services_orders(self):
-        return self.__load_from_pickle()
+
+    def save_upcoming_service(self, storge: Storge):
+        upcoming_services = storge.load_upcoming_services()
+        upcoming_services.append(self.cart.cart)
+
+        with open("upcoming_services.pkl", 'wb') as file: 
+            pickle.dump(upcoming_services, file)
            
-        
+           
     def __save_to_file(self, customers: dict):
         with open("previous_services_orders", 'wb') as file:
             pickle.dump(customers, file)
