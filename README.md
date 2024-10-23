@@ -2,7 +2,9 @@
 
 ## An online Bakery Shop:
 
-#### Overview: An online bakery shop that sells its goods and delivers to customers if they want. This bakery has 2 main users; The customer and the employee of the store. Each one of them should be able to do the following tasks for the bakery shop to function properly:
+#### Overview: 
+An online bakery shop that sells its goods and delivers to customers if they want. And allows employees to manage and inspect bakery menu.
+This bakery has 2 main users; The Customer and the Employee of the store. Each one of them should be able to do the following tasks for the bakery shop to function properly:
 
 #### As a Customer I should be able to do the following:
 - View the bakery menu. 
