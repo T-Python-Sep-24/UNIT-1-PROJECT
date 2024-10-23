@@ -5,6 +5,10 @@ from results import save_results, load_results
 from famous_people import famous_people
 from Emotions_Tips import emotional_intelligence_advice  
 from Learning_Tips import learning_style_advice  
+from colorama import init, Fore, Style
+
+# Initialize Colorama
+init() 
 
 class PersonalityQuiz:
     def __init__(self):
@@ -54,10 +58,12 @@ class PersonalityQuiz:
 
         # Get the famous person associated with the personality type
         famous_person = famous_people[personality_type]
-
-        print(f"Your personality type is: {personality_type}")
-        print(f"Your personality type is similar to: {famous_person['name']}")
-        print(f"Description: {famous_person['description']}")
+        print(Fore.CYAN + "\n" + "=" * 90)  # Top border
+        print(Fore.YELLOW + f"Your Personality Type is: {personality_type}" + Style.RESET_ALL)  # Personality type in yellow
+        print(Fore.CYAN + "=" * 90 + Style.RESET_ALL)  # Divider
+        print(Fore.MAGENTA + f"Your personality type is similar to: {famous_person['name']}" + Style.RESET_ALL)  # Famous person in magenta
+        print(Fore.GREEN + f"Description: {famous_person['description']}" + Style.RESET_ALL)  # Description in green
+        print(Fore.CYAN + "=" * 50 + Style.RESET_ALL)  # Bottom border
 
         # Save results including famous person's details
         user_results = {
@@ -117,16 +123,21 @@ class EmotionalIntelligenceQuiz:
 
         # Get tailored advice and books based on emotional intelligence level
         advice_data = emotional_intelligence_advice[ei_level]
-
+        
         # Display results in the CLI
-        print(f"\nYour emotional intelligence level is: {ei_level}")
-        print("\nAdvice Based on Your Emotional Intelligence Level:")
+        print(Fore.CYAN + "\n" + "=" * 90)  # Top border
+        print(Fore.YELLOW + f"Your Emotional Intelligence Level is: {ei_level}" + Style.RESET_ALL)  # Level in yellow
+        print(Fore.CYAN + "=" * 90 + Style.RESET_ALL)  # Bottom border
+        print(Fore.MAGENTA + "\nAdvice Based on Your Emotional Intelligence Level:" + Style.RESET_ALL)
+        print(Fore.MAGENTA + "-" * 50 + Style.RESET_ALL)  # Separator line
         for item in advice_data["advice"]:
-            print(item)
+            print(Fore.GREEN + item + Style.RESET_ALL)  # Advice in green
 
-        print("\nRecommended Books:")
+        print(Fore.MAGENTA + "\nRecommended Books:" + Style.RESET_ALL)
+        print(Fore.MAGENTA + "-" * 50 + Style.RESET_ALL)  # Separator line
         for book in advice_data["books"]:
-            print(book)
+            print(Fore.RESET + book + Style.RESET_ALL)  # Books in green
+            print(Fore.CYAN + "=" * 50 + Style.RESET_ALL)  # Bottom border
 
         # Prepare results to save
         user_results = {
@@ -185,23 +196,31 @@ class LearningStyleQuiz:
         else:
             learning_style = "Kinesthetic"
 
-        print(f"\nYour learning style is: {learning_style}")
-
+        print(Fore.CYAN + "\n" + "=" * 90)  # Top border
+        print(Fore.YELLOW + f"Your learning style is: {learning_style}" + Style.RESET_ALL)  # Level in yellow
+        print(Fore.CYAN + "=" * 90 + Style.RESET_ALL)  # Bottom border
         # Get advice, resources, and tools based on learning style
         advice_data = learning_style_advice[learning_style]
 
-        print("\n Advice Based on Your Learning Style:")
+              # Print advice
+        print(Fore.MAGENTA + "\nAdvice Based on Your Learning Style:" + Style.RESET_ALL)
+        print(Fore.MAGENTA + "-" * 50 + Style.RESET_ALL)  # Separator line
         for item in advice_data["advice"]:
-            print(item)
+            print(Fore.CYAN + item + Style.RESET_ALL)  # Advice in green
 
-        print("\n Recommended Resources:")
+        # Print recommended resources
+        print(Fore.MAGENTA + "\nRecommended Resources:" + Style.RESET_ALL)
+        print(Fore.MAGENTA + "-" * 50 + Style.RESET_ALL)  # Separator line
         for resource in advice_data["resources"]:
-            print(resource)
+            print(Fore.RESET + resource + Style.RESET_ALL)  # Resources in green
 
-        print("\n Recommended Tools:")
+        # Print recommended tools
+        print(Fore.MAGENTA + "\nRecommended Tools:" + Style.RESET_ALL)
+        print(Fore.MAGENTA + "-" * 50 + Style.RESET_ALL)  # Separator line
         for tool in advice_data["tools"]:
-            print(tool)
+            print(Fore.GREEN + tool + Style.RESET_ALL)  # Tools in green
 
+        print(Fore.CYAN + "=" * 50 + Style.RESET_ALL)  # Bottom border
         # Save results
         user_results = {
             "score": score,

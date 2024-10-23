@@ -1,4 +1,8 @@
 #  lists and dictionaries to store questions and user responses.
+from colorama import init, Fore, Style
+
+# Initialize Colorama
+init()
 questions = [
     {
         "question": "You enjoy social gatherings.",
@@ -194,4 +198,6 @@ def display_question(q):
      display_question(q)
     answer = int(input("Select option (1-4): ")) - 1
     score += q["weights"][answer]
+
+
     

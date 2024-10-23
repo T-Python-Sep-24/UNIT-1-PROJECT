@@ -1,5 +1,3 @@
-# famous_people.py
-
 famous_people = {
     "Extrovert": {
         "name": "Steve Jobs",
