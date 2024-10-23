@@ -73,6 +73,7 @@ class Player:
                 #trendig games
                 game_instance=Game("Trending","Trending")
                 print(game_instance.display_trending_game())
+                print("---"*16)
                 print(colorama.Fore.BLUE+"1- Adventure")
                 print(colorama.Fore.BLUE+"2- Rhythm")
                 print(colorama.Fore.BLUE+"3- Crazy Questions")
@@ -251,18 +252,23 @@ Objectives: Your goal is to match pairs of numbers and reveal parts of a hidden 
         #to reach to member function as player
         if self.get_player_type()=="visitor":
             while True:
+                print(colorama.Back.WHITE+colorama.Fore.BLACK+"COMMUNITY"+colorama.Back.RESET,"\n")
                 print(dummy_member.display_best_players())
-                print(colorama.Fore.BLUE+"---"*6," Community Messages ","---"*6)
+                print("---"*16)
+                print(colorama.Fore.BLUE+"---"*6," Messages ","---"*6)
                 for msg in self.__masseges:
                     statement=msg.split(":")
                     print(colorama.Fore.BLUE+statement[0],":",colorama.Fore.WHITE+statement[1],"\n")
-                print(colorama.Fore.BLUE+"----------------------"*4)
+                print(colorama.Fore.BLUE+"----------------------"*2)
                 break
         
         else: 
             while True:
+                print(colorama.Back.WHITE+colorama.Fore.BLACK+"COMMUNITY"+colorama.Back.RESET,"\n")
+
                 print(self.display_best_players())
-                print(colorama.Fore.BLUE+"---"*5," Community Messages ","---"*5)
+                print("---"*16)
+                print(colorama.Fore.BLUE+"---"*6," Messages ","---"*6)
                 for msg in self.__masseges:
                     statement=msg.split(":")
                     print(colorama.Fore.BLUE+statement[0],":",colorama.Fore.WHITE+statement[1],"\n")

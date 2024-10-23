@@ -1,2 +1,0 @@
-from freegames import pacman
-

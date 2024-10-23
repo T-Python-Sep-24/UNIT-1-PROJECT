@@ -25,11 +25,12 @@ while True:
         clear_screen()
         print(colorama.Fore.WHITE +"Join our community and enjoy more features! ✨")
         print(colorama.Fore.BLUE +'1- Sign up now')
-        print(colorama.Fore.BLUE +"2- Go directly to the games")
+        print(colorama.Fore.BLUE +"2- Continue as visitor")
         player_choice=input(colorama.Fore.WHITE +"Your Choice: ")
 
 
-        if player_choice=="1":     
+        if player_choice=="1": 
+            clear_screen()    
             print(colorama.Back.WHITE+colorama.Fore.BLACK+"SIGN UP"+colorama.Back.RESET,"\n")
             print(colorama.Fore.WHITE +"Fill the form please.")
             player_name=input(colorama.Fore.BLUE +"Please enter your name:"+colorama.Fore.RESET)

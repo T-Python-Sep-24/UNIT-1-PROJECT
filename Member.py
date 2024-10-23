@@ -136,7 +136,7 @@ class Member(Player):
         if updated_info=="1":
             member_list= self.__load_from_file('members.pkl')
             print(f"Current Name: {self.get_member_name().capitalize()}")
-            new_name=input(colorama.Fore.BLUE+"Please enter your new name:")
+            new_name=input(colorama.Fore.BLUE+"Please enter your new name:"+colorama.Fore.RESET)
             if self.is_name_taken(new_name):
                 print(colorama.Fore.RED+"The name is taken. Choose another name.")
                 input(colorama.Fore.WHITE+'Press Enter to continue >>>\n')
@@ -157,7 +157,7 @@ class Member(Player):
             member_list= self.__load_from_file('members.pkl')
             #check pass
             print(f"Current Password: {self.get_member_password()}")
-            new_pass=input(colorama.Fore.BLUE+"Enter your new password (6 digits):")
+            new_pass=input(colorama.Fore.BLUE+"Enter your new password (6 digits):"+colorama.Fore.RESET)
             if  new_pass.isdigit() and len(new_pass)==6:   
             
                 self.set_member_password(new_pass)

@@ -5,7 +5,7 @@ import time
 import keyboard
 import colorama
 import subprocess
-import os
+import sys
 
 class Game:
     def __init__(self,name:str,game_disc:str,game_style:str='computer') -> None:
@@ -80,15 +80,18 @@ class Game:
         self.__save_to_file('games.pkl')
 
     def display_trending_game(self)-> str:
-        games_list= self.__games_list
-        
-        best_repitition=[]
-        games_list.sort(key=lambda x: x["repetition"],reverse=True)
-        for r in range(0,min(3, len(games_list))):  
-            best_repitition.append(games_list[r])
-        return colorama.Fore.RESET+f"Trending Games 🔥: {colorama.Fore.YELLOW+best_repitition[0]["name"]}, \
+       try:
+            games_list= self.__games_list 
+            best_repitition=[]
+            games_list.sort(key=lambda x: x["repetition"],reverse=True)
+            for r in range(0,min(3, len(games_list))):  
+                best_repitition.append(games_list[r])
+            return colorama.Fore.RESET+f"Trending Games 🔥: {colorama.Fore.YELLOW+best_repitition[0]["name"]}, \
 {best_repitition[1]["name"]}, \
 {best_repitition[2]["name"]+colorama.Fore.RESET}"
+       except IndexError :
+           print(colorama.Fore.RED +"There is no enough games")
+           input(colorama.Fore.WHITE+'Press Enter to continue >>>')
         
         
 
@@ -410,11 +413,8 @@ Correct Answer: {ques_choosen["right"]}''')
         
         try:
             self.__increase_game_repetition()
-            script_path = os.path.join(os.path.dirname(__file__), 'run_pacman.py')
-            result=subprocess.run(['python', script_path],capture_output=True, text=True)
-            print(result.stdout)
-            print(result.stderr)
-            input("wewewe")
+            python_executable = sys.executable  # This gets the full path of the current Python interpreter
+            subprocess.run([python_executable, '-m', 'freegames', 'play', 'pacman'], capture_output=True, text=True)
         except Exception as e:
             print(e)
         finally:
@@ -424,7 +424,8 @@ Correct Answer: {ques_choosen["right"]}''')
     def memory_game(self):
         try:
             self.__increase_game_repetition()
-            subprocess.run(['freegames', 'play', 'memory'])
+            python_executable = sys.executable  # This gets the full path of the current Python interpreter
+            subprocess.run([python_executable, '-m', 'freegames', 'play', 'memory'], capture_output=True, text=True)
         except Exception as e:
             print(e)
         finally:
