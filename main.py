@@ -22,9 +22,9 @@ def loadUsers():
             #Read the list of users from a pickle file and store it in the variable
             users = list(pickle.load(file))
     except FileNotFoundError:
-        print(Text("File doesn't exist.", style="red"))
+        print(Text("File doesn't exist.", style="italic red"))
     except Exception as e:
-        print(Text(f"{e}", style="red"))
+        print(Text(f"{e}", style="italic red"))
 
 def saveUsers(user: Person):
     '''This function saves users to a pickle file'''
@@ -69,8 +69,8 @@ def updateCustomer(customer: Customer) -> Customer:
                 while True:
                     newPhone: str = Prompt.ask("[#aceaff]New phone number[/]")
                     if not phoneValid(newPhone):
-                        print(Text("Phone number should be 10 digits starting with (05).", style= "red"), end=" ")
-                        Prompt.ask("[#fff2f2]Try again..[/]")
+                        print(Text("Phone number should be 10 digits starting with (05).", style= "italic red"), end=" ")
+                        Prompt.ask("[italic #ffd7f0]Try again..[/]")
                     else:
                         user.setPhone(newPhone)
                         print(Text("Phone was updated successfully.", style="#9affbc"))
@@ -82,9 +82,9 @@ def updateCustomer(customer: Customer) -> Customer:
                 while True:
                     newPassword: str = Prompt.ask("[#aceaff]New password[/]")
                     if not passwordValid(newPassword):
-                        print("[red bold]Password too weak[/], [#fff2f2]your password should satisfy the following:[/]")
-                        print(Text("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)\n", style = "#fff2f2"), end =" ")
-                        Prompt.ask("[#fff2f2]Try again[/]")
+                        print("[red bold]Password too weak[/], [#ffd7f0]your password should satisfy the following:[/]")
+                        print(Text("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)", style = "#ffd7f0"))
+                        Prompt.ask("[italic #ffd7f0]Try again[/]")
                     else:
                         user.setPassword(newPassword)
                         print(Text("Your password was updated successfully.", style="#9affbc"))
@@ -102,7 +102,7 @@ def updateCustomer(customer: Customer) -> Customer:
             elif choice == '7':
                 break
             
-            #Save the update user in the customer variable then return it later
+            #Save the updated user in the customer variable to return it
             customer = user
     
     #Update the list of users with the new data
@@ -114,7 +114,6 @@ def updateCustomer(customer: Customer) -> Customer:
 
 def updateCustomerCart(customer: Customer, cart: Cart) -> Customer:
     '''This function updates the details of the customer's cart on the file'''
-    
     #Get the list of users from the file
     loadUsers()
     #Loop over the list of users and find the customer
@@ -162,10 +161,10 @@ def checkUserLogin(phone: str, password: str) -> Person:
             found = True
             return user
         elif user.getPhone() == phone and user.getPassword() != password: 
-            print(Text(f"Incorrect password for phone number {phone}", style="red"))
+            print(Text(f"Incorrect password for phone number {phone}", style="italic red"))
             return None
     if not found:
-        print(Text("There is no account with that phone number.", style= "red"))
+        print(Text("There is no account with that phone number.", style= "italic red"))
         return None
           
 def checkUserRegister(phone: str, password: str) -> bool:
@@ -173,10 +172,10 @@ def checkUserRegister(phone: str, password: str) -> bool:
     loadUsers()
     for user in users:
         if user.getPhone() == phone and user.getPassword() == password:
-            print(Text(f"You already have an account {user.getName()}!", style="red"))
+            print(Text(f"You already have an account {user.getName()}!", style="italic red"))
             return True
         elif user.getPhone() == phone and user.getPassword() != password: 
-            print(Text("An account with that number already exists", style="red"))
+            print(Text("An account with that number already exists", style="italic red"))
             return True
         else:
             return False            
@@ -295,7 +294,7 @@ def customerMenu(customer: Customer):
                             break
                         customer = updateCustomerCart(customer, cart)
                         #Keep asking customer if they want to add more items to their cart until they enter n
-                        addMore: bool = Confirm.ask(Text("Add more products?", style="bold #feffde"))
+                        addMore: bool = Confirm.ask(Text("Add more products?", style="#feffde"))
                         if addMore:
                             continue
                         elif not addMore:
@@ -303,27 +302,35 @@ def customerMenu(customer: Customer):
 
                 #Remove product from cart            
                 elif cartChoice == '2':
-                    print(Rule(Text("Remove from Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))
-                    prodName: str = Prompt.ask(Text("Enter the name of the product you want to remove", style="bold #fbfbe2"))
-                    isRemoved: bool = cart.removeFromCart(prodName)
-                    if isRemoved:
-                        customer = updateCustomerCart(customer, cart)
-                        print(Text(f"{prodName} has been successfully removed from cart.", style="#9affbc"))
-                    else: 
-                        print(Text(f"{prodName} is not in your cart.", style="red"))
-                
+                    if cart.getOrderedProducts() != []:
+                        print(Rule(Text("Remove from Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))                    
+                        prodName: str = Prompt.ask(Text("Enter the name of the product you want to remove", style="#fbfbe2"))
+                        isRemoved: bool = cart.removeFromCart(prodName)
+                        if isRemoved:
+                            customer = updateCustomerCart(customer, cart)
+                            Prompt.ask(Text(f"{prodName} has been successfully removed from cart.", style="#9affbc"))
+                        else: 
+                            Prompt.ask(Text(f"{prodName} is not in your cart.", style="italic red"))
+                    else:
+                        print(Text("No products to remove..", style="italic red"))
+                        break
+                    
                 #Update cart contents
                 elif cartChoice == '3':
-                    print(Rule(Text("Update Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))
-                    prodName: str = Prompt.ask(Text("Enter the name of the product you want to update", style="bold #fbfbe2"))
-                    #Only accepts integers from the customer
-                    newQty: int = IntPrompt.ask(Text("New quantity", style="bold #fbfbe2"))
-                    isUpdated: bool = cart.updateCart(prodName, newQty)
-                    if isUpdated:
-                        customer = updateCustomerCart(customer, cart)
-                        print(Text(f"{prodName}'s quantity has been successfully updated.", style="#9affbc"))
+                    if cart.getOrderedProducts() != []:
+                        print(Rule(Text("Update Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))
+                        prodName: str = Prompt.ask(Text("Enter the name of the product you want to update", style="#fbfbe2"))
+                        #Only accepts integers from the customer
+                        newQty: int = IntPrompt.ask(Text("New quantity", style="#fbfbe2"))
+                        isUpdated: bool = cart.updateCart(prodName, newQty)
+                        if isUpdated:
+                            customer = updateCustomerCart(customer, cart)
+                            Prompt.ask(Text(f"{prodName}'s quantity has been successfully updated.", style="#9affbc"))
+                        else:
+                            Prompt.ask(Text(f"{prodName} is not in your cart.", style="italic red"))
                     else:
-                        print(Text(f"{prodName} is not in your cart.", style="red"))
+                        print(Text("No products to update..", style="italic red"))
+                        break
                 
                 #Clear cart
                 elif cartChoice == '4':
@@ -332,66 +339,68 @@ def customerMenu(customer: Customer):
                         customer = updateCustomerCart(customer, cart)
                         print(Text("Your cart has been cleared.", style="#9affbc"))
                     else:
-                        print(Text("Your cart is already empty.", style="red"))
+                        print(Text("Your cart is already empty.", style="italic red"))
                     break
                 
                 #Checkout 
                 elif cartChoice == '5':
-                    print(Rule(Text("Checkout", style="bold #feffde"), characters="- ", style="bold #fdffb0"))
-                    paymentMethod: str = Prompt.ask(Text("Payment method:\n1. Credit Card.\n2. Cash.\nYour choice", style="#fbfbe2",), choices=['1','2'], show_choices=False)
-                    payment: str = ""
-                    #Set payment value based on customer choice of payment method
-                    if paymentMethod == '1':
-                        #Check that the cutomer enters valid values
-                        while True:
-                            ccNumber: int = IntPrompt.ask("[#fbfbe2]Enter your credit card's number[/]")
-                            #Credit card should have 16 digits
-                            if ccNumber > 9999999999999999 or ccNumber < 1000000000000000:
-                                print("[red]Please enter a valid credit card number.[/]")
-                                continue
-                            cvv: int = IntPrompt.ask("[#fbfbe2]Enter the cvv[/]")
-                            if cvv > 999 or cvv < 100:
-                                print("[red]Please enter a valid cvv number.[/]")
-                                continue
-                            break 
-                        payment = "Credit Card"
-                            
-                    elif paymentMethod == '2':
-                        payment = "Cash"
-                    
-                    #Delivery option 
-                    deliver: bool = Confirm.ask(Text(f"Do you want delivery?\nP.S: Delivery cost 10SR", style="#fdffc3"))
-                    if deliver:
-                        deliverTo: str = customer.getDeliveryAddress()
-                        #Show the current delivery address and ask customer if they want to deliver to a different address
-                        print(f"[bold #fdffc3]Order will be deliverd to:[/] [italic #fbfbe2],{deliverTo}[/]")
-                        changeAddress: bool = Confirm.ask(Text("Do you want to change the delivery address?", style="#fdffc3"))
-                        #If the customer wants to change the address, prompt them for the new address
-                        if changeAddress:
-                            deliverTo = Prompt.ask(Text("Enter the new delivery address", style="#fdffc3"))
-                        #Create the new order object
-                        newOrder: Order = Order(cart.getOrderedProducts(), payment, deliver, deliverTo)
-                    else:
-                        newOrder: Order = Order(cart.getOrderedProducts(), payment)
-                    #Get the list of customer's order history and add the new order to them 
-                    orders: list[Order] = customer.getOrderHistory()
-                    orders.append(newOrder)
+                    if cart.getOrderedProducts() != []:
+                        print(Rule(Text("Checkout", style="bold #feffde"), characters="- ", style="bold #fdffb0"))
+                        paymentMethod: str = Prompt.ask(Text("Payment method:\n1. Credit Card.\n2. Cash.\nYour choice", style="#fbfbe2",), choices=['1','2'], show_choices=False)
+                        payment: str = ""
+                        #Set payment value based on customer choice of payment method
+                        if paymentMethod == '1':
+                            #Check that the cutomer enters valid values
+                            while True:
+                                ccNumber: int = IntPrompt.ask("[#fbfbe2]Enter your credit card's number[/]")
+                                #Credit card should have 16 digits
+                                if ccNumber > 9999999999999999 or ccNumber < 1000000000000000:
+                                    print("[italic red]Please enter a valid credit card number.[/]")
+                                    continue
+                                cvv: int = IntPrompt.ask("[#fbfbe2]Enter the cvv[/]")
+                                if cvv > 999 or cvv < 100:
+                                    print("[italic red]Please enter a valid cvv number.[/]")
+                                    continue
+                                break 
+                            payment = "Credit Card"
+                                
+                        elif paymentMethod == '2':
+                            payment = "Cash"
+                        
+                        #Delivery option 
+                        deliver: bool = Confirm.ask(Text(f"Do you want delivery?\nP.S: Delivery cost 10SR", style="#fdffc3"))
+                        if deliver:
+                            deliverTo: str = customer.getDeliveryAddress()
+                            #Show the current delivery address and ask customer if they want to deliver to a different address
+                            print(f"[#fdffc3]Order will be deliverd to:[/] [italic #fbfbe2],{deliverTo}[/]")
+                            changeAddress: bool = Confirm.ask(Text("Do you want to change the delivery address?", style="#fdffc3"))
+                            #If the customer wants to change the address, prompt them for the new address
+                            if changeAddress:
+                                deliverTo = Prompt.ask(Text("Enter the new delivery address", style="#fdffc3"))
+                            #Create the new order object
+                            newOrder: Order = Order(cart.getOrderedProducts(), payment, deliver, deliverTo)
+                        else:
+                            newOrder: Order = Order(cart.getOrderedProducts(), payment)
+                        #Get the list of customer's order history and add the new order to them 
+                        orders: list[Order] = customer.getOrderHistory()
+                        orders.append(newOrder)
 
-                    #Update the list of users with the new data
-                    customer = updateCustomerOrders(customer, orders)
-                    print(Text("Order was successfully completed.", style="#9affbc"))
-                    print(Rule(Text("Thank you for shopping at Stellar Bakery, come again soon!", style="bold #e7e4ff"), characters="- ", style="italic bold #aca2f5"))
-                    
-                    #Clearing cart
-                    cart = Cart()
-                    customer = updateCustomerCart(customer, cart)
-                    break
+                        #Update the list of users with the new data
+                        customer = updateCustomerOrders(customer, orders)
+                        print(Text("Order was successfully completed.", style="#9affbc"))
+                        print(Rule(Text("Thank you for shopping at Stellar Bakery, come again soon!", style="bold #e7e4ff"), characters="- ", style="italic bold #aca2f5"))
+                        
+                        #Clearing cart
+                        cart = Cart()
+                        customer = updateCustomerCart(customer, cart)
+                        break
+                    else:
+                        print(Text("No products to checkout..", style="italic red"))
+                        break
 
                 #Back to previous menu
                 elif cartChoice == '6':
-                    break
-
-                Prompt.ask(Text("Press Enter to continue..", style="white italic"))
+                    break  
         
         #Create a new order       
         elif choice == '3':
@@ -405,9 +414,11 @@ def customerMenu(customer: Customer):
             prodName: str = Prompt.ask("[#feffde]Product name[/]")
             #Only accepts integers from the user
             prodQty: int = IntPrompt.ask("[#feffde]Quantity[/]")
-            cart.addToCart(prodName, prodQty)
+            isAdded: bool = cart.addToCart(prodName, prodQty)
+            #Check if the product was added successfully
+            if not isAdded:
+                break
             customer = updateCustomerCart(customer, cart)
-            print(Text(f"{prodName} was successfully added to your cart.", style="#9affbc"))
 
         #View and Update profile 
         elif choice == '4':
@@ -435,6 +446,7 @@ def main():
     Function that contains all main operations
     '''
     choice: str = ""
+    #Keep showing this list until the user enters 1 
     while choice != '1':
         print(Rule(Text("Welcome to Stellar Bakery", style="bold italic #f0cfff"), characters="- ", style="bold #e09eff"))
         choice = Prompt.ask("[#f5e6fc]1. Login.\n2. Register.\nYour choice[/]", choices=['1','2'], show_choices=False)
@@ -480,15 +492,15 @@ def main():
                 phone: str = Prompt.ask("[#daf5ff]Enter your phone number[/]")
                 #Validate phone format
                 if not phoneValid(phone):
-                    print(Text("Phone number should be 10 digits starting with (05).", style= "red"), end=" ")
-                    Prompt.ask("[#fff2f2]Try again..[/]")
+                    print(Text("Phone number should be 10 digits starting with (05).", style= "italic red"), end=" ")
+                    Prompt.ask("[italic #ffd7f0]Try again..[/]")
                     continue
                 password: str = Prompt.ask("[#daf5ff]Enter your password[/]")
                 #Validate password format
                 if not passwordValid(password):
-                    print("[red bold]Password too weak[/], [#f5cda4]your password should satisfy the following:[/]")
-                    print(Text("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)\n", style = "#fff2f2"), end =" ")
-                    Prompt.ask("[#fff2f2]Try again..[/]")
+                    print("[red bold]Password too weak[/], [#ffd7f0]your password should satisfy the following:[/]")
+                    print(Text("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)\n", style = "#ffd7f0"), end =" ")
+                    Prompt.ask("[italic #ffd7f0]Try again..[/]")
                     continue
                 deliveryAddress: str = Prompt.ask("[#daf5ff]Enter your delivery address[/]")
                     

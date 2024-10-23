@@ -3,7 +3,6 @@ from datetime import datetime
 #Using rich library to style output on terminal
 from rich.table import Table
 from rich import box
-from rich.text import Text
 
 class OrderedProduct:
 
@@ -76,10 +75,10 @@ class Order:
             totalPerProduct: float = prod.getQty() * prod.getPrice()
             productsTable.add_row(f"[#fdffc3]{prod.getName()}[/]", f"[#bdeeff]{prod.getQty()}[/]", f"[#a4d5b5]{totalPerProduct}[/]")
         if self.isDelivered():
-            productsTable.add_row(f"[#aceaff]Delivered to:[/]", f"[#daf5ff]{self.getDeliveryAddress()}[/]")
+            productsTable.add_row(f"[#d6d0ff]Delivered to:[/]", f"[#e7e4ff]{self.getDeliveryAddress()}[/]")
         else:
-            productsTable.add_row(None, f"[#aceaff]Ordered for pickup[/]", None)
+            productsTable.add_row(None, f"[#d6d0ff]Ordered for pickup[/]", None)
 
-        productsTable.add_row(f"[#aceaff]Ordered on:[/]", f"[#daf5ff]{datetime.strftime(self.__date, '%Y-%m-%d %H:%M:%S')}[/]")
+        productsTable.add_row(f"[#d6d0ff]Ordered on:[/]", f"[#e7e4ff]{datetime.strftime(self.__date, '%Y-%m-%d %H:%M:%S')}[/]")
         
         return productsTable

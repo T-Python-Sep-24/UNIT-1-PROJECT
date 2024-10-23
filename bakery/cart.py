@@ -5,6 +5,7 @@ import json
 from rich.table import Table
 from rich import box
 from rich.text import Text
+from rich import print
 
 class Cart:
 
@@ -30,14 +31,14 @@ class Cart:
                     print(Text(f"{productName} was successfully added to your cart.", style="#9affbc"))
                     return True
                 else:
-                    print(Text("Available quantity is less than the ordered quantity.", style="red"))
+                    print(Text("Available quantity is less than the ordered quantity.", style="italic red"))
                     return False
             else:
-                print(Text(f"Product '{productName}' isn't on the menu.", style="red"))
+                print(Text(f"Product '{productName}' isn't on the menu.", style="italic red"))
                 return False
 
-    def removeFromCart(self, prodName):
-        '''A method that removes a product with a specific name from the cart'''
+    def removeFromCart(self, prodName) -> bool:
+        '''A method that removes a product with a specific name from the cart. Returns True if product is successfully removed'''
         for prod in self.__orderedProducts:
             if prod.getName() == prodName:
                 #Return the canclled product to the menu of available products
@@ -48,7 +49,7 @@ class Cart:
         return False
 
     def updateCart(self, prodName: str, qty: int) -> bool:
-        '''A method that updates the quantity of a product in the cart'''
+        '''A method that updates the quantity of a product in the cart. Returns True if product is successfully updated'''
         for prod in self.__orderedProducts:
             if prod.getName() == prodName:
                 #First: return the products that are in the cart back to the menu
@@ -63,7 +64,6 @@ class Cart:
     def returnProductsToMenu(self, prodName: str, qty: int):
         '''This method returns the cancelled products to the menu of available products'''
         menu: dict = self.__loadFromJSON()
-        
         if menu:
             #Check that the product is on the menu
             if prodName in menu:
@@ -76,7 +76,6 @@ class Cart:
     def decreaseAvailableProductsQty(self, prodName: str, qty: int):
         '''This method updates a product's quantity then saves the modified menu to the json file'''
         menu: dict = self.__loadFromJSON()
-        
         if menu:
             #Check that the product is on the menu
             if prodName in menu:
@@ -91,11 +90,10 @@ class Cart:
         total: float = 0.0
         for prod in self.__orderedProducts:
             total += (prod.getPrice() * prod.getQty())
-        
         return total
     
     def viewCart(self) -> Table:
-        '''This method displays cart contents when called'''  
+        '''This method organizes and displays cart contents when called'''  
 
         #Creating a table object to display menu
         cartTable: Table = Table(title = "Cart Details", title_style="italic bold #fdffc3", border_style="#dadada",expand=False, box=box.SIMPLE_HEAVY)
@@ -111,7 +109,7 @@ class Cart:
                 totalProductPrice: float = prod.getPrice() * prod.getQty()
                 cartTable.add_row(f"[#fdffc3]{prod.getName()}[/]", f"[#bdeeff]{prod.getQty()}[/]", f"[#a4d5b5]{totalProductPrice} SR[/]")
             cartTable.add_section()
-            cartTable.add_row(None, None, f"Total price: {self.calculateTotal()} SR", style="white")
+            cartTable.add_row(None, None, f"Total price: {self.calculateTotal()} SR", style="#ccefd8")
             return cartTable
         else:
             return Text("Your cart is empty..", style="italic #fdffc3")

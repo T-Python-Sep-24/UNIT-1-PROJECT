@@ -6,7 +6,7 @@
     },
     "Double Chocolate Cookies": {
         "qty": 50,
-        "price": 6.5, 
+        "price": 6.5,
         "exp date": "2024-10-24"
     },
     "Brownies": {
@@ -17,7 +17,7 @@
     "Carrot Cake": {
         "qty": 25,
         "price": 10.0,
-        "exp date": "2024-10-24"      
+        "exp date": "2024-10-24"
     },
     "Croissant": {
         "qty": 30,

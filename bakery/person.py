@@ -8,6 +8,7 @@ from rich.table import Table
 from rich import box
 from rich.prompt import Prompt, IntPrompt, FloatPrompt
 from rich.console import Group
+from rich.text import Text
 
 class Person:
 
@@ -231,7 +232,7 @@ class Employee(Person):
                     json.dump(menu, file, indent = 4)
                 return Text(f"Product '{prodName}' was deleted successfully.", style="#baf5ce")
             else: 
-                return Text(f"Product '{prodName}' isn't on the menu.", style="red")
+                return Text(f"Product '{prodName}' isn't on the menu.", style="italic red")
         else: 
             return Text("The menu is empty.", style="italic #fbfbe2")
 
@@ -252,7 +253,7 @@ class Employee(Person):
                     json.dump(menu, file, indent = 4)
                 return Text(f"Name of '{prodName}' was updated successfully.", style="#baf5ce")
             else:
-                return Text(f"Product '{prodName}' isn't on the menu.", style="red")
+                return Text(f"Product '{prodName}' isn't on the menu.", style="italic red")
         else: 
             return Text("Your menu is empty.", style="italic #fbfbe2")
 
@@ -272,7 +273,7 @@ class Employee(Person):
                     json.dump(menu, file, indent = 4)
                 return Text(f"Quantity of '{prodName}' was updated successfully.", style="#baf5ce")
             else:
-                return Text(f"Product '{prodName}' isn't on the menu.", style="red")
+                return Text(f"Product '{prodName}' isn't on the menu.", style="italic red")
         else: 
             return Text("Your menu is empty.", style="italic #fbfbe2")
         
@@ -292,7 +293,7 @@ class Employee(Person):
                     json.dump(menu, file, indent = 4)
                 return Text(f"Price of '{prodName}' was updated successfully.", style="#baf5ce")
             else:
-                return Text(f"Product '{prodName}' isn't on the menu.", style="red")
+                return Text(f"Product '{prodName}' isn't on the menu.", style="italic red")
         else: 
             return Text("The menu is empty.", style="italic #fbfbe2")
         
