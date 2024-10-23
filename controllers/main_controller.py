@@ -6,6 +6,10 @@ class MainController:
     def __init__(self, main_view: v.MainView):
         self.view = main_view
 
+    def display_welcome(self):
+        """ Show welcome message """
+        self.view.display_welcome()
+
     def show_menu(self):
         """ Show menu by calling display menu from MainView"""
         self.view.display_menu()

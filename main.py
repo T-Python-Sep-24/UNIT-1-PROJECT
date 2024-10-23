@@ -30,6 +30,8 @@ deleter_model = d_m.DeleterModel()
 deleter_view = d_v.DeleterView()
 deleter_controller = d_c.DeleterController(deleter_view, deleter_model)
 
+main_controller.display_welcome()
+
 while True:
     main_controller.show_menu()
     pick: int = input("Enter: ")
@@ -53,6 +55,3 @@ while True:
     else:
         main_controller.display_wrong_input()
                 
-
-
-

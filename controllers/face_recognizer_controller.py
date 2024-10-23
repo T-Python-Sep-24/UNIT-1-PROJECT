@@ -1,3 +1,5 @@
+import face_recognition
+
 from models import face_recognizer_model as f_m
 from views import face_recognizer_view as f_v
 
@@ -19,13 +21,38 @@ class FaceRecognizerController():
             return
         else:
             while True:
-                pass
                 # show images list to pick a face from
+                self.face_rec_view.display_face_rec_menu(images_src_files)
+                
+                while True:
+                    try:
+                        pick: int = input("Enter: ")
+                        # check if enterd number can be used as list index
+                        if int(pick) <= len(images_src_files):
+                            break
+                    except:
+                        pass
+
+                have_many_faces: list = self.face_rec_model.check_many_faces(pick)
 
                 # if image has many faces:
-                    # display image has many faces. Please pick another image
-                # else:
-                    # type the folder_name:
+                if have_many_faces[0]:
+                    self.face_rec_view.display_wrong_image()
+                else:
+                    while True:
+                        try:
+                            dest_folder_name: str = input("Type the of the folder to save images to: ")
+                            if len(dest_folder_name) > 0:
+                                break
+                        except:
+                            pass
+
+                    img_path = have_many_faces[1]
+
+                    self.face_rec_model.copy_mathced_images(dest_folder_name, img_path)
+                    return
+
+
                     # create the folder
 
                     # known_image = ...

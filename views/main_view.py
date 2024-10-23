@@ -14,8 +14,14 @@ class MainView:
             "7: to exit\n"
         )
 
+        self.message: str = "Welcome to Album Orgnizer Program!"
+        self.border: str = "*" * len(self.message)
+        
+    def display_welcome(self):
+        print(f"{self.border}\n{self.message}\n{self.border}\n")
+
     def display_menu(self):
-        print(self.main_menu)
+        print(f"{self.border}\n{self.main_menu}{self.border}")
 
     def display_thank_you(self):
         print("Thank you for using the Album orgnizer program, come back again soon")
