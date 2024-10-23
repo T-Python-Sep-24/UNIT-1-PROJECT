@@ -35,21 +35,24 @@ class Manager:
                 print("Invalid option. Please enter a number between 1 and 6.")
 
     def create_project(self):
+        try:
+            print("\n--- Create New Project ---")  # Debug statement
 
-        name = input("Enter project name: ")
-        print(f"Received name: {name}")  # Debugging print
+            name = input("Enter project name: ")
+            description = input("Enter project description: ")
+            start_date = input("Enter project start date (YYYY-MM-DD): ")
+            end_date = input("Enter project end date (YYYY-MM-DD): ")
+            team_members = input("Enter team members (comma-separated): ").split(",")
 
-        description = input("Enter project description: ")
-        start_date = input("Enter project start date (YYYY-MM-DD): ")
-        end_date = input("Enter project end date (YYYY-MM-DD): ")
-        team_members = input("Enter team members (comma-separated): ").split(",")
-
-        if Project.is_valid_date(start_date) and Project.is_valid_date(end_date):
-            project = Project(name, description, start_date, end_date, team_members)
-            self.projects.append(project)  # Add the project to the list
-            print(f"Project '{name}' created successfully!")
-        else:
-            print("Invalid date format. Please use YYYY-MM-DD.")
+            # Validate the date format
+            if Project.is_valid_date(start_date) and Project.is_valid_date(end_date):
+                project = Project(name, description, start_date, end_date, team_members)
+                self.projects.append(project)  # Add the project to the list
+                print(f"Project '{name}' created successfully!\n")
+            else:
+                print("Invalid date format. Please use YYYY-MM-DD.")
+        except Exception as e:
+            print(f"An error occurred while creating the project: {e}")
 
     def view_team_tasks(self):
         print("Displaying team tasks... (Not implemented)")

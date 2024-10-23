@@ -1,5 +1,7 @@
 import bcrypt
 from user_manager import UserManager
+from manager import Manager
+from employee import Employee
 
 class Login:
     def __init__(self, user_manager):
@@ -17,43 +19,18 @@ class Login:
                 # Check the role after successful login
                 if role == 'Manager':
                     print(f"Welcome back, {username}! You have logged in as a Manager.")
-                    self.manager_dashboard()  # Redirect to Manager dashboard
+                    manager = Manager(self.user_manager)  # Create Manager instance
+                    manager.manager_dashboard()  # Redirect to Manager dashboard
                 elif role == 'Employee':
                     print(f"Welcome back, {username}! You have logged in as an Employee.")
-                    self.employee_dashboard(username)  # Redirect to Employee dashboard
+                    employee = Employee(username)  # Create Employee instance
+                    employee.employee_dashboard()  # Redirect to Employee dashboard
                 else:
                     print("Invalid role type. Please contact your administrator.")
             else:
                 print("User information could not be retrieved.")
         else:
             print("Invalid username or password.")
-
-    def manager_dashboard(self):
-        print("\nManager Dashboard")  
-        while True:
-            print("\nChoose an option:")
-            print("1. View Team Tasks")
-            print("2. Search Team Tasks")
-            print("3. Create Project")
-            print("4. Update Project")
-            print("5. Delete Project")
-            print("6. Exit")
-            option = input("Enter your choice (1-6): ").strip()
-            if option == '6':
-                print("Exiting Manager Dashboard.")
-                break
-
-    def employee_dashboard(self, username):
-        print(f"\nEmployee Dashboard for {username}")  
-        while True:
-            print("\nChoose an option:")
-            print("1. View My Tasks")
-            print("2. Update My Tasks")
-            print("3. Exit")
-            option = input("Enter your choice (1-3): ").strip()
-            if option == '3':
-                print("Exiting Employee Dashboard.")
-                break
 
 if __name__ == "__main__":
     user_manager = UserManager()

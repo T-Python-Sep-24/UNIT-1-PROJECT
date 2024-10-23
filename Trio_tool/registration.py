@@ -28,7 +28,6 @@ class UserManager:
                 'department': department
             }
             self.save_users()
-            print("User registered successfully!")
         else:
             print("Username already exists.")
 
