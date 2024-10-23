@@ -1,111 +1,65 @@
-import os
-import pickle
-import subprocess
+from Team import ProductOwner, DevTeam, QualityAssurance, UiUx, Task, update_task_status
 from rich.console import Console
-
 from rich.table import Table
-def fil_ter():
-    with open('tasks.pkl', 'rb') as file:
-        tasks = pickle.load(file)
-
-class Team:
-    emb_id=101
-    def __init__(self,task:str,role:str):
-        self.task=task
-        self.role=role
-        self.emID=Team.emb_id
-
-    def card(self):
-        pass
-
-
-
-class Task:
-    def __init__(self,task: str, role: str):
-        self.team=Team(task,role)
-
-    @staticmethod
-    def task_adding():
-        try:
-            with open('tasks.pkl', 'wb') as file:
-                tasks = pickle.load(file)
-        except FileNotFoundError:
-            tasks = []
-        task_des = str(input("enter your task:"))
-        task_type = str(input("type of this task?"))
-        new_task = {
-            "task_des": task_des,
-            "task_type": task_type
-        }
-        tasks.append(new_task)
-
-
-def task_return():
-    try:
-
-        console= Console()
-        with open('tasks.pkl', 'rb') as file:
-            tasks = pickle.load(file)
-            table = Table(title="Tasks")
-
-            table.add_column("Hold", justify="center", style="cyan", no_wrap=True)
-            table.add_column("Ready", justify="center", style="magenta")
-            table.add_column("In progress", justify="center", style="magenta")
-            table.add_column("done", justify="center", style="magenta")
-            console.print(table, justify="center")
-            task_hold=[]
-            task_ready=[]
-            task_progress=[]
-            task_done=[]
-            for task  in tasks:
-                task_des=task["task_des"]
-                task_type=task["task_type"]
-
-                if task_type=="hold":
-                    task_hold.append(task_des)
-
-
-                elif task_type=="ready":
-                    task_ready.append(task_des)
-
-                elif task_type=="progress":
-                    task_progress.append(task_des)
-
-                elif task_type=="done":
-                    task_done.append(task_des)
-                else:
-                    console.print()
-            table_max=max(len(task_hold),len(task_ready),len(task_progress),len(task_done))
-            print(table_max)
-            for i in range(table_max):
-                table.add_row(task_hold[i],task_progress[i],task_ready[i],task_done[i])
-            console.print(table,justify="center")
-    except Exception as e:
-        print(e)
-
-
-
-class ProductOwner(Team):
-    def __init__(self, task: str, role: str):
-        super().__init__(task, role)
-
-
-class DevTeam:
-    pass
-
-class QualityAssurance:
-    pass
-class UiUx:
-    pass
 
 if __name__ == "__main__":
-    task_manager = Task('default_task', 'default_role')
+    team_members = {
+        "Product Owner": ProductOwner(),
+        "Developer": DevTeam(),
+        "QA": QualityAssurance(),
+        "UI/UX": UiUx()
+    }
+current_user=None
+while current_user is None:
+    role_input = input("Enter your role (Product Owner, Developer, QA, UI/UX): ")
+    current_user = team_members.get(role_input)
 
-    while True:
-        cont = input("Choose an option - Add task (a), View tasks (v), Exit (e): ")
-        if cont.lower() == 'a':
-            task_manager.task_adding()
-        elif cont.lower() == 'v':
-            task_return()
-        elif cont.lower() == 'e':
+    if current_user:
+        print(f"Logged in as {current_user.role} (ID: {current_user.emID})")
+
+
+    while current_user:
+        cont = input("Choose an option - " +
+                     ("Add task (a), " if current_user.role == "Product Owner" else "") +
+                     "View tasks (v), Update task (u), Exit (e): ")
+
+        if cont == 'a' and current_user.role == "Product Owner":
+            task_des = input("Enter your task: ")
+            task_type = input("Task type (hold, ready, in progress, done): ").strip().lower()
+            assigned_role = input("Assigned team role: ")
+            assigned_to = team_members.get(assigned_role)
+
+            if assigned_to:
+                new_task = Task(task_des, task_type, assigned_to)
+                new_task.save_task()
+                assigned_to.assign_task_to_role(new_task)
+                print(f"Task '{task_des}' assigned to {assigned_to.role}.")
+            else:
+                print("Team role not found.")
+
+        elif cont == 'v':
+            tasks = Task.load_tasks()
+            if tasks:
+                table = Table(title="Task List")
+                table.add_column("Task ID", justify="center", style="cyan")
+                table.add_column("Description", justify="center", style="magenta")
+                table.add_column("Type", justify="center", style="yellow")
+                table.add_column("Assigned To", justify="center", style="white")
+                for task in tasks:
+                    if isinstance(task, Task) and (
+                            current_user.role == "Product Owner" or task.assigned_to.role == current_user.role):
+                        table.add_row(str(task.task_id), task.task_des, task.task_type,
+                                      f"{task.assigned_to.role} (ID: {task.assigned_to.emID})")
+                Console().print(table)
+            else:
+                Console().print("[bold red]No tasks found.[/bold red]")
+
+        elif cont == 'u':
+            update_task_status()
+
+        elif cont == 'e':
+            print("Goodbye!")
             break
+
+        else:
+            print("Please try again.")
