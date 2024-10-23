@@ -73,13 +73,19 @@ def customer_menu():
     while True:
         try:
             customer_id = int(input("Enter your ID: "))
-            if Customer.is_duplicate_id(customer_id):
-                print(f"ID {customer_id} already exists. Please enter a different ID.")
-            else:
-                break 
+            registered_name = Customer.is_duplicate_id(customer_id)  
             
+            if registered_name:
+                if registered_name == customer_name:
+                    print(f"Welcome back, {customer_name}!")
+                    break  
+                else:
+                    print(f"Error: ID {customer_id} is already registered under a different name.")
+            else:
+                print(f"ID {customer_id} is not registered yet. Proceeding with registration.")
+                break  
         except ValueError:
-            print("Invalid input, Please enter a valid number!")
+            print("Invalid input, please enter a valid number!")
 
     customer = Customer(customer_name, customer_id, car_storage, manager)
     customer.load_customer_file()

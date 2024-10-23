@@ -186,5 +186,5 @@ class Customer:
                 customers_data = json.load(f)
                 for customer in customers_data:
                     if customer['id'] == customer_id:
-                        return True
-        return False
+                        return customer['name']  # Return the name associated with the ID
+        return None 
