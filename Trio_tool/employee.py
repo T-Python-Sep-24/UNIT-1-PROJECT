@@ -44,115 +44,77 @@ class Task:
         print("-" * 40)
 
 class Employee:
-    def __init__(self, name):
-        self.name = name
-        self.tasks = []
+    def __init__(self, username):
+        self.username = username
+        self.tasks = []  # List to store tasks for this employee
 
-def create_task(self, task_name, task_description, task_type, task_date):
-    """Create a new task."""
-    if not is_valid_date(task_date):
-        print("Invalid date format. Please use YYYY-MM-DD.")
-        return
-
-    print("Select a status for the task:")
-    for idx, status in enumerate(Task.STATUSES):
-        print(f"{idx + 1}: {status}")
-
-    status_choice = int(input("Enter the number corresponding to the status: ")) - 1
-    if status_choice < 0 or status_choice >= len(Task.STATUSES):
-        print("Invalid choice. Task not created.")
-        return
-
-    task_status = Task.STATUSES[status_choice]
-    task = Task(task_name, task_description, task_type, task_date, task_status)
-    self.tasks.append(task)
-    print(f"Task '{task_name}' created successfully.")
-
-
-    def view_tasks(self, search_term=None):
-        """View all tasks or search for specific tasks."""
-        found_tasks = [task for task in self.tasks if search_term.lower() in task.name.lower()] if search_term else self.tasks
-
-        if not found_tasks:
-            print("No tasks found.")
-        else:
-            print(f"Tasks for {self.name}:")
-            for task in found_tasks:
-                task.display_task_details()
-
-    def update_task(self, task_id, new_task_name, new_task_description, new_task_type, new_task_date, new_status):
-        """Update an existing task."""
-        task = next((t for t in self.tasks if t.id == task_id), None)
-        if task:
-            task.update_task(new_task_name, new_task_description, new_task_type, new_task_date, new_status)
-        else:
-            print("Invalid task ID. Please provide a valid ID.")
-
-    def search_task(self, task_name):
-        """Search for a task by name."""
-        found = False
-        for task in self.tasks:
-            if task_name.lower() in task.name.lower():
-                task.display_task_details()
-                found = True
-        if not found:
-            print(f"No tasks found for the search term '{task_name}'.")
-
-    def delete_task(self, task_id):
-        """Delete a task by ID."""
-        task = next((t for t in self.tasks if t.id == task_id), None)
-        if task:
-            confirmation = input(f"Are you sure you want to delete the task '{task.name}'? (yes/no): ").strip().lower()
-            if confirmation == "yes":
-                self.tasks.remove(task)
-                print(f"Task '{task.name}' has been deleted successfully.")
-            else:
-                print("Deletion canceled.")
-        else:
-            print("Invalid task ID. Please provide a valid ID.")
-
-    def task_management_menu(self):
-        """Display the task management menu and handle user input."""
+    def employee_dashboard(self):
         while True:
-            print("\nChoose from the Options:")
+            print("\nEmployee Dashboard\n")
             print("1. Create Task")
-            print("2. View/Search Tasks")
+            print("2. View Tasks")
             print("3. Update Task")
-            print("4. Search Task")
-            print("5. Delete Task")
-            print("6. Exit")
+            print("4. Delete Task")
+            print("5. Exit")
+            choice = input("Enter your choice (1-5): ").strip()
 
-            option = input("Choose an option (1-6): ")
-
-            if option == "1":
-                task_name = input("Enter task name: ")
-                task_description = input("Enter task description: ")
-                task_type = input("Enter task type: ")
-                task_date = input("Enter task date (YYYY-MM-DD): ")
-                self.create_task(task_name, task_description, task_type, task_date)
-            elif option == "2":
-                search_term = input("Enter search term (leave blank to view all tasks): ")
-                self.view_tasks(search_term)
-            elif option == "3":
-                task_id = input("Enter task ID to update: ")
-                new_task_name = input("Enter new task name: ")
-                new_task_description = input("Enter new task description: ")
-                new_task_type = input("Enter new task type: ")
-                new_task_date = input("Enter new task date (YYYY-MM-DD): ")
-                print("Select a new status for the task:")
-                for idx, status in enumerate(Task.STATUSES):
-                    print(f"{idx + 1}: {status}")
-                new_status_choice = int(input("Enter the number corresponding to the new status: ")) - 1
-                new_status = Task.STATUSES[new_status_choice] if 0 <= new_status_choice < len(Task.STATUSES) else "Not Started"
-                self.update_task(task_id, new_task_name, new_task_description, new_task_type, new_task_date, new_status)
-            elif option == "4":
-                task_name = input("Enter task name to search: ")
-                self.search_task(task_name)
-            elif option == "5":
-                task_id = input("Enter task ID to delete: ")
-                self.delete_task(task_id)
-            elif option == "6":
-                print("Exiting Task Management Menu.")
+            if choice == "1":
+                self.create_task()
+            elif choice == "2":
+                self.view_tasks()
+            elif choice == "3":
+                self.update_task()
+            elif choice == "4":
+                self.delete_task()
+            elif choice == "5":
+                print("Exiting Employee Dashboard.")
                 break
             else:
-                print("Invalid option. Please choose a number between 1 and 6.")
+                print("Invalid choice. Please enter a number between 1 and 5.")
+
+    def create_task(self):
+        task_name = input("Enter task name: ")
+        task_description = input("Enter task description: ")
+        self.tasks.append({'name': task_name, 'description': task_description})
+        print(f"Task '{task_name}' created successfully.")
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("No tasks available.")
+            return
+        print("\n--- Your Tasks ---")
+        for idx, task in enumerate(self.tasks, start=1):
+            print(f"{idx}. {task['name']} - {task['description']}")
+
+    def update_task(self):
+        if not self.tasks:
+            print("No tasks available to update.")
+            return
+        self.view_tasks()
+        try:
+            task_index = int(input("Enter the number of the task you want to update: ")) - 1
+            if task_index < 0 or task_index >= len(self.tasks):
+                print("Invalid task number.")
+                return
+            new_name = input("Enter new task name: ")
+            new_description = input("Enter new task description: ")
+            self.tasks[task_index]['name'] = new_name
+            self.tasks[task_index]['description'] = new_description
+            print("Task updated successfully.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
+    def delete_task(self):
+        if not self.tasks:
+            print("No tasks available to delete.")
+            return
+        self.view_tasks()
+        try:
+            task_index = int(input("Enter the number of the task you want to delete: ")) - 1
+            if task_index < 0 or task_index >= len(self.tasks):
+                print("Invalid task number.")
+                return
+            deleted_task = self.tasks.pop(task_index)
+            print(f"Task '{deleted_task['name']}' deleted successfully.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")

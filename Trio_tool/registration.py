@@ -3,7 +3,7 @@ import json
 import os
 import bcrypt
 
-class UserManager:
+class Registration:
     def __init__(self, filename='users.json'):
         self.filename = filename
         self.users = self.load_users()
@@ -41,12 +41,16 @@ class Registration:
         if len(username) <= 2:
             print("The username length must be more than 2 characters, please provide a valid username.")
             return  # Exit the function if validation fails
-        
+
         # Get role input and validate
-        role = input("Enter your role (Manager/Employee): ")
-        if len(role) <= 2:
-            print("The role length must be more than 2 characters, please provide a valid role.")
+        role = input("Enter your role (Manager/Employee): ").strip().lower()
+        if role not in ["manager", "employee"]:
+            print("Invalid role type. Please provide either 'Manager' or 'Employee'.")
             return  # Exit the function if validation fails
+
+        # Capitalize role for consistency
+        role = role.capitalize()
+
         
         # Get department input and validate
         department = input("Enter Department: ")

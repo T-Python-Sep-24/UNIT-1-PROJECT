@@ -5,11 +5,11 @@ class Manager:
         self.user_manager = user_manager
         self.projects = []  
 
-    def manager_dashboard(self):
+def manager_dashboard(self):
         while True:
             print("\nManager Dashboard\n")
             print("Choose an option:")
-            print("1. View Team Tasks")
+            print("1. View All Projects")
             print("2. Search Team Tasks")
             print("3. Create Project")
             print("4. Update Project")
@@ -19,7 +19,7 @@ class Manager:
             choice = input("Enter your choice (1-6): ")
 
             if choice == "1":
-                self.view_team_tasks()
+                self.view_all_projects()
             elif choice == "2":
                 self.search_team_tasks()
             elif choice == "3":
@@ -34,7 +34,8 @@ class Manager:
             else:
                 print("Invalid option. Please enter a number between 1 and 6.")
 
-    def create_project(self):
+
+def create_project(self):
         try:
             print("\n--- Create New Project ---")  # Debug statement
 
@@ -53,8 +54,22 @@ class Manager:
                 print("Invalid date format. Please use YYYY-MM-DD.")
         except Exception as e:
             print(f"An error occurred while creating the project: {e}")
+            
+def view_all_projects(self):
+        if not self.projects:
+            print("No projects available.")
+            return
 
-    def update_project(self):
+        print("\n--- View All Projects ---")
+        for idx, project in enumerate(self.projects, start=1):
+            print(f"\nProject {idx}:")
+            print(f"  Name: {project.name}")
+            print(f"  Description: {project.description}")
+            print(f"  Start Date: {project.start_date}")
+            print(f"  End Date: {project.end_date}")
+            print(f"  Team Members: {', '.join(project.team_members)}")
+
+def update_project(self):
         if not self.projects:
             print("No projects available to update.")
             return
@@ -100,8 +115,20 @@ class Manager:
         except Exception as e:
             print(f"An error occurred while updating the project: {e}")
 
-    def view_team_tasks(self):
-        print("Displaying team tasks... (Not implemented)")
+def view_team_tasks(self):
+    if not self.projects:
+        print("No projects available to view team tasks.")
+        return
+
+    print("\n--- View Team Tasks ---")
+    for idx, project in enumerate(self.projects, start=1):
+        print(f"\nProject {idx}: {project.name}")
+        if hasattr(project, 'tasks') and project.tasks:
+            for task_idx, task in enumerate(project.tasks, start=1):
+                print(f"  Task {task_idx}: {task}")
+        else:
+            print("  No tasks available for this project.")
+
 
     def search_team_tasks(self):
         print("Searching team tasks... (Not implemented)")

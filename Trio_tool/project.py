@@ -4,22 +4,23 @@ class Project:
     # Define project status options as a class-level attribute
     STATUS_OPTIONS = ["Not Started", "In Progress", "Completed", "On Hold"]
 
-    def __init__(self, name, description, start_date, end_date, team_members, status="Not Started"):
+    def __init__(self, name, description, start_date, end_date, team_members):
         self.name = name
         self.description = description
         self.start_date = start_date
         self.end_date = end_date
         self.team_members = team_members
-        self.status = status  # New status attribute
+        self.tasks = []  # Add a list to store tasks
 
     @staticmethod
     def is_valid_date(date_str):
-        """Validate date format (YYYY-MM-DD)."""
+        from datetime import datetime
         try:
-            datetime.strptime(date_str, '%Y-%m-%d')
+            datetime.strptime(date_str, "%Y-%m-%d")
             return True
         except ValueError:
             return False
+
 
     def update_project(self, new_name, new_description, new_start_date, new_end_date, new_team_members, new_status):
         """Update project details."""

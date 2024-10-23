@@ -27,7 +27,7 @@ class UserManager:
             print(f"Error saving users: {e}")
 
     def add_user(self, username, email, password, role, department):
-        valid_roles = ['Manager', 'Team Member']
+        valid_roles = ['Manager', 'Employee']
         if role not in valid_roles:
             print("Invalid role type. Please contact your administrator.")
             return
