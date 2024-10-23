@@ -72,6 +72,7 @@ Overview: Trio Tool is an interactive Command-Line Interface (CLI) project manag
    - Create a Project: `create_project project_name project_description project_start_date project_end_date team_members_assigned`
    - Update Project: `update_project project_id new_project_name new_project_description new_project_start_date new_project_end_date new_team_members_assigned`
    - Delete Project: `delete_project project_id`
+    - Search Projects: `search_project`
    - Exit the Manager Dashboard: `exit`
 
 4. **Team Member Commands:**
@@ -79,7 +80,10 @@ Overview: Trio Tool is an interactive Command-Line Interface (CLI) project manag
    - View Your Tasks: `view_tasks`
    - Update a Task: `update_task task_id new_task_name new_task_description new_task_type new_task_date`
    - Delete a Task: `delete_task task_id`
+   - Search Tasks: `search_task`
    - Exit the Task Management Menu: `exit`
+   
+
 
 
 

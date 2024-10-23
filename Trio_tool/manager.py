@@ -54,7 +54,7 @@ class Manager:
         except Exception as e:
             print(f"An error occurred while creating the project: {e}")
 
-    def search_project_by_name(self):
+    def search_project(self):
         project_name = input("Enter the project name to search: ").strip()
         found_projects = [project for project in self.projects if project_name.lower() in project.name.lower()]
 

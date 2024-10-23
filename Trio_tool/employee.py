@@ -148,7 +148,7 @@ class Employee:
         except ValueError:
             print("Invalid input. Please enter a valid number.")
 
-    def search_task_by_name(self):
+    def search_task(self):
         task_name = input("Enter the task name to search: ").strip()
         found_tasks = [task for task in self.tasks if task_name.lower() in task.name.lower()]
 
