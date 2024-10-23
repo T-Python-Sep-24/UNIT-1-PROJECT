@@ -78,7 +78,7 @@ class Order:
         if self.isDelivered():
             productsTable.add_row(f"[#aceaff]Delivered to:[/]", f"[#daf5ff]{self.getDeliveryAddress()}[/]")
         else:
-            productsTable.add_row(f"[#aceaff]Ordered for pickup[/]", None, None)
+            productsTable.add_row(None, f"[#aceaff]Ordered for pickup[/]", None)
 
         productsTable.add_row(f"[#aceaff]Ordered on:[/]", f"[#daf5ff]{datetime.strftime(self.__date, '%Y-%m-%d %H:%M:%S')}[/]")
         

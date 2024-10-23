@@ -15,7 +15,7 @@ class Cart:
         '''Getter for ordered products attribute'''
         return self.__orderedProducts
 
-    def addToCart(self, productName, qty):
+    def addToCart(self, productName, qty) -> bool:
         '''A method that adds a product with a name and quantity to the cart'''
         menu: dict = self.__loadFromJSON()
         price: float = 0.0
@@ -27,10 +27,14 @@ class Cart:
                     product: OrderedProduct = OrderedProduct(productName, qty, price)
                     self.decreaseAvailableProductsQty(productName, qty)
                     self.__orderedProducts.append(product)
+                    print(Text(f"{productName} was successfully added to your cart.", style="#9affbc"))
+                    return True
                 else:
-                    return Text("Available quantity is less than the ordered quantity.", style="red")
+                    print(Text("Available quantity is less than the ordered quantity.", style="red"))
+                    return False
             else:
-                return Text(f"Product '{productName}' isn't on the menu.", style="red")
+                print(Text(f"Product '{productName}' isn't on the menu.", style="red"))
+                return False
 
     def removeFromCart(self, prodName):
         '''A method that removes a product with a specific name from the cart'''
@@ -86,7 +90,7 @@ class Cart:
         '''A method that calculate and return the total price of the products in the cart'''
         total: float = 0.0
         for prod in self.__orderedProducts:
-            total += prod.getPrice()
+            total += (prod.getPrice() * prod.getQty())
         
         return total
     
@@ -104,7 +108,8 @@ class Cart:
         if self.__orderedProducts != []:
             #Add a row for each product in the cart
             for prod in self.__orderedProducts:
-                cartTable.add_row(f"[#fdffc3]{prod.getName()}[/]", f"[#bdeeff]{prod.getQty()}[/]", f"[#a4d5b5]{prod.getPrice()} SR[/]")
+                totalProductPrice: float = prod.getPrice() * prod.getQty()
+                cartTable.add_row(f"[#fdffc3]{prod.getName()}[/]", f"[#bdeeff]{prod.getQty()}[/]", f"[#a4d5b5]{totalProductPrice} SR[/]")
             cartTable.add_section()
             cartTable.add_row(None, None, f"Total price: {self.calculateTotal()} SR", style="white")
             return cartTable

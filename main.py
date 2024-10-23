@@ -42,24 +42,24 @@ def updateCustomer(customer: Customer) -> Customer:
         if user.getPhone() == customer.getPhone():
 
             choiceList: str = "Choose what to update:\n1. Name.\n2. Age\n3. Gender.\n4. Phone number.\n5. Password.\n6. Delivery address.\n7. Back to previous menu.\nYour choice"
-            choice: str = Prompt.ask(Text(choiceList, style="#fff2f2"), choices=['1','2','3','4','5','6','7'], show_choices=False)
+            choice: str = Prompt.ask(Text(choiceList, style="#daf5ff"), choices=['1','2','3','4','5','6','7'], show_choices=False)
             
             #Update name
             if choice == '1':
-                newName: str = Prompt.ask("[#ffd7f0]New name[/]")
+                newName: str = Prompt.ask("[#aceaff]New name[/]")
                 user.setName(newName)
                 print(Text("Your name was updated successfully.", style="#9affbc"))
 
             #Update age 
             elif choice == '2':
-                newAge: int =IntPrompt.ask("[#ffd7f0]New age[/]")
+                newAge: int =IntPrompt.ask("[#aceaff]New age[/]")
                 user.setAge(newAge)
                 print(Text("Age was updated successfully.", style="#9affbc"))
 
             #Update gender
             elif choice == '3':
                 #Keep asking user to enter a valid gender
-                newGender: str = Prompt.ask("[#ffd7f0]New gender[/]", choices=['male','Male','female','Female'], show_choices=False)
+                newGender: str = Prompt.ask("[#aceaff]New gender[/]", choices=['male','Male','female','Female'], show_choices=False)
                 user.setGender(newGender)
                 print(Text("Gender was updated successfully.", style="#9affbc"))
 
@@ -67,7 +67,7 @@ def updateCustomer(customer: Customer) -> Customer:
             elif choice == '4':
                 #Keep asking for correct phone number format
                 while True:
-                    newPhone: str = Prompt.ask("[#ffd7f0]New phone number[/]")
+                    newPhone: str = Prompt.ask("[#aceaff]New phone number[/]")
                     if not phoneValid(newPhone):
                         print(Text("Phone number should be 10 digits starting with (05).", style= "red"), end=" ")
                         Prompt.ask("[#fff2f2]Try again..[/]")
@@ -80,7 +80,7 @@ def updateCustomer(customer: Customer) -> Customer:
             elif choice == '5':
                 #Keep asking for correct password format
                 while True:
-                    newPassword: str = Prompt.ask("[#ffd7f0]New password[/]")
+                    newPassword: str = Prompt.ask("[#aceaff]New password[/]")
                     if not passwordValid(newPassword):
                         print("[red bold]Password too weak[/], [#fff2f2]your password should satisfy the following:[/]")
                         print(Text("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)\n", style = "#fff2f2"), end =" ")
@@ -92,7 +92,7 @@ def updateCustomer(customer: Customer) -> Customer:
             
             #Update delivery address
             elif choice == '6':
-                newAddress: str = Prompt.ask("[#ffd7f0]New delivery address[/]")
+                newAddress: str = Prompt.ask("[#aceaff]New delivery address[/]")
                 #Cast user to Customer class to be able to call the following method:
                 customer = user
                 customer.setDeliveryAddress(newAddress)
@@ -104,7 +104,6 @@ def updateCustomer(customer: Customer) -> Customer:
             
             #Save the update user in the customer variable then return it later
             customer = user
-            Prompt.ask(Text("Press Enter to continue..", style="white italic"))
     
     #Update the list of users with the new data
     with open("bakeryData/users.pkl", "wb") as file:
@@ -289,10 +288,12 @@ def customerMenu(customer: Customer):
                         #Only accepts integers from the customer
                         prodQty: int = IntPrompt.ask("[#fbfbe2]Quantity[/]")
                         #Add the new product to the cart
-                        cart.addToCart(prodName, prodQty)
-                        customer = updateCustomerCart(customer, cart)
-                        print(Text(f"{prodName} was successfully added to your cart.", style="#9affbc"))
+                        isAdded: bool = cart.addToCart(prodName, prodQty)
                         
+                        #Check if the product was added successfully
+                        if not isAdded:
+                            break
+                        customer = updateCustomerCart(customer, cart)
                         #Keep asking customer if they want to add more items to their cart until they enter n
                         addMore: bool = Confirm.ask(Text("Add more products?", style="bold #feffde"))
                         if addMore:
