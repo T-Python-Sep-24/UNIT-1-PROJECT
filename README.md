@@ -104,5 +104,15 @@ os: Used for interacting with the operating system, including file handling and 
 bcrypt: Provides hashing functionality for securely storing user passwords.
 
 
+## Future Work :
+
+Manager Role: 
+- View all team tasks and filter by username .
+- Search for specific team tasks by username.
+- Target Project based on the status Property
+
+
+
+
 
 

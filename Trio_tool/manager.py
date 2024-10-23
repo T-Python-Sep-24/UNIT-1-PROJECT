@@ -36,7 +36,7 @@ class Manager:
 
     def create_project(self):
         try:
-            print("\n--- Create New Project ---")  # Debug statement
+            print("\n--- Create New Project ---")  
 
             name = input("Enter project name: ")
             description = input("Enter project description: ")
