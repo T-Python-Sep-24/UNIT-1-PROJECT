@@ -23,6 +23,7 @@ class DeleterController:
                     result = self.deleter_model.clear_image_src_folder("Images_Source")
                     if result[0]:
                         self.deleter_view.display_Exception_msg(result[1])
+                    self.deleter_view.display_image_folder_cleared("Images_Source")
                     return
 
             elif pick == "2":
@@ -36,6 +37,7 @@ class DeleterController:
                     result = self.deleter_model.clear_image_dest_folder("Images_Destination")
                     if result[0]:
                         self.deleter_view.display_Exception_msg(result[1])
+                    self.deleter_view.display_image_folder_cleared("Images_Destination")
                     return
 
             elif pick == "3":

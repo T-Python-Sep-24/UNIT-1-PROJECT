@@ -9,12 +9,16 @@ class MainView:
             "2: to show tree structure of Images_Destination folder\n"
             "3: to orgnize images by year\n"
             "4: to orgnize images by month\n"
-            "5: to delete the contents of the images folder\n"
-            "6: to exit"
+            "5: to orgnize images by face recognition\n"
+            "6: to delete the contents of the images folder\n"
+            "7: to exit\n"
         )
 
     def display_menu(self):
         print(self.main_menu)
+
+    def display_thank_you(self):
+        print("Thank you for using the Album orgnizer program, come back again soon")
 
     def display_wrong_input(self):
         print("---- Wrong input. Please try again ----")
@@ -33,4 +37,8 @@ class MainView:
 
     def display_try_again_after_delete_dest(self):
         print(f"---- Please try again after deleting the contents of Images_Destination ----")
+        input("")
+
+    def display_try_again_after_put_in_src(self):
+        print(f"---- Please try again after putting content in Images_Source ----")
         input("")

@@ -1,8 +1,8 @@
 import os
 import shutil
 
-from views import orgnizer_view as o_v
 from models import orgnizer_model as o_m
+from views import orgnizer_view as o_v
 
 
 class OrgnizerController:
@@ -12,15 +12,22 @@ class OrgnizerController:
 
     def orgnize_images_by_year(self):
         images_dest_files: list = self.orgnizer_model.get_images_dest_files()
+        images_src_files: list = self.orgnizer_model.get_images_src_files()
         if len(images_dest_files) > 0:
             # exit the method because the Images_Destination alread have contents
             self.orgnizer_view.display_try_again_after_delete_dest()
+            return
+        elif len(images_src_files) < 1:
+            self.orgnizer_view.display_try_again_after_put_in_src()
             return
         else:
             by_year_dict: dict = self.orgnizer_model.get_orgnized_by_year()
             if len(by_year_dict) < 1:
                 # display failure message because there is no images to copy
                 self.orgnizer_view.display_orgniz_msg(False)
+            elif len(images_src_files) < 1:
+                self.orgnizer_view.display_try_again_after_put_in_src()
+                return
             else:
                 # create the directories and copy the relevant images to it
                 for year, img_list in by_year_dict.items():
@@ -44,9 +51,13 @@ class OrgnizerController:
 
     def orgnize_images_by_month(self):
         images_dest_files: list = self.orgnizer_model.get_images_dest_files()
+        images_src_files: list = self.orgnizer_model.get_images_src_files()
         if len(images_dest_files) > 0:
             # exit the method because the Images_Destination alread have contents
             self.orgnizer_view.display_try_again_after_delete_dest()
+            return
+        elif len(images_src_files) < 1:
+            self.orgnizer_view.display_try_again_after_put_in_src()
             return
         else:
             by_month_dict: dict = self.orgnizer_model.get_orgnized_by_month()

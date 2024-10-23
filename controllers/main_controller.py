@@ -17,3 +17,9 @@ class MainController:
     def display_destination(self):
         """ Show tree structure of the Images_Destination folder """
         self.view.display_tree("./Images_Destination")
+
+    def display_thanks(self):
+        self.view.display_thank_you()
+    
+    def display_wrong_input(self):
+        self.view.display_wrong_input()
