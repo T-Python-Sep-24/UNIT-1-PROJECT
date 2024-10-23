@@ -1,45 +1,64 @@
-class Manager:
-    
-    def __init__(self):
-        self.dashboard = []
-    
-    def create_account(self):
-        # Get username input and validate
-        username = input("Enter your username: ")
-        if len(username) <= 2:
-            print("The username length must be more than 2 characters, please provide a valid username.")
-            return  # Exit the function if validation fails
-        
-        # Get roll input and validate
-        roll = input("Enter your roll:")
-        if len(roll)<=2:
-            print("The roll length must be more than 2 characters, please provide a valid roll")
-            return # Exit the function if validation fails
-        
-        # Get email input and validate
-        email = input("Enter your email address: ")
-        if email.count('@') != 1:
-            print("The email is not valid, please provide a valid email.")
-            return  # Exit the function if validation fails
-        elif not email.endswith('@gmail.com'):
-            print("The email is not valid, please provide a valid email.")
-            return  # Exit the function if validation fails
-        elif email.index('@') == 0:
-            print("The email is not valid, please provide a valid email.")
-            return  # Exit the function if validation fails
-        elif email.index('@') + 1 == len(email):
-            print("The email is not valid, please provide a valid email.")
-            return  # Exit the function if validation fails
-        
-        # Get password input and validate
-        password = input("Enter your password: ")
-        while not self.validate_password(password):
-            print("Invalid password. It must be at least 6 characters long.")
-            password = input("Enter your password: ")
+from project import Project  
 
-        print(f"Welcome {username}, you registered with the email {email}!")
-        
-        
-        def validate_password(self, password: str) -> bool:
-            return len(password) >= 6
-        
+class Manager:
+    def __init__(self, user_manager):
+        self.user_manager = user_manager
+        self.projects = []  
+
+    def manager_dashboard(self):
+        while True:
+            print("\nManager Dashboard\n")
+            print("Choose an option:")
+            print("1. View Team Tasks")
+            print("2. Search Team Tasks")
+            print("3. Create Project")
+            print("4. Update Project")
+            print("5. Delete Project")
+            print("6. Exit")
+
+            choice = input("Enter your choice (1-6): ")
+
+            if choice == "1":
+                self.view_team_tasks()
+            elif choice == "2":
+                self.search_team_tasks()
+            elif choice == "3":
+                self.create_project() 
+            elif choice == "4":
+                self.update_project()
+            elif choice == "5":
+                self.delete_project()
+            elif choice == "6":
+                print("Exiting Manager Dashboard.")
+                break
+            else:
+                print("Invalid option. Please enter a number between 1 and 6.")
+
+    def create_project(self):
+
+        name = input("Enter project name: ")
+        print(f"Received name: {name}")  # Debugging print
+
+        description = input("Enter project description: ")
+        start_date = input("Enter project start date (YYYY-MM-DD): ")
+        end_date = input("Enter project end date (YYYY-MM-DD): ")
+        team_members = input("Enter team members (comma-separated): ").split(",")
+
+        if Project.is_valid_date(start_date) and Project.is_valid_date(end_date):
+            project = Project(name, description, start_date, end_date, team_members)
+            self.projects.append(project)  # Add the project to the list
+            print(f"Project '{name}' created successfully!")
+        else:
+            print("Invalid date format. Please use YYYY-MM-DD.")
+
+    def view_team_tasks(self):
+        print("Displaying team tasks... (Not implemented)")
+
+    def search_team_tasks(self):
+        print("Searching team tasks... (Not implemented)")
+
+    def update_project(self):
+        print("Updating project... (Not implemented)")
+
+    def delete_project(self):
+        print("Deleting project... (Not implemented)")
