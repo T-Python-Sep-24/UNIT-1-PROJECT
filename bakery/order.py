@@ -76,4 +76,9 @@ class Order:
             totalPerProduct: float = prod.getQty() * prod.getPrice()
             productsTable.add_row(f"[#fdffc3]{prod.getName()}[/]", f"[#bdeeff]{prod.getQty()}[/]", f"[#a4d5b5]{totalPerProduct}[/]")
         
+        if self.isDelivered():
+            productsTable.add_row(f"[#aceaff]Delivered to:[/]", f"[#daf5ff]{self.getDeliveryAddress()}[/]")
+        else:
+            productsTable.add_row(None, f"[#aceaff]Ordered for pickup[/]", None)
+        
         return productsTable

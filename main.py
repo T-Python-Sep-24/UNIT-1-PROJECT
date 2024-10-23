@@ -157,11 +157,16 @@ def passwordValid(password: str) -> bool:
 def checkUserLogin(phone: str, password: str) -> Person:
     '''This function searches for a user with a phone number and password, if they exists it returns the user'''
     loadUsers()
+    found: bool = False
     for user in users:
         if user.getPhone() == phone and user.getPassword() == password:
+            found = True
             return user
         elif user.getPhone() == phone and user.getPassword() != password: 
             print(Text(f"Incorrect password for phone number {phone}", style="red"))
+            return user
+    if not found:
+        print(Text("There is no account with that phone number.", style= "red"))
           
 def checkUserRegister(phone: str, password: str) -> bool:
     '''This function checks if a user with the passed phone number exists. It returns True if they do and False if not'''
@@ -456,7 +461,6 @@ def main():
                         customerMenu(user)
                         break
                 else:
-                    print(Text("There is no account with that phone number.", style= "red"))
                     Prompt.ask(Text("Press Enter to continue..", style="white italic"))
                     #Change choice value to break out of the loop
                     choice = '0'
