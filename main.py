@@ -73,7 +73,11 @@ def customer_menu():
     while True:
         try:
             customer_id = int(input("Enter your ID: "))
-            break  
+            if Customer.is_duplicate_id(customer_id):
+                print(f"ID {customer_id} already exists. Please enter a different ID.")
+            else:
+                break 
+            
         except ValueError:
             print("Invalid input, Please enter a valid number!")
 

@@ -175,3 +175,16 @@ class Customer:
             print("Customer data file not found. Creating a new one.")
             with open(filename, "w") as f:
                 json.dump([], f)
+
+
+    @staticmethod
+    def is_duplicate_id(customer_id):
+        filename = os.path.join(os.path.dirname(__file__), '..', 'data_file', 'customer_data.json')
+
+        if os.path.exists(filename):
+            with open(filename, "r") as f:
+                customers_data = json.load(f)
+                for customer in customers_data:
+                    if customer['id'] == customer_id:
+                        return True
+        return False
