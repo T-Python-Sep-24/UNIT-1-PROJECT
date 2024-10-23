@@ -305,7 +305,7 @@ class Resident(Person):
             for violation in self.violations:
                 if violation['Ministry'] == violation_ministry and violation['Violation_id'] not in self.discounted_violations and not violation['Status'] and violation['Violation_id'] not in self.installment_tracker.get('violations_id', []):
                     previous_amount=violation['Amount']
-                    new_amount=previous_amount*(percentage/100)
+                    new_amount=previous_amount-(previous_amount*(percentage/100))
                     violation['Amount'] =new_amount
                     self.discounted_violations.append(violation['Violation_id'])
                     print(f'{Fore.CYAN}violation: {violation['Violation_id']} from {violation_ministry}to Resident {self.get_id()} has been disocunted by {percentage}% {Fore.RESET}')   
