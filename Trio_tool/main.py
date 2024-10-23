@@ -26,14 +26,14 @@ def main():
             if username:  # If login is successful
                 user_data = user_manager.get_user(username)  
                 if user_data:  # Ensure the data is retrieved
-                    role = user_data["role"]  # Check user role
+                    role = user_data["role"].capitalize()  # Check user role
                     print(f"Logged in as: {username} with role: {role}")
 
                     if role == 'Manager':
                         manager = Manager(user_manager)  # Create Manager instance
                         manager.manager_dashboard()  # Enter Manager Dashboard
                     elif role == 'Employee':
-                        employee = Employee(username) 
+                        employee = Employee(username)
                         employee.employee_dashboard()  # Enter Employee Dashboard
                     else:
                         print("Invalid role type. Please contact your administrator.")

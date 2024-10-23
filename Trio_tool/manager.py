@@ -1,41 +1,37 @@
-from project import Project  
+from project import Project
 
 class Manager:
     def __init__(self, user_manager):
         self.user_manager = user_manager
         self.projects = []  
 
-def manager_dashboard(self):
+    def manager_dashboard(self):
         while True:
             print("\nManager Dashboard\n")
             print("Choose an option:")
             print("1. View All Projects")
-            print("2. Search Team Tasks")
-            print("3. Create Project")
-            print("4. Update Project")
-            print("5. Delete Project")
-            print("6. Exit")
+            print("2. Create Project")
+            print("3. Update Project")
+            print("4. Delete Project")
+            print("5. Exit")
 
-            choice = input("Enter your choice (1-6): ")
+            choice = input("Enter your choice (1-5): ")
 
             if choice == "1":
                 self.view_all_projects()
             elif choice == "2":
-                self.search_team_tasks()
-            elif choice == "3":
                 self.create_project() 
-            elif choice == "4":
+            elif choice == "3":
                 self.update_project()
-            elif choice == "5":
+            elif choice == "4":
                 self.delete_project()
-            elif choice == "6":
+            elif choice == "5":
                 print("Exiting Manager Dashboard.")
                 break
             else:
-                print("Invalid option. Please enter a number between 1 and 6.")
+                print("Invalid option. Please enter a number between 1 and 5.")
 
-
-def create_project(self):
+    def create_project(self):
         try:
             print("\n--- Create New Project ---")  # Debug statement
 
@@ -54,8 +50,8 @@ def create_project(self):
                 print("Invalid date format. Please use YYYY-MM-DD.")
         except Exception as e:
             print(f"An error occurred while creating the project: {e}")
-            
-def view_all_projects(self):
+
+    def view_all_projects(self):
         if not self.projects:
             print("No projects available.")
             return
@@ -69,7 +65,7 @@ def view_all_projects(self):
             print(f"  End Date: {project.end_date}")
             print(f"  Team Members: {', '.join(project.team_members)}")
 
-def update_project(self):
+    def update_project(self):
         if not self.projects:
             print("No projects available to update.")
             return
@@ -111,24 +107,22 @@ def update_project(self):
 
         except ValueError:
             print("Invalid input. Please enter a valid number.")
-
         except Exception as e:
             print(f"An error occurred while updating the project: {e}")
 
-def view_team_tasks(self):
-    if not self.projects:
-        print("No projects available to view team tasks.")
-        return
+    def view_team_tasks(self):
+        if not self.projects:
+            print("No projects available to view team tasks.")
+            return
 
-    print("\n--- View Team Tasks ---")
-    for idx, project in enumerate(self.projects, start=1):
-        print(f"\nProject {idx}: {project.name}")
-        if hasattr(project, 'tasks') and project.tasks:
-            for task_idx, task in enumerate(project.tasks, start=1):
-                print(f"  Task {task_idx}: {task}")
-        else:
-            print("  No tasks available for this project.")
-
+        print("\n--- View Team Tasks ---")
+        for idx, project in enumerate(self.projects, start=1):
+            print(f"\nProject {idx}: {project.name}")
+            if hasattr(project, 'tasks') and project.tasks:
+                for task_idx, task in enumerate(project.tasks, start=1):
+                    print(f"  Task {task_idx}: {task}")
+            else:
+                print("  No tasks available for this project.")
 
     def search_team_tasks(self):
         print("Searching team tasks... (Not implemented)")
@@ -154,6 +148,5 @@ def view_team_tasks(self):
 
         except ValueError:
             print("Invalid input. Please enter a valid number.")
-
         except Exception as e:
             print(f"An error occurred while deleting the project: {e}")

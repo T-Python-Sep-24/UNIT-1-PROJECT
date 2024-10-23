@@ -7,15 +7,6 @@ class Login:
     def __init__(self, user_manager):
         self.user_manager = user_manager
 
-    import bcrypt
-from user_manager import UserManager
-from manager import Manager
-from employee import Employee
-
-class Login:
-    def __init__(self, user_manager):
-        self.user_manager = user_manager
-
     def user_login(self):
         username = input("Enter your username: ")
         password = input("Enter your password: ")

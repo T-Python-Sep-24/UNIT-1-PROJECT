@@ -72,7 +72,6 @@ class Registration:
 
         # Store user information
         self.user_manager.add_user(username, email, password, role, department)
-
         print(f"Welcome {username}, you registered with the email {email}!")
 
     def validate_email(self, email):
