@@ -95,7 +95,7 @@ class Meal:
         }
         with tqdm(total=100, desc="Calculating meal Calories and Nutrition", ncols=100) as progress_par:
             for i in range(90):
-                time.sleep(0.03)
+                time.sleep(0.01)
                 progress_par.update(1)
 
             response = requests.post(url, headers=headers, json=data)

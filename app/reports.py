@@ -1,6 +1,6 @@
 import time
 
-from app import base, health_states, nutrition
+from app import base, health_states, nutrition, user_data
 import workouts
 from tabulate import tabulate
 import dotenv
@@ -31,7 +31,7 @@ class Reports:
                 ["Calories", f"{meal['calories']} kcal"],
                 ["Water", f"{meal['water']} Liters"]
             ]
-            print(tabulate(meal_details, tablefmt="heavy_grid"))
+            print(tabulate(meal_details, tablefmt="heavy_outline"))
 
             print("\nMacronutrients")
             print("=============================")
@@ -46,7 +46,7 @@ class Reports:
                 ["Protein", meal['macronutrients']['protein']],
                 ["Potassium", meal['macronutrients']['potassium']]
             ]
-            print(tabulate(macronutrients, headers=["Nutrient", "Value"], tablefmt="heavy_grid"))
+            print(tabulate(macronutrients, headers=["Nutrient", "Value"], tablefmt="heavy_outline"))
             print("-"*50)
 
     def generate_weekly_report(self):
@@ -62,13 +62,13 @@ class Reports:
                 ["Calories Burned", f"{workout['calories_burned']} kcal"],
                 ["Date", workout['date']]
             ]
-            print(tabulate(workout_details, tablefmt="heavy_grid"))
+            print(tabulate(workout_details, tablefmt="heavy_outline"))
 
             # If there are goals, display them as well
             if workout['goals']:
                 print("\nGoals")
                 print("=============================")
-                print(tabulate([[goal] for goal in workout['goals']], headers=["Goal"], tablefmt="heavy_grid"))
+                print(tabulate([[goal] for goal in workout['goals']], headers=["Goal"], tablefmt="heavy_outline"))
             else:
                 print("\nNo goals for this workout.")
 
@@ -89,7 +89,7 @@ class Reports:
                 ]
 
         # Display the table
-                print(tabulate(measurement_details, tablefmt="heavy_grid"))
+                print(tabulate(measurement_details, tablefmt="heavy_outline"))
 
     def send_report_via_email(self, user_email):
         """
@@ -107,10 +107,13 @@ class Reports:
         message = MIMEMultipart()
         message['From'] = sender_email
         message['To'] = receiver_email
-        message['Subject'] = 'Health And Fitness Reports From Python Fitness Tracker'
+        message['Subject'] = 'FitTracker Health And Fitness Report'
 
         # Email body
-        # body = 'Hello, this is a test email sent from Python with App Password!'
+        #User data
+        user_file = user_data.User().fileName
+        userInfo = base.load_from_file(user_file)
+        username = userInfo['username']
 
         meals_file = nutrition.Meal().fileName
         meals_data = base.load_from_file(meals_file)
@@ -272,38 +275,41 @@ class Reports:
                 </style>
             </head>
             <body>
-                <h1>Hello!</h1>
-                <p>Hello, This is a Your Total Report sent from FitTracker.</p>
-                <p><strong>Enjoy coding!</strong></p>
+                <h1>Hello! {username}</h1>
+                <h2> <span style="background-color: Yellow">FitTtracker</span> <strong> Your Fitness, Your Progress, Your Way</strong></h2>
+                <p>Hello, This is Your Total Report sent from <strong> FitTracker </strong>. </p>
+
                 <div>
                     <h2>Meal Information</h2>
                     {all_meals_table}
                     <hr>
-                    <h4>Summary</h4>
-                    <p>Total Calories Intake: {total_meals_calories} Kcal</p>
-                    <p>Total water Intake: {total_water_intake} Liters</p>
-                    <p>Total protein Intake: {total_protein_intake} Liters</p>
-                    <p>Total carbs Intake: {total_carbs_intake} Liters</p>
-                    <p>Total fats Intake: {total_fats_intake} Liters</p>
-                    <p>Total sugar Intake: {total_sugar_intake} Liters</p>
+                    <h3>Meals Summary</h3>
+                    <h4>Total Calories Intake: {total_meals_calories} Kcal</h4>
+                    <h4>Total water Intake: {total_water_intake} Liters</h4>
+                    <h4>Total protein Intake: {total_protein_intake} </h4>
+                    <h4>Total carbs Intake: {total_carbs_intake} </h4>
+                    <h4>Total fats Intake: {total_fats_intake} </h4>
+                    <h4>Total sugar Intake: {total_sugar_intake} </h4>
                     <hr>
                     
                     <h2>Workout Information</h2>
                     {all_workouts_table}
                     
                     <hr>
-                    <p>Total Burned Calories: {total_burned_calories}</p>
-                    <p>Total Time Working Out: {total_time_workouts}</p>
+                    <h3> Workouts Summary </h3>
+                    <h4>Total Burned Calories: {total_burned_calories}</h4>
+                    <h4>Total Time Working Out: {total_time_workouts}</h4>
                     <hr>
                     
                     <h2>Health States</h2>
                     {all_health_states_table}
                     <hr>
-                    <p>Your Average weight is: {avgWeight}</p>
+                    <h3> Health State Summary </h3>
+                    <h4>Your Average weight is: {avgWeight}</h4>
                     <hr>
                 </div>
                 <a href="https://www.example.com">Click here to visit our website</a>
-                <h3> THANK YOU ! </h3>
+                <h3> THANK YOU And STAY HEALTHY </h3>
             </body>
         </html>
         """

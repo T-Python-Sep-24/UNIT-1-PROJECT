@@ -138,12 +138,12 @@ class Workout:
         }
 
         with tqdm(total=100, desc="Calculating Calories", ncols=100) as progress_par:
-            for i in range(90):
-                time.sleep(0.02)
-                progress_par.update(2)
+            for i in range(80):
+                time.sleep(0.01)
+                progress_par.update(1)
 
             response = requests.post(url, headers=headers, json=data)
-            progress_par.update(10)
+            progress_par.update(20)
         if response.status_code == 200:
 
             exercise_data = response.json()

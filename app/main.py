@@ -298,7 +298,7 @@ def workoutTracking():
             nf_calories = workout_instance.calcCalories(query, weight, height, gender, age)
             w_date = datetime.date.today()
 
-            print(f"You Burned {nf_calories} Calories ")
+            print(Fore.LIGHTGREEN_EX + f"You Burned {nf_calories} Calories " + Style.RESET_ALL)
             c = input("Do you want to add workout and health states to file [y/n] ? ")
             if c.lower() == 'y':
 
@@ -368,7 +368,7 @@ def workoutTracking():
 # Main menu
 def main_menu():
     print(Fore.CYAN + "=" * 40)
-    print("    CLI Health and Fitness Tracker")
+    print("    FitTtracker   ")
     print("=" * 40 + Style.RESET_ALL)
     print("Please choose an option from the menu below:")
     print(Fore.YELLOW + "1. Track Workouts / Calories Burned")  # done
@@ -392,7 +392,7 @@ def userAuth():
         print("-"*8 + " Welcome To " + Fore.RED + "FitTracker " + Style.RESET_ALL + "-"*8)
         print()
         print(Fore.BLUE+"> Please Register for New Account")
-        print("~"*39)
+        print("-"*39)
 
         try:
             name = input("Enter Your name: ")
@@ -431,11 +431,11 @@ def userAuth():
         while notAuthorized:
             print("-"*8 + " Welcome To " + Fore.RED + "FitTracker " + Style.RESET_ALL + "-"*8)
             print(" >> Please Log in << ")
-
+            print("-"*39)
             name = input("Enter Your name: ")
             if name == x['username']:
 
-                print(Fore.GREEN + "        welcome Back")
+                print(Fore.GREEN + f"Welcome Back {name.upper()}")
 
                 user1.set_age(x['age'])
                 user1.set_gender(x['gender'])
@@ -474,7 +474,7 @@ def main():
             input(" >>> Press any Key to continue <<< ")
 
         elif choice.lower() == 'q':
-            print(Fore.GREEN + "Goodbye!, Exiting the Health and Fitness Tracker... ")
+            print(Fore.GREEN + "Goodbye!, PLEASE STAY HEALTHY ")
             break
         else:
             print("Invalid choice! Please enter a valid choice from the list between 1 and 5 or q to quit")
@@ -549,7 +549,7 @@ if __name__ == "__main__":
     try:
         userAuth()
     except KeyboardInterrupt as e:
-        print(Fore.LIGHTGREEN_EX + "GoodBye !!")
+        print(Fore.LIGHTGREEN_EX + "GoodBye !! Stay Healthy And Fit")
     except ConnectionError as c:
         print("Please Check Your Internet Connection")
     except FileNotFoundError as fe:
