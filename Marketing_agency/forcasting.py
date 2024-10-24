@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, recall_score, confusion_matrix
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -17,7 +17,7 @@ def run_sales_prediction(df):
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
     # Create and train the model
-    model = LinearRegression()
+    model = LogisticRegression()
     model.fit(x_train, y_train)
     y_pred = model.predict(x_test)
 
@@ -34,8 +34,6 @@ def run_sales_prediction(df):
     cm = confusion_matrix(y_test_binned, y_pred_binned)
 
     print(f"Accuracy: {accuracy}")
-    print(f"Recall: {recall}")
-    print("Confusion Matrix:")
     print(cm)
 
     # Plot Confusion Matrix

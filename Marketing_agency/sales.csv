@@ -1,21 +1,221 @@
-transaction_id,date,employee,client
-e79ad594-563d-45cf-b978-b320098b4305,2024-07-20,Bradley Martinez,Minister in Education
-4e8c8dc4-1290-47bf-abfc-0bd7f54d33f9,2024-01-29,Heidi Davis,Minister in Hajj and Umrah
-ce394b3a-1859-4b10-8de6-98d309b28ae5,2024-01-10,Jerry Hebert,Minister in Education
-3b498f32-424b-4aac-9280-d10160aa3ba7,2024-06-25,Robert Aguilar,Minister in Culture
-33924214-0f9c-45f7-8b15-dcd294dbd992,2023-10-25,Zachary Williams,Minister in Culture
-3fd120ad-a343-4757-8e65-37b4befd2d88,2024-06-05,Pamela Humphrey,Minister in Hajj and Umrah
-de150556-5183-4919-b278-ddd074dc97c8,2024-06-20,Tammy Salas,Minister in Education
-8769738d-5130-48a2-a6d2-71f8c763d05c,2024-05-06,Martha Medina,Minister in Finance
-1fc834b5-28ba-4ce4-b724-8c0bc3f075ce,2024-05-20,Zachary Williams,Minister in Hajj and Umrah
-c67acacb-fb31-4864-94d2-b6750ef1ac65,2024-05-05,Thomas Doyle,Minister in Hajj and Umrah
-dae72380-f422-4ab2-954a-0e7152e2ba9a,2024-03-01,Rachel Hammond,Minister of Health
-a4e6e1ee-20e3-494b-98c8-55c06e54ba68,2023-11-01,Lonnie Hurley,Minister of Health
-3b15e0aa-5693-4253-8613-e750fd637130,2024-04-08,Ricardo Rich,Minister in Culture
-70be40ae-bbb6-4c1d-a249-2ad7ab1ceebf,2024-02-29,Bradley Martinez,Minister of Health
-d691edd9-b85f-4cc7-9c3a-eb53c3ef891a,2023-11-19,Jerry Hebert,Minister in Education
-fc410a29-ae1a-4c74-99f9-18782e784dfc,2024-06-25,Tammy Salas,Minister of Health
-b4605615-c48f-448d-b758-760f237e4201,2024-05-14,Tammy Salas,Minister of Health
-391cd01e-c5bc-4e14-a957-446a57328b9a,2024-02-15,Thomas Doyle,Minister in Culture
-adf77643-867b-46b5-89f1-9b6576ea32c9,2024-07-26,Noah Lucero,Minister of Health
-a42141f2-d664-4ae6-ab23-68c9d2d4aec2,2024-03-01,Pamela Humphrey,Minister in Education
+transaction_id,date,employee,client,product,price
+e79ad594-563d-45cf-b978-b320098b4305,2024-07-20,Bradley Martinez,Minister in Education,,
+4e8c8dc4-1290-47bf-abfc-0bd7f54d33f9,2024-01-29,Heidi Davis,Minister in Hajj and Umrah,,
+ce394b3a-1859-4b10-8de6-98d309b28ae5,2024-01-10,Jerry Hebert,Minister in Education,,
+3b498f32-424b-4aac-9280-d10160aa3ba7,2024-06-25,Robert Aguilar,Minister in Culture,,
+33924214-0f9c-45f7-8b15-dcd294dbd992,2023-10-25,Zachary Williams,Minister in Culture,,
+3fd120ad-a343-4757-8e65-37b4befd2d88,2024-06-05,Pamela Humphrey,Minister in Hajj and Umrah,,
+de150556-5183-4919-b278-ddd074dc97c8,2024-06-20,Tammy Salas,Minister in Education,,
+8769738d-5130-48a2-a6d2-71f8c763d05c,2024-05-06,Martha Medina,Minister in Finance,,
+1fc834b5-28ba-4ce4-b724-8c0bc3f075ce,2024-05-20,Zachary Williams,Minister in Hajj and Umrah,,
+c67acacb-fb31-4864-94d2-b6750ef1ac65,2024-05-05,Thomas Doyle,Minister in Hajj and Umrah,,
+dae72380-f422-4ab2-954a-0e7152e2ba9a,2024-03-01,Rachel Hammond,Minister of Health,,
+a4e6e1ee-20e3-494b-98c8-55c06e54ba68,2023-11-01,Lonnie Hurley,Minister of Health,,
+3b15e0aa-5693-4253-8613-e750fd637130,2024-04-08,Ricardo Rich,Minister in Culture,,
+70be40ae-bbb6-4c1d-a249-2ad7ab1ceebf,2024-02-29,Bradley Martinez,Minister of Health,,
+d691edd9-b85f-4cc7-9c3a-eb53c3ef891a,2023-11-19,Jerry Hebert,Minister in Education,,
+fc410a29-ae1a-4c74-99f9-18782e784dfc,2024-06-25,Tammy Salas,Minister of Health,,
+b4605615-c48f-448d-b758-760f237e4201,2024-05-14,Tammy Salas,Minister of Health,,
+391cd01e-c5bc-4e14-a957-446a57328b9a,2024-02-15,Thomas Doyle,Minister in Culture,,
+adf77643-867b-46b5-89f1-9b6576ea32c9,2024-07-26,Noah Lucero,Minister of Health,,
+a42141f2-d664-4ae6-ab23-68c9d2d4aec2,2024-03-01,Pamela Humphrey,Minister in Education,,
+d50b3881-e061-4de1-8ae5-46f9588a0c6a,2024-01-08,Scott Clark,Minister in Hajj and Umrah,Marketing Operations,304931.0
+f0f9df2d-f41a-48d9-8540-cc5fb5ccd8ef,2024-10-06,Justin Turner,Minister of Health,Online Ads,568409.0
+84891585-76ca-41bd-a059-a1e4196751bf,2023-11-12,Jennifer Harrell,Minister of Health,Logo Design,454309.0
+aa45ad82-0aa4-44a3-98cd-6a39e1cfa4bb,2023-11-23,Courtney Garrett,Ministery of Hajj and Umrah,User Testing Tools,411009.0
+979b15c7-ecaf-4346-b14b-bf2e533a98dc,2024-07-24,William Smith,Minister of Health,Rebranding,494316.0
+4d495f99-affe-40e1-b0ea-c0f3ed51fdc2,2024-03-07,Michael Haynes,Ministery of Education,Online Ads,544245.0
+b914e3f8-525b-41c7-b8b6-4531ae0e6bd3,2024-03-05,Ryan Harris,Almarai,Product Development,674697.0
+4c065679-94d2-4601-9102-706fb0972aba,2023-12-01,Debbie Bradley,Minister of Health,Online Ads,381239.0
+81a2b72b-8ec1-4912-abd3-3f4cecdf5afe,2024-08-06,Trevor Keith,Minister of Health,CRM Software,673559.0
+0496a403-4d47-4390-a849-1eace92db089,2024-07-28,Craig Gomez,Ministery of Finance,Product Development,364823.0
+a75e1b06-392a-414d-9237-d47b9f053588,2024-09-13,Steven Hardy,Ministery of Finance,Online Ads,279614.0
+12525881-230e-4c7b-99da-57a617a861eb,2024-01-05,Zachary Carson,Ministery of Health,Rebranding,192375.0
+253e5e0c-f2a5-442e-b6b1-85bb8af6ecb4,2023-11-10,Justin Turner,Minister in Finance,Rebranding,47280.0
+30b4f4f6-542f-488a-b5b5-37859c5e0ebb,2024-06-06,Ashley Valencia,Minister of Health,Rebranding,308500.0
+a83c2fb6-9d2d-4e4c-9d99-6709b5ab82eb,2024-06-29,Matthew Hall,Ministery of Hajj and Umrah,User Testing Tools,654246.0
+97f20946-7898-4bb9-913a-d397ca3abd91,2024-03-19,Stacey Walker,Minister in Education,Product Prototypes,179495.0
+2ce07c86-3f92-433b-bd1a-86d1cf331afd,2024-01-12,Laura Anthony,Ministery of Education,User Testing Tools,254635.0
+2956c9a3-2954-4b7e-8db0-843e04e53d8e,2024-05-27,Jennifer Harrell,Minister in Education,CRM Software,675563.0
+16b40a2a-03f8-4f36-8537-a468c55c61d6,2024-02-13,Isaac Bennett,Minister in Education,Product Development,85054.0
+9007a3d7-e2c4-4e9e-b46f-65a30f93deca,2024-03-13,Devin Davis MD,Ministery of Education,Rebranding,590831.0
+17411898-5968-44b0-8def-0817a7ef1b6a,2023-11-17,Andrew Mccall,Minister in Hajj and Umrah,Online Ads,558008.0
+2b30377a-d699-4e9e-aef1-53e48979de52,2023-12-12,Matthew Hall,Minister in Education,Facebook Ads,313026.0
+f7d6c9e5-3839-40cb-b7e2-866d5b7d9425,2024-02-02,Michael Schmidt,Minister of Health,Wireframes,593855.0
+4ea61303-83f9-4f9d-a365-e9b2bab61c99,2024-01-10,Courtney Garrett,Minister in Finance,Online Ads,507849.0
+6ad4bafe-0570-4374-998d-e0bd91da17de,2023-12-29,Jason Yates,Minister in Education,Rebranding,58792.0
+ad61b834-0a3d-429a-badd-e6c127b88bc8,2024-04-02,Stephanie Graham,Minister in Education,Product Development,188758.0
+6c19e918-bb6f-4f98-9068-feea2ad74aed,2024-03-24,Laura Anthony,Minister in Education,Rebranding,674984.0
+7ae325ce-8cd8-4e35-adaf-7c49adba8cdf,2024-04-30,James Sherman,Ministery of Hajj and Umrah,Product Prototypes,484102.0
+f100ddfe-f81c-499d-807b-bd2ea91cedcb,2024-02-16,Amy Stephenson,Minister in Education,Email Campaign Tools,503542.0
+79973a1e-24db-4dd4-afe9-b29a1d3b9930,2024-04-24,Tabitha Robinson,STC,Product Prototypes,119456.0
+a5e9ad72-1e1a-46d0-9f5d-0c0a88d3effa,2023-12-23,Rachel Ryan,Minister in Culture,Facebook Ads,559078.0
+fdcb1b78-cd12-4a83-a742-c489f07cbf7e,2024-04-23,Tina Williams,Minister in Hajj and Umrah,Market Analysis Reports,483951.0
+5d582e5e-0a2b-4ca9-ba22-96a3915c26f5,2024-05-02,Morgan Sanchez,Ministery of Hajj and Umrah,Online Ads,409149.0
+23c0e305-cd3f-45a9-aa3f-930df14bb7c6,2024-01-04,Andrea Young,Minister in Hajj and Umrah,Facebook Ads,482332.0
+8c6bcb2a-cc00-42f4-a1f8-82862aa09737,2024-04-21,James Sherman,Minister in Finance,Product Development,303216.0
+0104336e-76d9-4692-afeb-473bb266b6fd,2023-10-26,Isaac Bennett,Ministery of Hajj and Umrah,Wireframes,478474.0
+87fc0108-0d08-4dec-a396-51cbf63806a8,2024-08-09,Joan Arnold,Minister in Education,Rebranding,47672.0
+f295b019-9d17-4222-be90-900c6ec25280,2024-07-22,Debbie Bradley,Minister in Education,Rebranding,195862.0
+d1363c75-92cf-43d5-8905-d036cf19bc85,2024-09-17,Anthony Shannon,Ministery of Education,Online Ads,535744.0
+e54944fa-fcf9-43b4-bd99-43d20413ce85,2024-02-23,Tracy Fisher,Minister in Culture,Rebranding,462389.0
+9170828f-c7b8-4210-9733-55bc96057613,2024-05-30,Scott Larsen,Minister in Education,Rebranding,48175.0
+5c5cb4f0-b51a-4634-a270-f45a3b95cf85,2024-08-18,Laura Anthony,Minister of Health,Wireframes,653416.0
+eb91b774-c4f3-44a5-b0e9-d6843f8c2e58,2024-07-28,Craig Small,Minister in Finance,Email Campaign Tools,503794.0
+fdf74a33-b873-4ccf-be90-cc5569d3bc31,2024-07-02,Eric Gillespie,Minister of Health,Facebook Ads,300135.0
+cc1b1560-2d62-465d-be4c-512f3a1fecb2,2024-05-12,Eric Gillespie,Minister in Finance,Market Analysis Reports,203754.0
+7049edce-44c0-4509-bbf3-cfd29cd64bb3,2024-07-21,Craig Small,Minister in Education,Online Ads,552115.0
+017026b9-180c-4bb6-83be-61b8b16c23c1,2024-07-17,Craig Gomez,Minister of Health,Online Ads,417543.0
+80eb3926-ac8d-4eb4-a69d-4279bef7ca47,2024-07-08,Ashley Valencia,Aramco,User Testing Tools,67347.0
+0d87ffe6-de44-4d79-b141-0e5ada4d3881,2023-11-20,Matthew Hall,Ministery of Finance,Product Development,225793.0
+af4addbe-2b77-4111-8ab9-b84efd20925f,2024-06-27,David Anderson,STC,User Testing Tools,312460.0
+2720958d-79a0-46cc-9ad6-78702f5d0e59,2024-07-05,Nicole Richardson,Ministery of Education,Rebranding,498907.0
+d581d2f0-7a99-487b-994c-59734c5d8719,2024-03-24,Matthew Hall,Minister in Finance,Rebranding,161970.0
+8b1761da-8b6a-4080-b3ee-e88045de1f49,2024-05-16,Daniel Harris,Minister in Education,Online Ads,556175.0
+a4efb5fd-561a-432d-bb0c-c63f5d0f6a4b,2024-05-10,Margaret Francis,Minister of Health,Logo Design,209407.0
+8a97415f-0371-444b-b6ed-ff9115cb5fd5,2024-04-20,Jason Yates,Minister in Hajj and Umrah,Rebranding,510309.0
+3895bb42-a7c3-482a-a6ca-8bf557763a15,2024-06-26,Amy Stephenson,Ministery of Finance,Rebranding,407170.0
+326574ed-1ba9-4c81-a871-d2c60e0b4faf,2024-09-25,Cheyenne Turner,Ministery of Finance,Rebranding,355630.0
+03f449d8-393b-4be7-8e37-1b18d261a23f,2024-09-18,Trevor Keith,STC,Market Analysis Reports,691517.0
+c2574678-2a54-4c6c-858f-7beecbab5ee6,2024-10-06,Craig Small,STC,Wireframes,161113.0
+73298eac-5568-4978-b808-f6d0f9f09a19,2024-09-09,Desiree Harvey,Minister of Health,Rebranding,382207.0
+efa5f767-d079-4bdb-8ae7-098848cc06fa,2023-12-02,Scott Clark,Ministery of Hajj and Umrah,Product Development,359835.0
+a5d56f9e-8884-4f23-a079-e3d6438ee46a,2024-06-20,Craig Gomez,STC,Brand Guidelines,113010.0
+6d9de706-4053-473d-aab2-4d76c80d324e,2023-11-04,Jason Yates,Ministery of Finance,Marketing Operations,384698.0
+d1f18365-0089-4461-9314-bfd789a398e3,2023-11-25,Isaac Bennett,Aramco,User Testing Tools,698119.0
+62e4fa89-b902-442c-baaf-d1baa5a42148,2024-08-31,Joan Arnold,Ministery of Hajj and Umrah,Rebranding,267452.0
+efdb6137-978e-4928-ae61-ca8129f277d7,2024-05-28,Justin Turner,Ministery of Finance,Marketing Operations,383386.0
+6b3fc9ef-b3e1-4fa4-8936-9425ba21851d,2024-09-24,Craig Small,Ministery of Hajj and Umrah,Wireframes,407687.0
+976f75d2-da93-4d8c-a748-20da269d500d,2024-01-24,Daniel Harris,Ministery of Hajj and Umrah,Rebranding,488136.0
+49aacd24-b704-46fb-8393-2377c7056e85,2024-07-01,James Sherman,STC,CRM Software,448655.0
+6ac5d916-c108-4f42-b8d6-ae0fd8363d6b,2024-05-19,Craig Gomez,Ministery of Education,Product Development,563182.0
+ec43793a-301b-4bf1-8296-f61b35905ec6,2024-04-25,Matthew Hall,Minister in Hajj and Umrah,Wireframes,160174.0
+db10d698-61b2-4293-badd-23de143037ac,2023-12-10,Debbie Bradley,STC,Rebranding,244053.0
+f028fcd5-1cf6-4692-a35a-77bbce13558b,2024-05-25,Meghan Goodman,Minister of Health,Marketing Operations,44815.0
+d352a14a-82c2-45b2-9052-f8675944a239,2024-04-19,Daniel Harris,Minister of Health,Product Development,292089.0
+52cfac1f-06cf-4670-a7f7-d53ff8603bf8,2024-06-17,James Hanson,Minister in Finance,Facebook Ads,58294.0
+2ba0736b-34de-452f-a577-f1e2df009f0c,2023-11-04,Jason Yates,STC,Rebranding,401007.0
+d79002ba-20ba-4a67-9f53-7fc883bc73a3,2024-07-15,Laura Anthony,Almarai,Online Ads,487640.0
+649ed22e-cb46-4f36-8a4a-0ee79c6ad2d2,2024-05-03,William Smith,Ministery of Education,Facebook Ads,519316.0
+c7425bfc-5f82-4403-ae8c-9469c2b3b40c,2024-07-19,Andrea Young,Ministery of Health,Wireframes,145358.0
+e7e8f357-3d10-45d0-bc4e-5dbd1a6612e9,2024-09-01,John Lawrence,STC,Rebranding,517132.0
+60526168-f5a3-48ae-9aff-f166fad79de6,2024-02-07,James Hanson,Almarai,Rebranding,51914.0
+dbb349e7-166c-4a8d-ad9a-ec86e2229d1d,2024-02-18,Hannah David,STC,Market Analysis Reports,278971.0
+6af9e440-5791-402e-a784-8c23db014c80,2024-04-23,Heidi Lowe,Minister in Culture,Online Ads,264724.0
+9e7f5feb-295c-4226-a250-1f12b2d50a59,2023-12-12,James Sherman,Minister of Health,User Testing Tools,464777.0
+42691051-c135-416c-a728-7ad51b2576dc,2024-07-31,Brian Odonnell,Minister in Education,Rebranding,363255.0
+b0b04d2d-771f-4081-b90f-93e0d4114f08,2024-03-24,Taylor Wyatt,Aramco,Facebook Ads,158973.0
+8a1e2d42-7e40-4c9b-a270-faf036023a43,2024-07-31,Tina Williams,Minister in Education,Rebranding,373688.0
+2817919b-d7f7-462e-a14f-c439a196fb4a,2024-07-02,Anthony Shannon,Minister in Education,Product Development,698653.0
+982eccd0-b150-44a0-9507-fd88aa0862e5,2024-04-07,Brian Odonnell,Minister in Finance,Wireframes,631247.0
+7e18b484-1226-491f-bcad-1974a43e7ded,2024-09-02,Amy Stephenson,Minister in Education,User Testing Tools,96047.0
+f5c740b3-1b3a-42a6-9d92-c85d439b3d5a,2024-06-01,Amy Stephenson,STC,Brand Guidelines,422720.0
+a2253f79-8903-4bed-96fc-9bf5117ed132,2024-02-22,Isaac Bennett,Almarai,Email Campaign Tools,76739.0
+ff9079ae-03dc-42cc-b755-1450f29582fc,2023-10-30,James Ruiz,Ministery of Health,Rebranding,229022.0
+8f5134a1-ea0a-40b9-82da-4772557d3135,2024-07-24,Ryan Harris,Minister in Hajj and Umrah,User Testing Tools,569023.0
+944efca3-78c4-4bdc-9ca9-fecd7455d687,2024-01-07,Hannah David,Ministery of Health,Marketing Operations,451706.0
+ea72fd76-b3bb-481c-8d73-f77eeee91570,2024-06-16,Andrea Young,Ministery of Hajj and Umrah,Facebook Ads,480276.0
+4d050f61-11d8-4478-ac5f-c45185c31a80,2024-07-30,Richard Huynh,Ministery of Hajj and Umrah,Online Ads,588127.0
+1349354d-7bb6-4228-ba9b-8eaf2c2e4d70,2024-02-26,Steven Hardy,Ministery of Health,Wireframes,593807.0
+2ea6582b-e380-44bd-b16c-4e8c2a76c66a,2023-11-13,Scott Clark,Minister of Health,User Testing Tools,371762.0
+7f90fe71-1151-4f9b-be74-4c22d605eb43,2023-12-12,Debbie Bradley,Minister in Finance,Wireframes,190022.0
+24b7ea96-b965-45bd-a43b-8f475eae027e,2024-02-25,Jason Yates,Ministery of Finance,Rebranding,611608.0
+4d4b1a19-3a77-432c-ae7c-1850742ca88b,2024-10-19,Thomas Torres,Minister of Health,Facebook Ads,140253.0
+8fcf6e41-f66f-4434-a899-8eafc97b7afb,2024-07-24,Margaret Francis,STC,CRM Software,537977.0
+82741a9d-aded-4f4b-9ce6-30dddaf457a2,2024-10-13,Craig Gomez,Ministery of Hajj and Umrah,Rebranding,46276.0
+4c8045b2-b890-4674-9e1c-f6d38031d8c5,2023-10-23,Brian Odonnell,Ministery of Education,Wireframes,93179.0
+d5f2b887-4496-4d6d-bafb-934ef938bcfd,2024-02-18,James Ruiz,Ministery of Hajj and Umrah,Email Campaign Tools,336660.0
+74ec5f60-d1ab-4efb-9ad1-c2f2e65a222c,2024-03-15,Erin Contreras,Saudi Airlines,Product Development,540881.0
+29d88a73-d0ee-4ac5-a39b-69b27786f8f2,2023-11-27,Andrea Young,Aramco,Product Development,134011.0
+0e7feef3-4ecd-444c-8e07-777461a4ae98,2024-08-12,David Blackburn,Ministery of Hajj and Umrah,User Testing Tools,269392.0
+b427b317-c143-4ec8-be6b-98a796e5a6ee,2024-10-14,Scott Clark,Minister in Hajj and Umrah,Product Development,674706.0
+a21efd23-2505-4fe7-a7d1-b0d55ae049d9,2024-08-22,Bruce Jennings,Minister in Culture,User Testing Tools,671800.0
+f49bff9c-4d30-464c-b1de-be4914d68a7d,2024-06-18,Lynn Clements,STC,Wireframes,357895.0
+ee5f6ccb-6f17-40cb-ad7d-0a925188aebe,2023-11-11,Michael Schmidt,STC,Marketing Operations,576448.0
+8b3280ca-c98f-43fc-b7a3-cdb07772df5c,2024-04-26,Thomas Torres,Ministery of Hajj and Umrah,Product Development,517682.0
+57bb6830-1f6b-4e83-86fa-a9d66a2fccd8,2024-01-31,Karen Moore,Minister in Culture,Market Analysis Reports,88596.0
+0f1bffe7-4f03-436a-a77b-ffc0df8cd3be,2024-09-30,Lynn Clements,Minister of Health,CRM Software,401617.0
+07a29a40-3ad2-4abe-ad6b-76baa8af1dca,2023-11-24,Matthew Hall,Minister in Culture,Wireframes,388316.0
+fd1af62b-9f11-4e41-b599-d5264aa48e2f,2023-11-21,Craig Small,Almarai,Wireframes,294963.0
+0084f44c-23c0-4978-8d0d-791988a72207,2024-08-27,Stephanie Graham,Minister in Finance,CRM Software,554185.0
+ce5a083b-aff6-452d-a73a-cebdeb35af06,2024-02-22,Meghan Goodman,Minister in Education,Rebranding,342539.0
+aae837d7-a47e-455b-9a16-4814f2908095,2024-04-16,Elizabeth Guerrero,Minister in Education,Market Analysis Reports,117822.0
+cad39ed1-2edf-442a-9c83-4f01a7e79c3a,2024-01-12,David Blackburn,Aramco,Brand Guidelines,662514.0
+9ee5bba8-35c0-4f23-b4c1-3c651b63e0e6,2024-06-12,Margaret Francis,Ministery of Education,Google Ads,122767.0
+0aa74352-adda-4972-9027-b03fdd7e9394,2023-12-10,Jordan Johnson,Ministery of Education,Email Campaign Tools,610212.0
+c2695006-ab37-4584-99d6-92c80077016d,2024-05-04,Adam Schmidt,STC,Email Campaign Tools,277070.0
+ec7d2b38-a570-47d4-8ee1-279fca73af59,2024-08-22,Jamie Reeves,STC,Google Ads,541123.0
+08b4acc3-82f2-427c-aa4d-0e0032177648,2023-11-29,Ashley Valencia,Ministery of Health,CRM Software,674787.0
+5a4e5ae5-af65-4ecc-9006-b0a31b21e34c,2024-03-14,Meredith Grant,Saudi Airlines,Product Development,492721.0
+13bc0cf1-e3db-4591-8c95-9aafe65f11e0,2024-08-16,Meghan Goodman,STC,CRM Software,665460.0
+340de79c-3a60-4c98-97b3-7fb865401dac,2024-08-03,Meredith Grant,Ministery of Hajj and Umrah,Brand Guidelines,325950.0
+59d504bf-fb55-4ada-ac4b-7b449f9dcb5c,2024-05-30,Richard Kennedy,Ministery of Health,Product Prototypes,251929.0
+8d209521-4915-450d-9e20-2bf549d7e15c,2024-07-11,Tabitha Robinson,Ministery of Health,Product Prototypes,610822.0
+a44e7866-7d25-4e43-83e5-08d9ebc38f2a,2024-09-21,Eric Gonzales,Ministery of Finance,Brand Guidelines,133931.0
+a08eee93-ac66-4bbe-8735-cad18135714a,2024-04-12,Nicole Richardson,Minister in Education,Facebook Ads,114639.0
+586a936d-25d0-4f3d-b42b-09e15b503db6,2024-01-10,Richard Steele,Sabic,Wireframes,543684.0
+fc415d1c-23c7-4a3f-8305-dd161a838427,2024-06-30,Susan Ramos,Minister in Finance,Brand Guidelines,185623.0
+ee466dfa-a171-428d-aa7a-f77389878aa7,2024-09-07,Rachel Ryan,Ministery of Hajj and Umrah,CRM Software,595672.0
+141f4e4f-dae5-416f-8cf3-e1077e276329,2024-03-20,Hailey Marshall,Ministery of Hajj and Umrah,Google Ads,590746.0
+040be60f-9411-40a3-8711-0da613f7ef91,2024-06-24,John Payne,Ministery of Education,Google Ads,654647.0
+deb93395-9dae-41e6-bf6d-39b7b17453df,2024-05-24,Ryan Harris,Aramco,Product Prototypes,61082.0
+b768ce5f-8944-408b-9375-26c3b2623982,2024-10-09,Laura Barton,Saudi Airlines,User Testing Tools,229719.0
+9165ad8f-2e67-4ef7-9571-0bee1836dc90,2024-01-13,Tabitha Robinson,Minister of Health,Google Ads,397287.0
+601b17d5-9b0f-451f-bac5-5fbbff872f2a,2024-10-18,Cheyenne Turner,Almarai,User Testing Tools,41710.0
+bade4850-a678-4892-b7b0-930e217a85ca,2024-06-16,Maria Ford,Sabic,CRM Software,563066.0
+e18d6cf9-05ab-4cc3-94cf-d914c80d35bc,2024-05-28,Christopher Mckay,Ministery of Finance,User Testing Tools,480185.0
+912f7dfa-4bf7-4918-acae-564810925b6e,2024-02-25,Rhonda Ayers,Ministery of Health,Online Ads,192183.0
+60877182-bb18-4d12-8d77-b80e104d5eb9,2024-05-09,Isaac Bennett,Ministery of Culture,Market Analysis Reports,477862.0
+e7505444-427d-41aa-908d-2a7866c437d4,2024-05-06,Justin Jarvis,Minister in Hajj and Umrah,Product Prototypes,441241.0
+138511b4-f7fb-4f8d-a0f8-27981809335d,2024-06-06,Michael Richardson,Almarai,Online Ads,550975.0
+a485866b-4d54-4dd3-bb9e-514e2e8eb8df,2024-03-08,Justin Jarvis,Ministery of Hajj and Umrah,Online Ads,343934.0
+599a842f-8fff-4556-9fdf-0708d649dfdb,2023-11-15,Michael Hancock,Ministery of Finance,Online Ads,238658.0
+591e8d87-8687-4097-9d05-4bc8a78b02eb,2024-10-16,Dustin Jimenez,Ministery of Hajj and Umrah,Logo Design,378930.0
+dac5230f-c227-4602-8521-f02c4e9c1299,2024-05-10,Christopher Mckay,Minister of Health,CRM Software,355640.0
+8fcc150a-336e-4cea-ad35-9781c8a9e958,2024-09-24,Deanna Garcia,Minister in Culture,User Testing Tools,268440.0
+7c84084f-8f8a-4ff0-a66c-f3591092e160,2024-05-15,Jordan Johnson,Ministery of Education,Facebook Ads,210571.0
+181a5544-334e-41ec-8283-ff5a54c14ddd,2024-03-20,Hailey Marshall,Ministery of Hajj and Umrah,Market Analysis Reports,52721.0
+85d50f50-2a4f-4b6a-b79f-9792c826a089,2023-11-03,Anthony Shannon,Ministery of Health,Product Prototypes,416773.0
+e71c7551-6e0e-4837-90d5-60477c9a1570,2024-02-02,Jamie Reeves,Ministery of Culture,Facebook Ads,351615.0
+c8e1f936-bc22-4086-b1bd-8f13e77e1806,2023-11-08,Courtney Garrett,Ministery of Education,Brand Guidelines,679886.0
+5ea9f4b8-7699-4362-b967-4b7b9169d7f7,2024-07-25,Dana Reyes,STC,Product Development,692842.0
+7f70b62e-c56f-4e88-9ab9-3035a5279ce9,2024-06-06,Morgan Sanchez,STC,User Testing Tools,483378.0
+d2036d72-3499-40cc-a964-329eea63ec6a,2024-10-09,Michelle Porter,Saudi Airlines,Rebranding,314545.0
+dbb3b1a5-d884-4a26-876f-2381d165c9dd,2023-11-05,Cindy Adams,STC,Wireframes,375258.0
+7aef395d-edb9-4aaa-b624-fbf2b8116249,2024-08-04,James Sherman,Aramco,CRM Software,398040.0
+3d0e273c-0523-4cff-8ef7-071a9196ce74,2023-11-24,Hannah David,Minister in Finance,Product Prototypes,680446.0
+dfc0520d-0a9c-4508-92cf-207c7c3ac0db,2024-04-04,David Anderson,Ministery of Education,CRM Software,252245.0
+7c5266fa-625e-4151-a35b-9e3095308734,2023-12-30,Adam Schmidt,Minister in Hajj and Umrah,Marketing Operations,263217.0
+44a9bcb5-165f-4a79-8d7e-d417a657947a,2023-12-28,Jay Bell,Ministery of Health,Marketing Operations,205856.0
+49654fcf-51fe-4b30-b296-9776f57c5dc8,2024-09-20,Courtney Garrett,STC,Market Analysis Reports,303505.0
+f3ed327e-2d7c-400c-a946-87e9193bbb1e,2024-04-08,Justin Jarvis,Aramco,Google Ads,154183.0
+ed4dd914-471a-4161-bbf3-38e8b8ea4922,2024-06-12,Elizabeth Guerrero,Almarai,Product Development,159608.0
+248cdcfd-5479-4e7d-b105-f9e7bce1a3f9,2023-12-12,Tracy Griffin,Ministery of Finance,Facebook Ads,655478.0
+552d2413-31d1-40d1-8f92-9b15bcac1e1a,2024-04-16,Dana Reyes,Ministery of Finance,Facebook Ads,124692.0
+ebeff763-7c63-4053-833f-31830a4cbea8,2024-04-08,Eric Gillespie,Sabic,Facebook Ads,473722.0
+986f3a9c-4b42-40e6-a7bb-e3a1366f1a46,2024-01-22,Jacob Knox,Aramco,Wireframes,271316.0
+c2b1bcde-4faf-4273-989c-018fe78ff12c,2024-03-01,Regina Moran,Ministery of Health,User Testing Tools,566746.0
+ebd7433a-dd66-40df-b30e-44703490b95c,2024-08-14,Cindy Adams,Ministery of Hajj and Umrah,Google Ads,407912.0
+5d869c41-1386-4cf7-8ed0-eb4e84d39d22,2024-07-21,Nicole Porter,Ministery of Education,Wireframes,187288.0
+84a13e50-f21e-4e05-b0e0-99d8411296be,2024-08-14,James Ruiz,Minister in Education,Product Prototypes,173484.0
+934e6fcb-9f2a-432b-99d3-17b473523993,2024-04-27,Richard Steele,STC,User Testing Tools,42386.0
+4fa379ef-a9f8-485f-9eb5-50e03232ba57,2024-04-24,Louis Morris,STC,Product Development,697177.0
+3a94a289-327e-4646-9875-b83c5e9630ad,2023-11-11,Chelsea Stephens,Saudi Airlines,Wireframes,219765.0
+8c0bbe46-2837-4764-a361-7495c2949d65,2024-07-12,Hannah David,Minister in Culture,Facebook Ads,96318.0
+9abc328e-06d3-4b3d-b7eb-5348cbc837dd,2023-11-22,Karen Moore,Almarai,Online Ads,626302.0
+1064a4fc-cd6b-472a-abe5-f89e7cd2a1b1,2023-12-24,Rachel Ryan,Ministery of Education,Logo Design,369750.0
+493a625a-a510-4939-94d9-6f6905ed5b42,2024-08-04,Andrea Young,Almarai,Wireframes,36426.0
+7e4f7103-04da-40dd-9e05-733c07d58b2c,2024-04-10,Ryan Harris,Ministery of Education,Market Analysis Reports,566244.0
+cc2c6a8c-8205-48fd-934e-b5f3b9a58053,2024-06-30,Ashley Lewis,Sabic,Rebranding,151213.0
+143d0c15-a7e2-4553-81ef-0f297b3ea51f,2024-06-07,Hailey Marshall,Ministery of Health,CRM Software,119425.0
+4760f43d-41e9-4dcb-96e9-49eb83a55633,2024-08-19,Scott Larsen,Ministery of Finance,CRM Software,565085.0
+eb425fcc-63b3-4e83-9e34-9d3a4fbd4599,2024-06-23,Richard Montes,Saudi Airlines,Facebook Ads,177859.0
+b5b66daf-4bed-46fe-b494-bb7c55f54ce3,2024-02-14,Richard Huynh,Ministery of Hajj and Umrah,Wireframes,504939.0
+3d175e57-0e2a-4454-b6a4-59b78a289581,2024-07-01,Ian Willis,Ministery of Hajj and Umrah,Market Analysis Reports,675865.0
+aeec0a43-b0fd-4663-b851-52d79b31a747,2024-02-27,Richard Huynh,Ministery of Hajj and Umrah,Wireframes,655240.0
+f6cf61e9-cba4-49b6-895a-1e3e21066b24,2024-04-05,Trevor Keith,Ministery of Health,Facebook Ads,323543.0
+72c1c4f0-5c9f-4249-9fb8-25f168e600ff,2024-03-03,Ashley Lewis,Minister of Health,Online Ads,393252.0
+5eada621-35a7-45bb-bbee-cd9c11204e10,2023-12-29,Joshua Hernandez,Almarai,User Testing Tools,459442.0
+11f12394-bdfd-4b2f-b925-602db6758e09,2024-03-16,Joshua Hernandez,Ministery of Health,Facebook Ads,211495.0
+ee6498c3-ab8b-4c3e-8ac8-97086f7d6a84,2024-04-28,Justin Jarvis,Minister in Hajj and Umrah,Google Ads,97993.0
+b8a50fb9-8953-4cfb-a66f-5bd6490d2402,2023-11-06,Zachary Carson,STC,Email Campaign Tools,641626.0

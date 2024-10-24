@@ -138,33 +138,6 @@ def view_manage_data(data_manager):
 
 import pandas as pd
 
-
-def delete_all_data(data_manager):
-    """
-    Deletes all data in the CSV files, keeping the headers, after password confirmation.
-    """
-    password = input("Enter password to confirm deletion: ")
-
-    # Assuming there's a method in the User class for authentication
-    if User.authenticate("admin", password):
-        # Clear the content of all the CSV files but keep the headers
-        pd.DataFrame(columns=['name', 'id', 'address', 'email', 'role', 'salary']).to_csv('employees.csv', index=False)
-        pd.DataFrame(columns=['name', 'contact_number', 'email', 'address']).to_csv('clients.csv', index=False)
-        pd.DataFrame(columns=['name', 'id', 'price']).to_csv('products.csv', index=False)
-        pd.DataFrame(columns=['transaction_id', 'date', 'employee', 'client', 'product', 'price']).to_csv('sales.csv',
-                                                                                                          index=False)
-
-        # Clear the in-memory data as well
-        data_manager.employees = []
-        data_manager.clients = []
-        data_manager.products = []
-        data_manager.sales = []
-
-        print("All data has been successfully deleted, but the headers are kept intact.")
-    else:
-        print("Incorrect password. Data deletion aborted.")
-
-
 def visualize_client_preferences(data_manager):
     """
     Visualizes client preferences, showing the total amount spent on each product
@@ -213,12 +186,15 @@ def main():
     print(Fore.YELLOW + Style.BRIGHT + "  Data Management System  ".center(40))
     print(Fore.CYAN + "=" * 40 + "\n")
 
-    username = input("Enter username: ")
-    password = input("Enter password: ")
+    while True:
+        username = input("Enter username: ")
+        password = input("Enter password: ")
 
-    if not User.authenticate(username, password):
-        print("Invalid credentials. Exiting.")
-        return
+        if User.authenticate(username, password):
+            break  # Exit the loop when the correct credentials are provided
+        else:
+            print("Invalid credentials. Please try again.")
+            z = input("")
 
     while True:
 
@@ -227,8 +203,7 @@ def main():
         print(Fore.MAGENTA + "2. " + Fore.WHITE + "View & Manage Data".center(40))
         print(Fore.MAGENTA + "3. " + Fore.WHITE + "Run Sales Forecasting".center(40))
         print(Fore.MAGENTA + "4. " + Fore.WHITE + "show client preferences".center(40))
-        print(Fore.MAGENTA + "5. " + Fore.WHITE + "Delete All Data".center(40))  # New option
-        print(Fore.MAGENTA + "6. " + Fore.WHITE + "Exit".center(40))
+        print(Fore.MAGENTA + "5. " + Fore.WHITE + "Exit".center(40))
         print(Fore.CYAN + "=" * 40)
 
         try:
@@ -247,8 +222,6 @@ def main():
         elif choice == 4:
             visualize_client_preferences(data_manager)
         elif choice == 5:
-            delete_all_data(data_manager)
-        elif choice == 6:
             data_manager.save_data_to_csv()
             print("Exiting the data management system. Goodbye!")
             break

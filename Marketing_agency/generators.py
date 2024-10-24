@@ -25,6 +25,7 @@ class DataGenerators:
             }
             data_manager.employees.append(employee)  # Correctly appending to employees
         print(f"Generated {number} employees profiles.")
+        z = input("")
         print("----------------------------------------")
 
     def generate_clients(self, number, data_manager):
@@ -42,6 +43,7 @@ class DataGenerators:
             }
             data_manager.clients.append(client)  # Add to data_manager
         print(f"Generated {number} client profiles.")
+        z = input("")
         print("----------------------------------------")
 
     def generate_products(self, number, data_manager):
@@ -57,6 +59,7 @@ class DataGenerators:
             }
             data_manager.products.append(product)  # Add to data_manager
         print(f"Generated {number} product profiles.")
+        z = input("")
         print("----------------------------------------")
 
     def generate_transactions(self, number, data_manager):
@@ -90,4 +93,5 @@ class DataGenerators:
             data_manager.sales.append(transaction)
 
         print(f"Generated {number} transaction records.")
+        z = input("")
         print("----------------------------------------")

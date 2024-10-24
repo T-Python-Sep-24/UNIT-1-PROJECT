@@ -24,14 +24,19 @@ class DataManager:
         """
         if os.path.exists('employees.csv'):
             self.employees = pd.read_csv('employees.csv').to_dict(orient='records')
+        else:
+            return {}
         if os.path.exists('clients.csv'):
             self.clients = pd.read_csv('clients.csv').to_dict(orient='records')
+        else:
+            return {}
         if os.path.exists('products.csv'):
             self.products = pd.read_csv('products.csv').to_dict(orient='records')
+        else:
+            return {}
         if os.path.exists('sales.csv'):
             self.sales = pd.read_csv('sales.csv').to_dict(orient='records')
         print("Data loaded successfully from CSV files.")
-
     def save_data_to_csv(self):
         """
         Saves current data to CSV files.

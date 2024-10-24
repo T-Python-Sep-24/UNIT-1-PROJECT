@@ -5,14 +5,14 @@
  . 
 
 #### As a customer I should be able to do the following :
-As a customer, I should be able to do the following:
 - Generate Data.
 - View Data.
 - Update records by ID.
 - Delete records by ID.
+- Search for records by ID.
 - Export data in CSV files.
 - Predict my future sales.
-- Search for records by ID.
+- 
 
 
 
