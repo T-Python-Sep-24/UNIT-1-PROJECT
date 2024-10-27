@@ -28,7 +28,6 @@ def loadUsers():
 
 def saveUsers(user: Person):
     '''This function saves users to a pickle file'''
-    loadUsers()
     users.append(user)
     with open("bakeryData/users.pkl", "wb") as file:
             pickle.dump(users, file)
@@ -37,7 +36,6 @@ def updateCustomer(customer: Customer) -> Customer:
     '''
     This function updates a customer's details then saves the updated info to the list of users in a pickle file
     '''
-    loadUsers()
     for user in users:
         if user.getPhone() == customer.getPhone():
 
@@ -70,7 +68,7 @@ def updateCustomer(customer: Customer) -> Customer:
                     newPhone: str = Prompt.ask("[#aceaff]New phone number[/]")
                     if not phoneValid(newPhone):
                         print(Text("Phone number should be 10 digits starting with (05).", style= "italic red"), end=" ")
-                        Prompt.ask("[italic #ffd7f0]Try again..[/]")
+                        Prompt.ask("[italic #fbe8e8]Try again..[/]")
                     else:
                         user.setPhone(newPhone)
                         print(Text("Phone was updated successfully.", style="#9affbc"))
@@ -82,9 +80,9 @@ def updateCustomer(customer: Customer) -> Customer:
                 while True:
                     newPassword: str = Prompt.ask("[#aceaff]New password[/]")
                     if not passwordValid(newPassword):
-                        print("[red bold]Password too weak[/], [#ffd7f0]your password should satisfy the following:[/]")
+                        print("[red italic]Password too weak[/], [#fbe8e8]your password should satisfy the following:[/]")
                         print(Text("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)", style = "#ffd7f0"))
-                        Prompt.ask("[italic #ffd7f0]Try again[/]")
+                        Prompt.ask("[italic #fbe8e8]Try again[/]")
                     else:
                         user.setPassword(newPassword)
                         print(Text("Your password was updated successfully.", style="#9affbc"))
@@ -93,7 +91,6 @@ def updateCustomer(customer: Customer) -> Customer:
             #Update delivery address
             elif choice == '6':
                 newAddress: str = Prompt.ask("[#aceaff]New delivery address[/]")
-                #Cast user to Customer class to be able to call the following method:
                 customer = user
                 customer.setDeliveryAddress(newAddress)
                 print(Text("Your delivery address was updated successfully.", style="#9affbc"))
@@ -114,8 +111,6 @@ def updateCustomer(customer: Customer) -> Customer:
 
 def updateCustomerCart(customer: Customer, cart: Cart) -> Customer:
     '''This function updates the details of the customer's cart on the file'''
-    #Get the list of users from the file
-    loadUsers()
     #Loop over the list of users and find the customer
     for user in users:
         if user.getPhone() == customer.getPhone():
@@ -129,8 +124,6 @@ def updateCustomerCart(customer: Customer, cart: Cart) -> Customer:
             
 def updateCustomerOrders(customer: Customer, orders: list[Order]) -> Customer:
     '''This function updates the order history of a customer'''
-    #Get the list of users from the file
-    loadUsers()
     #Loop over the list of users and find the customer
     for user in users:
         if user.getPhone() == customer.getPhone():
@@ -154,7 +147,6 @@ def passwordValid(password: str) -> bool:
 
 def checkUserLogin(phone: str, password: str) -> Person:
     '''This function searches for a user with a phone number and password, if they exists it returns the user'''
-    loadUsers()
     found: bool = False
     for user in users:
         if user.getPhone() == phone and user.getPassword() == password:
@@ -169,7 +161,6 @@ def checkUserLogin(phone: str, password: str) -> Person:
           
 def checkUserRegister(phone: str, password: str) -> bool:
     '''This function checks if a user with the passed phone number exists. It returns True if they do and False if not'''
-    loadUsers()
     for user in users:
         if user.getPhone() == phone and user.getPassword() == password:
             print(Text(f"You already have an account {user.getName()}!", style="italic red"))
@@ -201,9 +192,9 @@ def employeeMenu(employee: Employee):
                 try:
                     datetime.strptime(expDate, '%Y-%m-%d')
                 except ValueError:
-                    print(Text("Invalid date, make sure format is (yyyy-mm-dd).", style="red"))
+                    print(Text("Invalid date, make sure format is (yyyy-mm-dd).", style="italic red"))
                 except Exception as e:
-                    print(Text(f"An error occured,{e}", style="red"))
+                    print(Text(f"An error occured,{e}", style="italic red"))
                 else:
                     break
             employee.addProduct(prodName, qty, price, expDate)
@@ -270,7 +261,7 @@ def customerMenu(customer: Customer):
         #Show cart
         elif choice == '2':
             print(Rule(Text("Your Cart", style="bold #fbfbe2"), characters="- ", style="bold #fdffb0"))
-            #Keep displaying cart options to the customer until they enter 5
+            #Keep displaying cart options to the customer until they enter 6
             while True:
                 cartInfo = cart.viewCart()
                 #Display cart contents if they exist
@@ -446,6 +437,8 @@ def main():
     '''
     Function that contains all main operations
     '''
+    #Get the list of users from a pickle file
+    loadUsers()
     choice: str = ""
     #Keep showing this list until the user enters 1 
     while choice != '1':
@@ -459,8 +452,8 @@ def main():
                 phone: str = Prompt.ask("[#daf5ff]Enter your phone number[/]")
                 #Check if phone number is valid
                 if not phoneValid(phone):
-                    print(Text("Phone number should be 10 digits starting with (05).", style= "red"), end=" ")
-                    Prompt.ask("[#fff2f2]Try again..[/]")
+                    print(Text("Phone number should be 10 digits starting with (05).", style= "italic red"), end=" ")
+                    Prompt.ask("[#fbe8e8]Try again..[/]")
                     continue
                 password: str = Prompt.ask("[#daf5ff]Enter your password[/]")
 
@@ -494,14 +487,14 @@ def main():
                 #Validate phone format
                 if not phoneValid(phone):
                     print(Text("Phone number should be 10 digits starting with (05).", style= "italic red"), end=" ")
-                    Prompt.ask("[italic #ffd7f0]Try again..[/]")
+                    Prompt.ask("[italic #fbe8e8]Try again..[/]")
                     continue
                 password: str = Prompt.ask("[#daf5ff]Enter your password[/]")
                 #Validate password format
                 if not passwordValid(password):
-                    print("[red bold]Password too weak[/], [#ffd7f0]your password should satisfy the following:[/]")
+                    print("[red italic]Password too weak[/], [#fbe8e8]your password should satisfy the following:[/]")
                     print(Text("• Be at least 8 characters long.\n• Contain 1 upper case and 1 lower case letters.\n• Contain a special character e.g(@#_)\n", style = "#ffd7f0"), end =" ")
-                    Prompt.ask("[italic #ffd7f0]Try again..[/]")
+                    Prompt.ask("[italic #fbe8e8]Try again..[/]")
                     continue
                 deliveryAddress: str = Prompt.ask("[#daf5ff]Enter your delivery address[/]")
                     
@@ -515,6 +508,5 @@ def main():
                 break
             Prompt.ask(Text("Press Enter to continue..", style="white italic"))
         
-
 #Executing main program
 main()
