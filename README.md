@@ -1,48 +1,32 @@
-
-
-## PORTFOLIO WEBSITE
-
-### Overview
-
-The Portfolio Website is an interactive platform designed to showcase personal projects, skills, and professional experiences. It serves as a comprehensive hub for potential clients, employers, and collaborators to explore your work and capabilities. The website is organized into three main applications: **Portfolio App**, **Contact App**, and **Dashboard App**, each providing unique functionalities to enhance user experience.
-
-### User Stories
-
-As a user, I should be able to:
-
-- **Explore My Work**: Navigate through the **Portfolio App** to view my experiences, skills, and an "About Me" section that outlines my professional journey.
-- **Add New Experiences**: Use the **Add Experience** feature to submit my latest projects and achievements, enriching my portfolio.
-- **Connect with Me**: Access the **Contact App** to fill out a contact form, allowing visitors to reach out for inquiries or collaboration opportunities.
-- **Manage My Dashboard**: Utilize the **Dashboard App** to edit or delete experiences, ensuring my portfolio remains up-to-date and relevant.
-
-### Usage
-
-To interact with the Portfolio Website, follow these instructions:
-
-1. **Navigate to the Site**: Open your web browser and enter the website URL.
-   
-2. **Explore the Portfolio**:
-   - Visit the **Experience** section to see detailed descriptions of my work.
-   - Check out the **Skills** section to discover the technologies and tools I am proficient in.
-   - Read the **About** page for insights into my background and professional philosophy.
-
-3. **Add Experience**:
-   - Click on the **Add Experience** link to submit new projects. Fill out the form with relevant details and submit it to update your portfolio.
-
-4. **Contact Me**:
-   - Go to the **Contact Form** in the **Contact App**.
-   - Fill out your name, email, and message, then submit to reach me directly with any inquiries.
-
-5. **Manage Dashboard**:
-   - Access the **Dashboard App** to view a list of all experiences.
-   - Use the provided options to edit or delete entries as needed.
-
-### Examples of Actions
-
-- To view my latest projects, navigate to the **Experience** section.
-- To submit a new project, click on **Add Experience**, fill in the form, and hit submit.
-- To connect with me, fill out the contact form and send your message.
-
-### Conclusion
-
-The Portfolio Website is designed to provide a seamless experience for users looking to explore my professional capabilities and connect with me. Each app is crafted with user engagement in mind, ensuring that visitors can easily navigate and interact with my work.
+# UNIT-1-PROJECT
+## Based on what you’ve learned until now , create a project of your choosing (impress us with your imagination) . This project must at least satisfy the following minimum requirements :
+- Must be interactive on CLI.
+- Use your coding skills in Python accurately.
+- Organize Your Code into modules & (or packages)
+- Use Best practices.
+# Discover Yourself Program
+## Overview
+The **Discover Yourself Program** is an interactive tool designed to help individuals gain insights into their personality, emotional intelligence, and learning styles. The program features three main assessments: a Personality Quiz, an Emotional Intelligence Test, and a Learning Style Assessment. Each quiz provides tailored feedback and recommendations based on the user's responses, allowing for a deeper understanding of oneself.
+## User Stories
+As a **user**, I should be able to:
+- Take a **Personality Quiz** to discover my personality type and see famous personalities that share my traits.
+- Complete an **Emotional Intelligence Test** to understand my emotional strengths and receive advice on improvement.
+- Engage in a **Learning Style Assessment** to determine my preferred learning methods and access resources to enhance my learning experience.
+- Access my results in a readable format and save them for future reference.
+## Usage
+To interact with the Discover Yourself Program, follow these instructions:
+1. **Start the Program**: Launch the program in your terminal.
+2. **Choose an Option**: Enter the number corresponding to your choice:
+   - Type `1` to take the Personality Quiz.
+   - Type `2` to take the Emotional Intelligence Test.
+   - Type `3` to take the Learning Style Assessment.
+   - Type `4` to exit the program.
+3. **Take the Quiz**:
+   - For any quiz, follow the prompts to answer questions.
+   - Upon completion, your results will be displayed along with useful insights and recommendations.
+4. **Examples of Commands**:
+   - Type `show personality` to view your personality type and its famous representatives.
+   - Type `show emotional intelligence` for your emotional intelligence level and advice and books that suit your personality.
+   - Type `show learning style` to learn about your preferred learning methods along with resources and tools.
+5. **View Recommendations**: After completing any assessment, review personalized advice and resources tailored to your results.
+6. **Exit the Program**: Type `4` at any prompt to exit the program gracefully.
